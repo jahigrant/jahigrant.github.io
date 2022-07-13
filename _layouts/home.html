@@ -1,3 +1,14 @@
-123
+{% include head.html %}
+    <body>
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
 
-{% include footer.html %}
+        {% include header.html %}
+        
+        <link rel="stylesheet" type="text/css" href="/" media="print" />
+        <script src="" async defer></script>
+
+        {% include footer.html %}
+    </body>
+</html>

@@ -1,4 +1,2 @@
 # Jahi Portfolio
----
-food: Pizza
----
+

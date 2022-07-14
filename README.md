@@ -1,1 +1,1 @@
-Welcome to {{ site.name }}
+# Welcome to {{ site.name }}

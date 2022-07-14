@@ -9,13 +9,15 @@
 
           <div class="row pt-4 pb-4">
             
-            <div class="col-4">
+            <div class="col-4 shadow-sm">
                 {% include sidebar.html %}
             </div>
             <div class="col-8">
-                <h1>{{ page.title }}</h1>
-
+                
+                <div class="shadow-sm p-3 pt-0 mb-5 bg-body rounded">
+                    <h1>{{ page.title }}</h1>
         {{ content }}
+        </div>
             </div>
           </div>
         </div>

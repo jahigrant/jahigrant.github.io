@@ -1,3 +1,9 @@
+---
+layout: home
+title: Documentation
+permalink: /docs.html
+---
+
 ## Welcome to GitHub Page
 
 You can use the [editor on GitHub](https://github.com/jahigrant/jahigrant.github.io/edit/main/docs/index.md) to maintain and preview the content for your website in Markdown files.

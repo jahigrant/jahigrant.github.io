@@ -18,13 +18,14 @@
                 <div class="p-3 pt-0 mb-5 bg-body rounded">
                     <h1>{{ page.title }}</h1>
 
-                    {% for page_title in site.pages %}
+                    {% for page_title in site.pages | where: 'my_prop', nil %}
                     <h2>
                         <a href="{{ page_title.url }}">
                             {{ page_title.title }}
                         </a>
                     </h2>
                   {% endfor %}
+
 
         {{ content | markdownify }}
         </div>

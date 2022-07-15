@@ -1,6 +1,6 @@
 ---
 layout: home
-title: Welcome to {{ site.name }}
+title: Home
 permalink: /home.html
 menupage: true
 ---

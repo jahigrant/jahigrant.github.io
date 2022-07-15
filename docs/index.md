@@ -2,7 +2,6 @@
 layout: home
 title: Documentation
 permalink: /docs.html
-published: false
 ---
 
 ## Welcome to GitHub Page

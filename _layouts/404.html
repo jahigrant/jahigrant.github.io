@@ -26,8 +26,7 @@
     </div>
 
     <script>
-        var pathArray = window.location.pathname.split('/');
-        var secondLevelLocation = pathArray[0];
+        var secondLevelLocation = document.location.hash;
         document.getElementById("unknown-url").innerHTML = secondLevelLocation;
     </script>
 

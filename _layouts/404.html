@@ -12,7 +12,7 @@
 
         <main class="px-3">
             <h1>Error 404</h1>
-            <h3>Page URL unknown</h3>
+            <h3>Page URL ({{ page.url }}) unknown</h3>
             <p class="lead">{{ content | markdownify }}</p>
             <p class="lead">
                 <a href="{{ site.site_path }}" class="btn btn-lg btn-secondary fw-bold border-white bg-white">Home</a>

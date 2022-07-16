@@ -11,5 +11,10 @@
         <p>{{ content | markdownify }}</p>
 
         {% include 404_footer.html %}
+
+        {% if page.404_footer %}
+        {% include {{ page.404_footer }} %}
+      {% endif %}
+
     </body>
 </html>

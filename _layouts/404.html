@@ -26,7 +26,8 @@
     </div>
 
     <script>
-        var secondLevelLocation = document.location.hash;
+        var url = window.location.href.split("/");
+        var secondLevelLocation = url[1];
         document.getElementById("unknown-url").innerHTML = secondLevelLocation;
     </script>
 

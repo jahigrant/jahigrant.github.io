@@ -1,5 +1,12 @@
 <header class="mb-auto">
     <div>
-        <h3 class="float-md-start mb-0">{{ site.name }}</h3>
+        <h3 class="float-md-start mb-0">
+            {% if page.404_header %}
+            {% include {{ page.404_header }} %}
+        {% endif %}
+                {{ site.name }}
+            </a>
+            
+        </h3>
     </div>
 </header>

@@ -1,9 +1,7 @@
 <header class="mb-auto">
     <div>
         <h3 class="float-md-start mb-0">
-            {% if page.site_url %}
-            {% include {{ page.site_url }} %}
-        {% endif %}
+            {% include site_url.html %}
                 {{ site.name }}
             </a>
             

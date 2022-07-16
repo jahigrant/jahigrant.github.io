@@ -4,6 +4,8 @@
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
 
+        <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column"></div>
+
         {% if page.404_header %}
             {% include {{ page.404_header }} %}
         {% endif %}
@@ -20,6 +22,8 @@
         {% if page.404_footer %}
             {% include {{ page.404_footer }} %}
         {% endif %}
+
+    </div>
 
     </body>
 </html>

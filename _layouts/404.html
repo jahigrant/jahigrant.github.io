@@ -1,14 +1,21 @@
 {% include head.html %}
-    <body>
+    <body class="d-flex h-100 text-white bg-dark">
         <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
 
-        {% include header.html %}
-        
-        <h1>Error 404</h1>
-        <h3>Page URL unknown</h3>
-        <p>{{ content | markdownify }}</p>
+        {% if page.404_header %}
+            {% include {{ page.404_header }} %}
+        {% endif %}
+
+        <main class="px-3">
+            <h1>Error 404</h1>
+            <h3>Page URL unknown</h3>
+            <p class="lead">{{ content | markdownify }}</p>
+            <p class="lead">
+                <a href="#" class="btn btn-lg btn-secondary fw-bold border-white bg-white">Learn more</a>
+            </p>
+        </main>
 
         {% if page.404_footer %}
             {% include {{ page.404_footer }} %}

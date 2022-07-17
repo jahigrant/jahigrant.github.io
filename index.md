@@ -1,5 +1,5 @@
 ---
-layout: index.html
+layout: index
 title: Welcome to {{ site.name }}
 permalink: /
 ---

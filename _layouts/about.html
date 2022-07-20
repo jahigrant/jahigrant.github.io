@@ -34,23 +34,16 @@
 
 
                     <div id="skills" class="pt-5">
-                        {{ content | markdownify }}
-                        {{ content | markdownify }}
-                        {{ content | markdownify }}
-                        {{ content | markdownify }}
-                        {{ content | markdownify }}
-                        {{ content | markdownify }}
-                        {{ content | markdownify }}
-                        {{ content | markdownify }}
-                        {{ content | markdownify }}
-                        {{ content | markdownify }}
-                        {{ content | markdownify }}
-                        {{ content | markdownify }}
-                        {{ content | markdownify }}
-                        {{ content | markdownify }}
-                        {{ content | markdownify }}
-                        {{ content | markdownify }}
-                        {{ content | markdownify }}
+                        <h3>
+    
+                        </h3>
+
+                        {% for skill in data.skills %}
+                            <h2>
+                                    {{ skill_name }}
+                            </h2>
+                        {% endfor %}
+
                     </div>
 
                 </div>

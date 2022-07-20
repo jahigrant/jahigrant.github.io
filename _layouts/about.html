@@ -61,13 +61,14 @@
         {% include footer.html %}
 
 <script>
-    const boxes = document.querySelectorAll('.sidebar-navlink,');
-
-for (const box of boxes) {
-  box.addEventListener('click', function handleClick() {
-    box.classList.add('.active');
-  });
-}
+            var a = document.querySelectorAll(".sidebar-menu a");
+            for (var i = 0, length = a.length; i < length; i++) {
+              a[i].onclick = function() {
+                var b = document.querySelector(".sidebar-menu li a.active");
+                if (b) b.classList.remove("active");
+                this.parentNode.classList.add('active');
+              };
+            }
 </script>
 
 

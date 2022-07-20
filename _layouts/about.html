@@ -42,6 +42,15 @@
                             <h2>
                                     {{ skill.name }}
                             </h2>
+                            
+                            <button type="button" class="btn btn-primary position-relative">
+                                {{ skill.name }}
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                    {{ skill.level }}
+                                  <span class="visually-hidden">{{ skill.name }}</span>
+                                </span>
+                              </button>
+
                             <div class="progress">
                                 <div class="progress-bar" role="progressbar" aria-valuenow="{{ skill.level }}" aria-valuemin="0" aria-valuemax="100">{{ skill.name }}</div>
                               </div>

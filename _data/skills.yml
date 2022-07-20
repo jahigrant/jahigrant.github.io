@@ -3,26 +3,47 @@ skills_info:
   level: 9
   url: https://html.spec.whatwg.org/multipage/
 
-- name: Javascript
+- name: JavaScript/ECMAScript
   level: 8
-  url: https://html.spec.whatwg.org/multipage/
+  url: https://www.ecma-international.org/publications-and-standards/standards/ecma-262/
 
-- name: DENO
-  level: 3
-  url: https://html.spec.whatwg.org/multipage/
+- name: Web3
+  level: 8
+  url: https://web3.foundation/
 
-- name: NODEJS
+- name: TypeScript
+  level: 2
+  url: https://www.typescriptlang.org/
+
+- name: Deno
   level: 3
-  url: https://html.spec.whatwg.org/multipage/
+  url: https://deno.land/
+
+- name: Node.js
+  level: 3
+  url: https://nodejs.org/en/
 
 - name: Markdown
   level: 5
-  url: https://html.spec.whatwg.org/multipage/
+  url: https://daringfireball.net/projects/markdown/
 
 - name: Python
   level: 3
-  url: https://html.spec.whatwg.org/multipage/
+  url: https://www.python.org/
+
+- name: PHP
+  level: 5
+  url: https://www.php.net/
 
 - name: Wordpress
   level: 7
-  url: https://html.spec.whatwg.org/multipage/
+  url: https://en-gb.wordpress.org/
+
+- name: CSS
+  level: 7
+  url: https://www.w3.org/TR/CSS/
+
+
+- name: Jekyll
+  level: 4
+  url: https://jekyllrb.com/

@@ -35,17 +35,16 @@
 
                     <div id="skills" class="pt-5">
                         <h3>
-    
+                            Skills
                         </h3>
-
-                        {{ site.data.skills }}
-
-
                         
                         {% for skill in site.data.skills.skills_info %}
                             <h2>
                                     {{ skill.name }}
                             </h2>
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="{{ skill.level }}"></div>
+                              </div>
                         {% endfor %}
 
                     </div>

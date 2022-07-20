@@ -1,21 +1,28 @@
 skills_info:
 - name: HTML
   level: 9
+  url: https://html.spec.whatwg.org/multipage/
 
 - name: Javascript
   level: 8
+  url: https://html.spec.whatwg.org/multipage/
 
 - name: DENO
   level: 3
+  url: https://html.spec.whatwg.org/multipage/
 
 - name: NODEJS
   level: 3
+  url: https://html.spec.whatwg.org/multipage/
 
 - name: Markdown
   level: 5
+  url: https://html.spec.whatwg.org/multipage/
 
 - name: Python
   level: 3
+  url: https://html.spec.whatwg.org/multipage/
 
 - name: Wordpress
   level: 7
+  url: https://html.spec.whatwg.org/multipage/

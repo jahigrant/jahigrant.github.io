@@ -40,9 +40,9 @@
 
                         {{site._data.skills}}
 
-                        {% for skill in data.skills %}
+                        {% for skill in site._data.skills %}
                             <h2>
-                                    {{ skill_name }}
+                                    {{ skill.skill_name }}
                             </h2>
                         {% endfor %}
 

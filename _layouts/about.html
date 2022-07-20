@@ -41,14 +41,9 @@
                         {% for skill in site.data.skills.skills_info %}
  
                             
-                            <button type="button" class="btn btn-primary position-relative">
-                                {{ skill.name }}
-                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                    {{ skill.level }}
-                                  <span class="visually-hidden">{{ skill.name }}</span>
-                                </span>
-                              </button>
-
+                        <button type="button" class="btn btn-primary">
+                            {{ skill.name }} <span class="badge bg-secondary">{{ skill.level }}</span>
+                          </button>
                  
                         {% endfor %}
 

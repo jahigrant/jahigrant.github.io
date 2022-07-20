@@ -1,6 +1,21 @@
 skills_info:
+- name: HTML
+  level: 9
+
 - name: Javascript
   level: 8
 
+- name: DENO
+  level: 3
+
+- name: NODEJS
+  level: 3
+
 - name: Markdown
   level: 5
+
+- name: Python
+  level: 3
+
+- name: Wordpress
+  level: 7

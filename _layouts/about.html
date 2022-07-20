@@ -19,11 +19,19 @@
                     <div id="profile" class="p-3 pt-0 mb-5 bg-body">
 
                         <h1>{{ page.title }}</h1>
-<p>123</p>
-                        <p>
-                            {{ site.data.info.portfolio_info.profile }}
-                            
-                        </p>
+
+                        
+                            {% for information in site.data.info.portfolio_info %}
+                                <p>
+                                    {{ information.profile_p_1 }}
+                                </p>
+                                <p>
+                                    {{ information.profile_p_2 }}
+                                </p>
+                                
+
+                            {% endfor %}    
+                        
 
             
                     </div>

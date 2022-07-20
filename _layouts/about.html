@@ -20,9 +20,11 @@
 
                         <h1>{{ page.title }}</h1>
 
-                        {% for information in site.data.info.portfolio_info %}
-                            {{ information.profile }}
-                        {% endfor %}
+                        <p>
+                            {% for information in site.data.info.portfolio_info %}
+                                {{ information.profile }}
+                            {% endfor %}    
+                        </p>
 
                         {{ content | markdownify }}
             

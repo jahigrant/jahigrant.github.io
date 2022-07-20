@@ -40,10 +40,10 @@
                         
                         {% for skill in site.data.skills.skills_info %}
  
-                            
-                        <button type="button" class="btn btn-primary mb-1">
+                        <a class="btn btn-primary mb-1" href="#" role="button">  
+                        
                             {{ skill.name }} <span class="badge bg-success">{{ skill.level }}/10</span>
-                          </button>
+                            </a> 
                  
                         {% endfor %}
 

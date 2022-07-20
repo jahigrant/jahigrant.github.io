@@ -47,3 +47,8 @@ skills_info:
 - name: Jekyll
   level: 4
   url: https://jekyllrb.com/
+
+softwares_info:
+- name: Visual Studio Code
+  level: 4
+  url: #

@@ -41,11 +41,19 @@
                         {% for skill in site.data.skills.skills_info %}
                             <a class="btn btn-secondary mb-1 rounded-0" href="{{ skill.url }}" role="button" target="_blank">  
 
-<img src="{{ skill.img_url }}" alt="">
 
+                                <div class="card text-dark bg-light mb-3" style="max-width: 4rem;">
+                                    <img src="{{ skill.img_url }}" class="card-img" alt="{{ skill.name }} image">
+                                    <div class="card-img-overlay">
+                                    <div class="card-title">{{ skill.name }}</div>
+                                    <div class="card-body">
+                                        <span class="badge bg-success">{{ skill.level }}/10</span>
 
-                                {{ skill.name }} 
-                                <span class="badge bg-success">{{ skill.level }}/10</span>
+                                    </div>
+                                </div>
+                                  </div>
+                                 
+                                
                             </a>
                         {% endfor %}
                     </div>

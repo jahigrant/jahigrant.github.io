@@ -11,3 +11,22 @@
     background-color: #6c757d;
     border-color: #6c757d;
 }
+
+
+
+.nav-pills .nav-link.active:hover, .nav-pills .show>.nav-link:hover {
+    color: #fff;
+    background-color: #5c636a;
+    border-color: #565e64;
+}
+
+
+.nav-link.sidebar-navlink {
+    display: block;
+    padding: 0.5rem 1rem;
+    color: #575757;
+}
+
+.nav-link.sidebar-navlink:hover {
+    color: #575757;
+}

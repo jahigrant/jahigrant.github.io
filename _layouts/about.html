@@ -40,6 +40,10 @@
                         </h3>
                         {% for skill in site.data.skills.skills_info %}
                             <a class="btn btn-secondary mb-1 rounded-0" href="{{ skill.url }}" role="button" target="_blank">  
+
+<img src="{{ skill.img_url }}" alt="">
+
+
                                 {{ skill.name }} 
                                 <span class="badge bg-success">{{ skill.level }}/10</span>
                             </a>

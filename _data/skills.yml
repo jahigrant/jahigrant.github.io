@@ -2,6 +2,7 @@ skills_info:
 - name: HTML
   level: 9
   url: https://html.spec.whatwg.org/multipage/
+  img_url: https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/HTML5_logo_and_wordmark.svg/512px-HTML5_logo_and_wordmark.svg.png?20170517184425
 
 - name: JavaScript/ECMAScript
   level: 8

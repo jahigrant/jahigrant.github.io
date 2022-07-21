@@ -7,6 +7,7 @@ skills_info:
 - name: JavaScript/ECMAScript
   level: 8
   url: https://www.ecma-international.org/publications-and-standards/standards/ecma-262/
+  img_url: https://cdn.worldvectorlogo.com/logos/logo-javascript.svg
 
 - name: Web3
   level: 8

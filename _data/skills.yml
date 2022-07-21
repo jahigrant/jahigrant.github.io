@@ -43,12 +43,59 @@ skills_info:
   level: 7
   url: https://www.w3.org/TR/CSS/
 
-
 - name: Jekyll
   level: 4
   url: https://jekyllrb.com/
 
+- name: Babylon.js
+  level: 4
+  url: https://www.babylonjs.com/
+
 softwares_info:
 - name: Visual Studio Code
   level: 4
-  url: #
+  url: https://code.visualstudio.com/
+
+- name: Presonus Studio One
+  level: 6
+  url: https://www.presonus.com/products/Studio-One
+
+  - name: Adobe Photoshop
+  level: 7
+  url: https://www.adobe.com/uk/products/photoshop.html
+
+  - name: Adobe Premiere Pro
+  level: 5
+  url: https://www.adobe.com/uk/products/premiere.html
+
+  - name: Adobe Illustrator
+  level: 6
+  url: https://www.adobe.com/uk/products/illustrator.html
+
+  - name: Adobe Animate
+  level: 6
+  url: https://www.adobe.com/uk/products/animate.html
+
+  - name: Adobe Audition
+  level: 5
+  url: https://www.adobe.com/uk/products/audition.html
+
+  - name: Adobe InDesign
+  level: 6
+  url: https://www.adobe.com/uk/products/indesign.html
+
+  - name: Microsoft Word
+  level: 8
+  url: https://www.microsoft.com/en-gb/microsoft-365/word
+
+  - name: Microsoft Excel
+  level: 6
+  url: https://www.microsoft.com/en-gb/microsoft-365/excel
+
+  - name: Microsoft Publisher
+  level: 8
+  url: https://www.microsoft.com/en-gb/microsoft-365/publisher
+
+  - name: Microsoft PowerPoint
+  level: 7
+  url: https://www.microsoft.com/en-gb/microsoft-365/powerpoint

@@ -82,6 +82,7 @@ softwares_info:
 - name: Adobe Photoshop
   level: 70
   url: https://www.adobe.com/uk/products/photoshop.html
+  img_url: https://cdn.jsdelivr.net/gh/devicons/devicon/icons/photoshop/photoshop-plain.svg
 
 - name: Adobe Premiere Pro
   level: 50

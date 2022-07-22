@@ -4,7 +4,7 @@ skills_info:
   url: https://html.spec.whatwg.org/multipage/
   img_url: https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg
 
-- name: JavaScript/ECMAScript
+- name: JavaScript
   level: 80
   url: https://www.ecma-international.org/publications-and-standards/standards/ecma-262/
   img_url: https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg

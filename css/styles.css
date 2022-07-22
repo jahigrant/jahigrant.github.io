@@ -31,7 +31,9 @@
     color: #575757;
 }
 
-
+img.profile-imgs {
+    filter: grayscale(200%)!important;
+}
 img.profile-imgs:hover {
     filter: grayscale(0%)!important;
 }

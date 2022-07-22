@@ -73,6 +73,7 @@ softwares_info:
 - name: Visual Studio Code
   level: 40
   url: https://code.visualstudio.com/
+  img_url: https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg
 
 - name: Presonus Studio One
   level: 60

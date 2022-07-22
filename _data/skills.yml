@@ -16,48 +16,58 @@ skills_info:
 
 - name: Solidity
   level: 30
-  url: https://web3.foundation/
+  url: https://docs.soliditylang.org/en/v0.8.15/
   img_url: https://cdn.jsdelivr.net/gh/devicons/devicon/icons/solidity/solidity-original.svg
 
 - name: TypeScript
   level: 20
   url: https://www.typescriptlang.org/
+  img_url: https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg
 
 - name: Deno
   level: 30
-  url: https://deno.land/
+  url: https://deno.land/c
+  img_url: https://cdn.jsdelivr.net/gh/devicons/devicon/icons/denojs/denojs-original.svg
 
 - name: Node.js
   level: 30
   url: https://nodejs.org/en/
+  img_url: https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg
 
 - name: Markdown
   level: 50
   url: https://daringfireball.net/projects/markdown/
+  img_url: https://cdn.jsdelivr.net/gh/devicons/devicon/icons/markdown/markdown-original.svg
 
 - name: Python
   level: 30
   url: https://www.python.org/
+  img_url: https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg
 
 - name: PHP
   level: 50
   url: https://www.php.net/
+  img_url: https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg
 
 - name: Wordpress
   level: 70
   url: https://en-gb.wordpress.org/
+  img_url: https://cdn.jsdelivr.net/gh/devicons/devicon/icons/wordpress/wordpress-original.svg
 
 - name: CSS
   level: 70
   url: https://www.w3.org/TR/CSS/
+  img_url: https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg
 
 - name: Jekyll
   level: 40
   url: https://jekyllrb.com/
+  img_url: https://www.svgrepo.com/show/353927/jekyll.svg
 
 - name: Babylon.js
   level: 40
   url: https://www.babylonjs.com/
+  img_url: https://upload.wikimedia.org/wikipedia/commons/8/8e/Babylon_logo_v4.svg
 
 softwares_info:
 - name: Visual Studio Code

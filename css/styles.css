@@ -30,3 +30,8 @@
 .nav-link.sidebar-navlink:hover {
     color: #575757;
 }
+
+
+img.profile-imgs:hover {
+    filter: grayscale(0%)!important;
+}

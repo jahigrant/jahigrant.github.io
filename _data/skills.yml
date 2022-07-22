@@ -2,7 +2,7 @@ skills_info:
 - name: HTML
   level: 90
   url: https://html.spec.whatwg.org/multipage/
-  img_url: https://cdn.worldvectorlogo.com/logos/html-1.svg
+  img_url: https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg
 
 - name: JavaScript/ECMAScript
   level: 80

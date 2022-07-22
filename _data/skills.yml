@@ -87,10 +87,12 @@ softwares_info:
 - name: Adobe Premiere Pro
   level: 50
   url: https://www.adobe.com/uk/products/premiere.html
+  img_url: https://cdn.jsdelivr.net/gh/devicons/devicon/icons/premierepro/premierepro-plain.svg
 
 - name: Adobe Illustrator
   level: 60
   url: https://www.adobe.com/uk/products/illustrator.html
+  img_url: https://cdn.jsdelivr.net/gh/devicons/devicon/icons/illustrator/illustrator-plain.svg
 
 - name: Adobe Animate
   level: 60

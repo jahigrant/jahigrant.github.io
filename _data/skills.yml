@@ -10,8 +10,14 @@ skills_info:
   img_url: https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg
 
 - name: Web3
-  level: 80
+  level: 40
   url: https://web3.foundation/
+  img_url: https://repository-images.githubusercontent.com/24655114/c71c5800-6a8c-11e9-9117-8ec357c9f69e
+
+- name: Solidity
+  level: 30
+  url: https://web3.foundation/
+  img_url: https://cdn.jsdelivr.net/gh/devicons/devicon/icons/solidity/solidity-original.svg
 
 - name: TypeScript
   level: 20

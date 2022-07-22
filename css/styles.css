@@ -31,9 +31,9 @@
     color: #575757;
 }
 
-img.profile-imgs {
-    filter: grayscale(200%)!important;
+.profile-imgs {
+    filter: grayscale(200%);
 }
-img.profile-imgs:hover {
-    filter: grayscale(0%)!important;
+.profile-imgs:hover {
+    filter: grayscale(0%);
 }

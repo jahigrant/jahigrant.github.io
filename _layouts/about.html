@@ -47,7 +47,8 @@
 
                                         <div class="card-footer bg-white border-0 px-0">
                                             <div class="progress">
-                                                <div class="progress-bar" role="progressbar" aria-valuenow="{{ skill.level }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                                <div class="progress-bar" role="progressbar"
+                                                style="width: {{ skill.level }}%" aria-valuenow="{{ skill.level }}" aria-valuemin="0" aria-valuemax="100"></div>
                                               </div>
                                             <a class="text-decoration-none text-dark" href="{{ skill.url }}" role="button" target="_blank">  
                                                 {{ skill.name }}

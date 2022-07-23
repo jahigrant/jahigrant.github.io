@@ -98,7 +98,7 @@ softwares_info:
 - name: Animate
   level: 60
   url: https://www.adobe.com/uk/products/animate.html
-  img_url: https://en.wikipedia.org/wiki/File:Adobe_Animate_CC_2015_icon.png#/media/File:Adobe_Animate_CC_2015_icon.png
+  img_url: https://upload.wikimedia.org/wikipedia/commons/e/e3/Adobe_Animate_CC_icon.svg
 
 - name: Audition
   level: 50

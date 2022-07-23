@@ -70,54 +70,54 @@ skills_info:
   img_url: https://upload.wikimedia.org/wikipedia/commons/8/8e/Babylon_logo_v4.svg
 
 softwares_info:
-- name: Visual Studio Code
+- name: VS Code
   level: 40
   url: https://code.visualstudio.com/
   img_url: https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg
 
-- name: Presonus Studio One
+- name: Presonus S1
   level: 60
   url: https://www.presonus.com/products/Studio-One
 
-- name: Adobe Photoshop
+- name: Photoshop
   level: 70
   url: https://www.adobe.com/uk/products/photoshop.html
   img_url: https://cdn.jsdelivr.net/gh/devicons/devicon/icons/photoshop/photoshop-plain.svg
 
-- name: Adobe Premiere Pro
+- name: Premiere Pro
   level: 50
   url: https://www.adobe.com/uk/products/premiere.html
   img_url: https://cdn.jsdelivr.net/gh/devicons/devicon/icons/premierepro/premierepro-plain.svg
 
-- name: Adobe Illustrator
+- name: Illustrator
   level: 60
   url: https://www.adobe.com/uk/products/illustrator.html
   img_url: https://cdn.jsdelivr.net/gh/devicons/devicon/icons/illustrator/illustrator-plain.svg
 
-- name: Adobe Animate
+- name: Animate
   level: 60
   url: https://www.adobe.com/uk/products/animate.html
 
-- name: Adobe Audition
+- name: Audition
   level: 50
   url: https://www.adobe.com/uk/products/audition.html
 
-- name: Adobe InDesign
+- name: InDesign
   level: 60
   url: https://www.adobe.com/uk/products/indesign.html
 
-- name: Microsoft Word
+- name: Word
   level: 80
   url: https://www.microsoft.com/en-gb/microsoft-365/word
 
-- name: Microsoft Excel
+- name: Excel
   level: 60
   url: https://www.microsoft.com/en-gb/microsoft-365/excel
 
-- name: Microsoft Publisher
+- name: Publisher
   level: 80
   url: https://www.microsoft.com/en-gb/microsoft-365/publisher
 
-- name: Microsoft PowerPoint
+- name: PowerPoint
   level: 70
   url: https://www.microsoft.com/en-gb/microsoft-365/powerpoint

@@ -1,16 +1,22 @@
 
 
+function loadXMLDoc() {
+    var xmlhttp = new XMLHttpRequest();
 
-fetch('https://www.freecodecamp.dev/curriculum-data/v1/available-superblocks.json').then(function (response) {
-	// The API call was successful!
-	return response.text();
-}).then(function (html) {
+    xmlhttp.onreadystatechange = function() {
+        if (xmlhttp.readyState == XMLHttpRequest.DONE) { // XMLHttpRequest.DONE == 4
+           if (xmlhttp.status == 200) {
+               document.getElementById("myDiv").innerHTML = xmlhttp.responseText;
+           }
+           else if (xmlhttp.status == 400) {
+              alert('There was an error 400');
+           }
+           else {
+               alert('something else other than 200 was returned');
+           }
+        }
+    };
 
-	// Convert the HTML string into a document object
-	var parser = new DOMParser();
-	var doc = parser.parseFromString(html, 'text/html');
-
-}).catch(function (err) {
-	// There was an error
-	console.warn('Something went wrong.', err);
-});
+    xmlhttp.open("GET", "https://www.freecodecamp.dev/curriculum-data/v1/available-superblocks.json", true);
+    xmlhttp.send();
+}

@@ -17,6 +17,6 @@ function loadXMLDoc() {
         }
     };
 
-    xmlhttp.open("GET", "https://www.freecodecamp.dev/curriculum-data/v1/available-superblocks.json", true);
+    xmlhttp.open("GET", "https://www.freecodecamp.org/certification/musagrant/javascript-algorithms-and-data-structures", true);
     xmlhttp.send();
 }

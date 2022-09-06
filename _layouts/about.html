@@ -126,8 +126,9 @@ has successfully completed the freeCodeCamp.org</p>
 
                                         <h5 class="card-title">{{ certificate.name }}</h5>
                                         <p class="card-text">Developer Certification, representing approximately 300 hours of coursework.</p>
-                                        <img src="{{ certificate.signature_url }}">
-                                        <a href="#" class="card-link">Card link</a>
+                                        <img src="{{ certificate.signature_url }}" style="width: 35%;
+    display: block;">
+                                        <a href="{{ certificate.cert_link }}" class="card-link">Card link</a>
                                         <a href="#" class="card-link">Another link</a>
                                     </div>
                                 </div>

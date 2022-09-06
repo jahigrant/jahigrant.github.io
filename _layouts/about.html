@@ -121,12 +121,12 @@
                                     <div class="card-body">
 
 <p>This certifies that <br>
-{{ certificate.awarded_to }} <br>
+<h6 class="card-subtitle mb-2 text-muted">{{ certificate.awarded_to }} </h6>
 has successfully completed the freeCodeCamp.org</p>
 
                                         <h5 class="card-title">{{ certificate.name }}</h5>
-                                        <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-                                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                        <p class="card-text">Developer Certification, representing approximately 300 hours of coursework.</p>
+                                        <img src="{{ certificate.signature_url }}">
                                         <a href="#" class="card-link">Card link</a>
                                         <a href="#" class="card-link">Another link</a>
                                     </div>

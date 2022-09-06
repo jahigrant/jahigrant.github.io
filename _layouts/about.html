@@ -116,17 +116,22 @@
                         </h3>
                         <div class="row">
 
-{% for certificate in site.data.certificates.certificates_info %}
-<div class="card" style="width: 18rem;">
-  <div class="card-body">
-    <h5 class="card-title">{{ certificate.name }}</h5>
-    <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-    <a href="#" class="card-link">Card link</a>
-    <a href="#" class="card-link">Another link</a>
-  </div>
-</div>
-{% endfor %}
+                            {% for certificate in site.data.certificates.certificates_info %}
+                                <div class="card border-0 p-0">
+                                    <div class="card-body">
+
+<p>This certifies that
+{{ certificate.awarded_to }}
+has successfully completed the freeCodeCamp.org</p>
+
+                                        <h5 class="card-title">{{ certificate.name }}</h5>
+                                        <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                        <a href="#" class="card-link">Card link</a>
+                                        <a href="#" class="card-link">Another link</a>
+                                    </div>
+                                </div>
+                            {% endfor %}
 
                 </div>
         </div>

@@ -120,14 +120,13 @@
                                 <div class="card border-0 p-0 col-sm-6">
                                     <div class="card-body bg-primary p-5 m-3">
 
-                                        <p>This certifies that <br>
-                                        <h6 class="card-subtitle mb-2 text-muted">{{ certificate.awarded_to }} </h6>
+                                        <p class="text-white">This certifies that <br>
+                                        <h6 class="card-subtitle mb-2 text-white fs-2">{{ certificate.awarded_to }} </h6>
                                         has successfully completed the freeCodeCamp.org</p>
 
                                         <h5 class="card-title">{{ certificate.name }}</h5>
                                         <p class="card-text">Developer Certification, representing approximately 300 hours of coursework.</p>
-                                        <img src="{{ certificate.signature_url }}" style="width: 35%;
-    display: block;">
+                                        <img src="{{ certificate.signature_url }}" style="width: 35%;display: block;invert(100%) sepia(100%) saturate(100%) hue-rotate(346deg) brightness(104%) contrast(97%);">
     <p>Quincy Larson</p>
     <p>Executive Director, freeCodeCamp.org</p>
                                         <a href="{{ certificate.cert_link }}" class="card-link" target="_blank">Certificate</a>

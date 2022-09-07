@@ -117,12 +117,12 @@
                         <div class="row">
 
                             {% for certificate in site.data.certificates.certificates_info %}
-                                <div class="card border-0 p-0 col-sm-2">
-                                    <div class="card-body">
+                                <div class="card border-0 p-0 col-sm-6">
+                                    <div class="card-body bg-primary p-5">
 
-<p>This certifies that <br>
-<h6 class="card-subtitle mb-2 text-muted">{{ certificate.awarded_to }} </h6>
-has successfully completed the freeCodeCamp.org</p>
+                                        <p>This certifies that <br>
+                                        <h6 class="card-subtitle mb-2 text-muted">{{ certificate.awarded_to }} </h6>
+                                        has successfully completed the freeCodeCamp.org</p>
 
                                         <h5 class="card-title">{{ certificate.name }}</h5>
                                         <p class="card-text">Developer Certification, representing approximately 300 hours of coursework.</p>

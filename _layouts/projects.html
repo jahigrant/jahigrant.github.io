@@ -13,6 +13,10 @@
             <div class="col-12">
                 <div class="p-5 mb-5 bg-body rounded">
 
+
+{% for quote in site.data.projects.quote_machine %}
+{{ quotes.quote }}
+{% endfor %}
         {{ content }}
         </div>
             </div>

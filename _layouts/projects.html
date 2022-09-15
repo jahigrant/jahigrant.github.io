@@ -5,24 +5,23 @@
         <![endif]-->
 
         {% include header.html %}
+        
+            <div id="quote-box" class="container">
+                <div class="row pt-4 pb-4">
 
-        <div class="container">
-        <div class="row pt-4 pb-4">
-            
+                    <div class="col-12">
+                        <div class="p-5 mb-5 bg-body rounded">
 
-            <div class="col-12">
-                <div class="p-5 mb-5 bg-body rounded">
+                            {% for single_quote in site.data.projects.quote_machine.quotes %}
+                                {{ single_quote.quote }}
+                            {% endfor %}
 
+                        </div>
+                    </div>
 
-{% for single_quote in site.data.projects.quote_machine.quotes %}
-{{ single_quote.quote }}
-{% endfor %}
-        {{ content }}
-        </div>
+                </div>
             </div>
-          </div>
-        </div>
-    </div>
+            
         {% include footer.html %}
     </body>
 </html>

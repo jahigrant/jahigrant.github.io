@@ -14,8 +14,8 @@
                 <div class="p-5 mb-5 bg-body rounded">
 
 
-{% for quote in site.data.projects.quote_machine %}
-{{ quotes.quote }}
+{% for single_quote in site.data.projects.quote_machine.quotes %}
+{{ single_quote.quote }}
 {% endfor %}
         {{ content }}
         </div>

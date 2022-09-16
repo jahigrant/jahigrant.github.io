@@ -7,9 +7,7 @@
         {% include header.html %}
         
             <div id="quote-box" class="container">
-                <div class="row pt-4 pb-4">
 
-                    <div class="col-12">
 
 
 
@@ -17,19 +15,19 @@
       <div class="card text-bg-primary mb-3" style="max-width: 18rem;">
   <div class="card-header">Header</div>
   <div class="card-body">
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-  </div>
-</div>
-                        {% for single_quote in site.data.projects.quote_machine.quotes %}
+    <p class="card-text">
+    {% for single_quote in site.data.projects.quote_machine.quotes %}
                                 {{ single_quote.quote }}
                             {% endfor %}
+    </p>
+  </div>
+</div>
+                        
 
 
 
                     </div>
 
-                </div>
-            </div>
 
         {% include footer.html %}
     </body>

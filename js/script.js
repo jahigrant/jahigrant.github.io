@@ -18,7 +18,7 @@ function tick() {
       <div>
         <h2>It is {
 researchTitles.forEach(element => {
-    index
+    `<p>` + index + `</p>`
 })
         
 

@@ -27,7 +27,7 @@ function tick() {
     const element = (
 <button id='theButton'>bouton</button>
       <div>
-        <h2 id="text">{ randomItem }</h2>
+        <h2 id="text"></h2>
       </div>
     );
     ReactDOM.render(

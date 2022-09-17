@@ -13,10 +13,12 @@
     ["Quote 6", "Quote Author 6"]
   ]; 
 
+  var randomItem = researchTitles[Math.floor(Math.random()*researchTitles.length)];
+
 function tick() {
     const element = (
       <div>
-        <h2>It is {
+        <h2>It is { randomItem,
 researchTitles.forEach(element => {
     `<p>` + index + `</p>`
 })

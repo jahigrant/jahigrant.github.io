@@ -17,6 +17,9 @@
 
 function tick() {
     const element = (
+        <button onClick={this.randomItem}>
+        Click me!
+      </button>
       <div>
         <h2>{ randomItem }</h2>
       </div>

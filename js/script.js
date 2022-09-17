@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-const quoteTitles = [
+
+const researchTitles = [
     ["Quote 1", "Quote Author 1"],
     ["Quote 2", "Quote Author 2"],
     ["Quote 3", "Quote Author 3"],
@@ -8,24 +8,15 @@ const quoteTitles = [
     ["Quote 6", "Quote Author 6"]
   ];
 
-  const getRandomQuoteTitle = () => {
-    return quoteTitles[Math.floor(Math.random() * quoteTitles.length)];
-  };
+  let mygroceries = researchTitles[Math.floor(Math.random() * researchTitles.length)]
+console.log(mygroceries)//This gives you any string from groceries
+  
 
 function tick() {
-    const [quoteTitle, setQuoteTitle] = useState(getRandomQuoteTitle());
-    const handleClick = () => {
-        // shuffle array and pick random
-        const randomQuoteTitle = getRandomQuoteTitle();
-        setQuoteTitle(randomQuoteTitle);
-      };
-
     const element = (
       <div>
         <h1>Hello, world!</h1>
         <h2>It is {new Date().toLocaleTimeString()}.</h2>
-        <h1>{quoteTitle}</h1>
-        <button onClick={handleClick}>Generate</button>
       </div>
     );
     ReactDOM.render(

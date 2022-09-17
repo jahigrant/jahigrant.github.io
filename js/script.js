@@ -20,9 +20,9 @@
   const myText = document.getElementById('text');
 
   btn.addEventListener('click', function(){
-    myText.innerHTML = "";
+    myText.innerHTML += "";
     let myInsertText = randomItem;
-  myText.innerHTML = myInsertText;
+  myText.innerHTML += myInsertText;
   
   }); 
   }

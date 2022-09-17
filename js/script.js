@@ -17,11 +17,10 @@ function tick() {
     const element = (
       <div>
         <h1>Hello, world!</h1>
-        <h2>It is {new Date().toLocaleTimeString()}.</h2>
+        <h2>It is {random_item(researchTitles)}.</h2>
       </div>
     );
     ReactDOM.render(
-        random_item(researchTitles),
       element,
       document.getElementById('the_root_of_your_reactJS_component')
     );

@@ -25,8 +25,9 @@
 
 function tick() {
     const element = (
-<button id='theButton'>bouton</button>
+
       <div>
+        <button id='theButton'>bouton</button>
         <h2 id="text"></h2>
       </div>
     );

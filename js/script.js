@@ -14,20 +14,26 @@
   ]; 
 
   var randomItem = researchTitles[Math.floor(Math.random()*researchTitles.length)];
-  const btn = document.getElementById('theButton');
+
+  function getQuote() {
+   const btn = document.getElementById('theButton');
   const myText = document.getElementById('text');
   
   btn.addEventListener('click', function(){
     const myInsertText = randomItem;
   myText.innerHTML = myInsertText;
   
-  });
+  }); 
+  }
+  
+
+
 
 function tick() {
     const element = (
 
       <div>
-        <button id='theButton'>bouton</button>
+        <button id='theButton' onClick={getQuote}>bouton</button>
         <h2 id="text"></h2>
       </div>
     );

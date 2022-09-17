@@ -1,4 +1,4 @@
-
+import React, { useState } from "react";
 const quoteTitles = [
     ["Quote 1", "Quote Author 1"],
     ["Quote 2", "Quote Author 2"],

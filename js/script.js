@@ -18,6 +18,7 @@
   function getQuote() {
    const btn = document.getElementById('theButton');
   const myText = document.getElementById('text');
+  myText.innerHTML = '';
   
   btn.addEventListener('click', function()=>{
     const myInsertText = randomItem;

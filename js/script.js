@@ -20,8 +20,8 @@
   const myText = document.getElementById('text');
 
   btn.addEventListener('click', function(){
-    const myInsertText = randomItem;
-  myText.innerHTML = myInsertText;
+    let myInsertText = randomItem;
+  myText.innerHTML += myInsertText;
   
   }); 
   }

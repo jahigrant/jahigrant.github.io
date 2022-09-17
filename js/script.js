@@ -20,7 +20,7 @@
   const myText = document.getElementById('text');
   myText.innerHTML = '';
 
-  btn.addEventListener('click', function()=>{
+  btn.addEventListener('click', function(){
     const myInsertText = randomItem;
   myText.innerHTML = myInsertText;
   

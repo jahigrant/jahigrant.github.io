@@ -8,26 +8,25 @@
         
             <div id="quote-box" class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column mb-5 mt-5 pb-5 pt-5">
 
+                <div class="card text-center p-5 m-5 bg-body shadow-lg rounded">
+                <div class="card-body">
+                    <blockquote class="blockquote mb-0">
+                        <p id="text">
+                            {% for single_quote in site.data.projects.quote_machine.quotes %}
+                                {{ single_quote.quote }}
+                            {% endfor %}
+                        </p>
+                        <footer class="blockquote-footer" id="author">Someone famous in <cite title="Source Title">Source Title</cite></footer>
+                    </blockquote>
 
-<div class="card text-center p-5 m-5 bg-body shadow-lg rounded">
-  <div class="card-body">
-    <blockquote class="blockquote mb-0">
-      <p>
-        {% for single_quote in site.data.projects.quote_machine.quotes %}
-            {{ single_quote.quote }}
-        {% endfor %}
-      </p>
-      <footer class="blockquote-footer">Someone famous in <cite title="Source Title">Source Title</cite></footer>
-    </blockquote>
+                <!-- some HTML -->
+                <div id="the_root_of_your_reactJS_component"></div>
+                <!-- some other HTML -->
+                
 
-  <!-- some HTML -->
-  <div id="the_root_of_your_reactJS_component"></div>
-  <!-- some other HTML -->
-  
-
-    
-  </div>
-</div>
+                    
+                </div>
+                </div>
 
 
                 

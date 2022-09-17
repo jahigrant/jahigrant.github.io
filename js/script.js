@@ -14,14 +14,20 @@
   ]; 
 
   var randomItem = researchTitles[Math.floor(Math.random()*researchTitles.length)];
+  const btn = document.getElementById('theButton');
+  const myText = document.getElementById('text');
+  
+  btn.addEventListener('click', function(){
+    const myInsertText = randomItem;
+  myText.innerHTML = myInsertText;
+  
+  });
 
 function tick() {
     const element = (
-        <button onClick={this.randomItem}>
-        Click me!
-      </button>
+<button id='theButton'>bouton</button>
       <div>
-        <h2>{ randomItem }</h2>
+        <h2 id="text">{ randomItem }</h2>
       </div>
     );
     ReactDOM.render(

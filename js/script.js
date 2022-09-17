@@ -18,13 +18,7 @@
 function tick() {
     const element = (
       <div>
-        <h2>It is { randomItem,
-researchTitles.forEach(element => {
-    `<p>` + index + `</p>`
-})
-        
-
-        }.</h2>
+        <h2>{ randomItem }</h2>
       </div>
     );
     ReactDOM.render(

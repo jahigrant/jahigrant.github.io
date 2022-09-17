@@ -33,7 +33,7 @@ function tick() {
     const element = (
 
       <div>
-        <button id='theButton' class="btn btn-primary" onClick={getQuote}>bouton</button>
+        <button id='theButton' className="btn btn-primary" onClick={getQuote}>bouton</button>
         <h2 id="text"></h2>
       </div>
     );

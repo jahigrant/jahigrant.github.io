@@ -16,8 +16,13 @@
 function tick() {
     const element = (
       <div>
-        <h1>Hello, world!</h1>
-        <h2>It is {researchTitles}.</h2>
+        <h2>It is {
+researchTitles.forEach(element => {
+    index
+})
+        
+
+        }.</h2>
       </div>
     );
     ReactDOM.render(

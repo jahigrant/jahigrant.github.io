@@ -24,9 +24,7 @@
     let quoteText = document.getElementById('text');
     let authorName = document.getElementById('author');
 
-    window.addEventListener('load', function() {
-    console.log('All assets are loaded')
-})
+
 
     let insertQuote = randomResult[0][0][0];  
     if (insertQuote) {
@@ -36,7 +34,12 @@
     let insertAuthor = randomResult[0][0][1];
     authorName.innerHTML = insertAuthor;
   }
-  loadQuote();
+  
+  window.addEventListener('load', function() {
+    console.log('All assets are loaded');
+    loadQuote();
+  });
+  
 
   function getQuote() {
     

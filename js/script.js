@@ -45,9 +45,9 @@ function tick() {
     const element = (
 
       <div>
-        <button id='theButton' className="btn btn-primary" onClick={getQuote}>bouton</button>
-        <p id="text"></p>
-        <footer className="blockquote-footer" id="author"></footer>
+        <button id='theButton' className="btn btn-primary rounded-0" onClick={getQuote}>New Quote</button>
+        <p id="text">Hello</p>
+        <footer className="blockquote-footer" id="author">Bobby D</footer>
         <cite title="Source Title"></cite>
       </div>
     );

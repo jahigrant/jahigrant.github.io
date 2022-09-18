@@ -19,11 +19,12 @@
     let randomResult = [randomItem];
     let quoteText = document.getElementById('quote');
     let authorName = document.getElementById('author');
-    let myInsertText = randomResult[0][0][0];    
-    quoteText.innerHTML = myInsertText;
-    let myInsertAuthor = randomResult[0][0][1];
-    authorName.innerHTML = myInsertAuthor;
+    let insertQuote = randomResult[0][0][0];    
+    quoteText.innerHTML = insertQuote;
+    let insertAuthor = randomResult[0][0][1];
+    authorName.innerHTML = insertAuthor;
   }
+  loadQuote();
 
   function getQuote() {
     
@@ -35,18 +36,18 @@
     let authorName = document.getElementById('author');
 
     btn.onclick = () => {
-      let myInsertText = randomResult[0][2][0];    
-      if (myInsertText !== quoteText.innerHTML) {
-        quoteText.innerHTML = myInsertText;
+      let insertQuote = randomResult[0][2][0];    
+      if (insertQuote !== quoteText.innerHTML) {
+        quoteText.innerHTML = insertQuote;
         console.log(randomResult[0][2][0]);
       } else {
         quoteText.innerHTML = randomResult[0][0][0];
         console.log(randomResult[0][0][0]);
       }
 
-      let myInsertAuthor = randomResult[0][2][1];    
-      if (myInsertAuthor !== authorName.innerHTML) {
-        authorName.innerHTML = myInsertAuthor;
+      let insertAuthor = randomResult[0][2][1];    
+      if (insertAuthor !== authorName.innerHTML) {
+        authorName.innerHTML = insertAuthor;
         console.log(randomResult[0][2][1]);
       } else {
         authorName.innerHTML = randomResult[0][0][1];
@@ -62,9 +63,9 @@
 function tick() {
     const element = (
 
-      <div>
+      <div onLoad={loadQuote}>
         <button id='theButton' className="btn btn-primary rounded-0" onClick={getQuote}>New Quote</button>
-        <p className="d-block" id="quote" onLoad={loadQuote}>Hello</p>
+        <p className="d-block" id="quote">Hello</p>
         <footer className="blockquote-footer d-block" id="author" >Bobby D</footer>
         <cite title="Source Title"></cite>
       </div>

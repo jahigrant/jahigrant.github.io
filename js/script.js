@@ -13,9 +13,12 @@
     ["Quote 6", "Quote Author 6"]
   ]; 
 
-  var randomItem = researchTitles[Math.floor(Math.random()*researchTitles.length)];
-var randomResult = [randomItem]
+
   function getQuote() {
+
+  let randomItem = researchTitles[Math.floor(Math.random()*researchTitles.length)];
+let randomResult = [randomItem]
+
    let btn = document.getElementById('theButton');
   let myText = document.getElementById('text');
   let myAuthor = document.getElementById('author');
@@ -30,6 +33,7 @@ var randomResult = [randomItem]
   // }); 
 
   btn.onclick = () => {
+
     console.log(randomResult);
     myText.value = '';
     let myInsertText = randomResult[0][0];

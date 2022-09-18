@@ -388,7 +388,7 @@
     return items.sort(() => Math.random() - 0.5).slice(0, 5); 
   }
 
-
+console.log(quoteItems);
 
   function loadQuote() {
     let randomItem = random_item(quoteItems);
@@ -398,7 +398,7 @@
     let quoteText = document.getElementById('text');
     let authorName = document.getElementById('author');
 
-console.log(quoteItems);
+
 
     let insertQuote = randomResult[0][0][0];  
     if (insertQuote) {

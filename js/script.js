@@ -90,7 +90,7 @@ function tick() {
     );
     ReactDOM.render(
       element,
-      document.getElementById('the_root_of_your_reactJS_component')
+      document.getElementById('qoute_component')
     );
   }
   

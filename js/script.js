@@ -14,11 +14,15 @@
     return items.sort(() => Math.random() - 0.5).slice(0, 5); 
   }
 
-  async function loadQuote() {
+  .addEventListener('load', function() {
+    console.log('All assets are loaded')
+})
+
+  function loadQuote() {
     let randomItem = random_item(researchTitles);
     let randomResult = [randomItem];
-    let quoteText = await document.getElementById('quote');
-    let authorName = await document.getElementById('author');
+    let quoteText = document.getElementById('text');
+    let authorName = document.getElementById('author');
     let insertQuote = randomResult[0][0][0];  
     if (insertQuote) {
       quoteText.innerHTML = insertQuote;
@@ -27,15 +31,15 @@
     let insertAuthor = randomResult[0][0][1];
     authorName.innerHTML = insertAuthor;
   }
- 
+  loadQuote();
 
   function getQuote() {
     
     let randomItem = random_item(researchTitles);
     let randomResult = [randomItem];
 
-    let btn = document.getElementById('theButton');
-    let quoteText = document.getElementById('quote');
+    let btn = document.getElementById('new-quote');
+    let quoteText = document.getElementById('text');
     let authorName = document.getElementById('author');
 
     btn.onclick = () => {
@@ -66,9 +70,9 @@
 function tick() {
     const element = (
 
-      <div onLoad={loadQuote}>
-        <button id='theButton' className="btn btn-primary rounded-0" onClick={getQuote}>New Quote</button>
-        <p className="d-block" id="quote">Hello</p>
+      <div>
+        <button id='new-quote' className="btn btn-primary rounded-0" onClick={getQuote}>New Quote</button>
+        <p className="d-block" id="text">Hello</p>
         <footer className="blockquote-footer d-block" id="author" >Bobby D</footer>
         <cite title="Source Title"></cite>
       </div>

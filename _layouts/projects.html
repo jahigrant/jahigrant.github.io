@@ -7,36 +7,24 @@
         {% include header.html %}
         
             <div id="quote-box" class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column mb-5 mt-5 pb-5 pt-5">
-
                 <div class="card text-center p-5 m-5 bg-body shadow-lg rounded">
-                <div class="card-body">
-                    <blockquote class="blockquote mb-0">
-                        <p>
-                            {% for single_quote in site.data.projects.quote_machine.quotes %}
-                                {{ single_quote.quote }}
-                            {% endfor %}
-                        </p>
+                    <div class="card-body">
+                        <blockquote class="blockquote mb-0">
 
-                        <div id="the_root_of_your_reactJS_component"></div>
+                            <p>
+                                {% for single_quote in site.data.projects.quote_machine.quotes %}
+                                    {{ single_quote.quote }}
+                                {% endfor %}
+                            </p>
 
+                            <div id="the_root_of_your_reactJS_component"></div>
                         
-
-                    </blockquote>
-
-                <!-- some HTML -->
-                
-                <!-- some other HTML -->
-                
-
-                    
-                </div>
-                </div>
-
-
-                
+                        </blockquote>
                     </div>
+                </div>
+            </div>
 
-{% include projects_footer.html %}
+        {% include projects_footer.html %}
         
     </body>
 </html>

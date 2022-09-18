@@ -398,7 +398,7 @@
     let quoteText = document.getElementById('text');
     let authorName = document.getElementById('author');
 
-
+console.log(quoteItems);
 
     let insertQuote = randomResult[0][0][0];  
     if (insertQuote) {

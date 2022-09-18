@@ -425,22 +425,22 @@ console.log(quoteItems);
     let authorName = document.getElementById('author');
 
     btn.onclick = () => {
-      let insertQuote = randomResult[0][2][0];    
+      let insertQuote = randomResult[0].quote;    
       if (insertQuote !== quoteText.innerHTML) {
         quoteText.innerHTML = insertQuote;
-        console.log(randomResult[0][2][0]);
+        console.log(randomResult[0].quote);
       } else {
-        quoteText.innerHTML = randomResult[0][0][0];
-        console.log(randomResult[0][0][0]);
+        quoteText.innerHTML = randomResult[1].quote;
+        console.log(randomResult[1].quote);
       }
 
-      let insertAuthor = randomResult[0][2][1];    
+      let insertAuthor = randomResult[0].author;    
       if (insertAuthor !== authorName.innerHTML) {
         authorName.innerHTML = insertAuthor;
-        console.log(randomResult[0][2][1]);
+        console.log(randomResult[0].author);
       } else {
-        authorName.innerHTML = randomResult[0][0][1];
-        console.log(randomResult[0][0][1]);
+        authorName.innerHTML = randomResult[1].author;
+        console.log(randomResult[1].author);
       }
     };
 

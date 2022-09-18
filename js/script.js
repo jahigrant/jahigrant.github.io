@@ -18,11 +18,14 @@
   function getQuote() {
    const btn = document.getElementById('theButton');
   const myText = document.getElementById('text');
+  const myauthor = document.getElementById('author');
 
   btn.addEventListener('click', function(){
     myText.innerHTML += "";
     let myInsertText = randomItem[0];
-  myText.innerHTML += myInsertText;
+  myText.innerHTML = myInsertText;
+  let myInsertAuthor = randomItem[1];
+  myAuthor.innerHTML = myInsertAuthor;
   
   }); 
   }

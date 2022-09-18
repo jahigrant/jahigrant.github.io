@@ -17,12 +17,12 @@
   async function loadQuote() {
     let randomItem = random_item(researchTitles);
     let randomResult = [randomItem];
-    let quoteText = document.getElementById('quote');
-    let authorName = document.getElementById('author');
+    let quoteText = await document.getElementById('quote');
+    let authorName = await document.getElementById('author');
     let insertQuote = randomResult[0][0][0];    
-    quoteText.innerHTML = await insertQuote;
+    quoteText.innerHTML = insertQuote;
     let insertAuthor = randomResult[0][0][1];
-    authorName.innerHTML = await insertAuthor;
+    authorName.innerHTML = insertAuthor;
   }
   loadQuote();
 

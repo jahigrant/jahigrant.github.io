@@ -21,7 +21,7 @@
 
   btn.addEventListener('click', function(){
     myText.innerHTML += "";
-    let myInsertText = randomItem;
+    let myInsertText = randomItem[0];
   myText.innerHTML += myInsertText;
   
   }); 

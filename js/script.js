@@ -31,7 +31,7 @@ var randomResult = [randomItem]
 
   btn.onclick = () => {
     console.log(randomResult);
-    myText.innerHTML = "";
+    myText.value = '';
     let myInsertText = randomResult[0][0];
   myText.innerHTML = myInsertText;
   let myInsertAuthor = randomResult[0][1];

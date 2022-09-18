@@ -16,9 +16,9 @@
   var randomItem = researchTitles[Math.floor(Math.random()*researchTitles.length)];
 var randomResult = [randomItem]
   function getQuote() {
-   const btn = document.getElementById('theButton');
-  const myText = document.getElementById('text');
-  const myAuthor = document.getElementById('author');
+   let btn = document.getElementById('theButton');
+  let myText = document.getElementById('text');
+  let myAuthor = document.getElementById('author');
 
   // btn.addEventListener('click', function(){
   //   myText.innerHTML += "";
@@ -46,8 +46,8 @@ function tick() {
 
       <div>
         <button id='theButton' className="btn btn-primary" onClick={getQuote}>bouton</button>
-        <h2 id="text"></h2>
-        <h2 id="author"></h2>
+        <p id="text"></p>
+        <footer class="blockquote-footer" id="author">Someone famous in <cite title="Source Title">Source Title</cite></footer>
       </div>
     );
     ReactDOM.render(

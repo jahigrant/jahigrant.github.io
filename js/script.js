@@ -1,9 +1,7 @@
 
 
 
-  function random_item(items){
-    return items[Math.floor(Math.random()*items.length)]; 
-  }
+ 
  const researchTitles = [
     ["Quote 1", "Quote Author 1"],
     ["Quote 2", "Quote Author 2"],
@@ -12,11 +10,13 @@
     ["Quote 5", "Quote Author 5"],
     ["Quote 6", "Quote Author 6"]
   ]; 
-
+ function random_item(items){
+    return researchTitles[Math.floor(Math.random()*researchTitles.length)]; 
+  }
 
   function getQuote() {
 
-  let randomItem = researchTitles[Math.floor(Math.random()*researchTitles.length)];
+  let randomItem = random_item();
 let randomResult = [randomItem]
 
    let btn = document.getElementById('theButton');

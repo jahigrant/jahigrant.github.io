@@ -29,20 +29,24 @@ let randomResult = [randomItem]
     // const choices = researchTitles.sort(() => Math.random() - 0.5).slice(0, 5);
     // console.log("Array " + choices[0][0], choices[0][1]);
 
-    console.log(randomResult);
+    
 
 let myInsertText = randomResult[0][2][0];    
 if (myInsertText !== myText) {
   myText.innerHTML = myInsertText;
+  console.log(randomResult[0][2][0]);
 } else {
-  myText.innerHTML = randomResult[0][0][0]
+  myText.innerHTML = randomResult[0][0][0];
+  console.log(randomResult[0][0][0]);
 }
 
 let myInsertAuthor = randomResult[0][2][1];    
-if (myInsertAuthor !== myText) {
+if (myInsertAuthor !== myAuthor) {
   myAuthor.innerHTML = myInsertAuthor;
+  console.log(randomResult[0][2][1]);
 } else {
-  myAuthor.innerHTML = randomResult[0][0][1]
+  myAuthor.innerHTML = randomResult[0][0][1];
+  console.log(randomResult[0][0][1]);
 }
     
 

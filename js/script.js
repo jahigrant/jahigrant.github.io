@@ -24,9 +24,9 @@
     let quoteText = document.getElementById('text');
     let authorName = document.getElementById('author');
 
-    quoteBox.onload = () => {
+    window.addEventListener('load', function() {
     console.log('All assets are loaded')
-};
+})
 
     let insertQuote = randomResult[0][0][0];  
     if (insertQuote) {

@@ -14,7 +14,7 @@
   ]; 
 
   var randomItem = researchTitles[Math.floor(Math.random()*researchTitles.length)];
-
+var randomResult = [randomItem]
   function getQuote() {
    const btn = document.getElementById('theButton');
   const myText = document.getElementById('text');
@@ -22,9 +22,9 @@
 
   btn.addEventListener('click', function(){
     myText.innerHTML += "";
-    let myInsertText = randomItem[0];
+    let myInsertText = randomResult[0];
   myText.innerHTML = myInsertText;
-  let myInsertAuthor = randomItem[1];
+  let myInsertAuthor = randomResult[1];
   myAuthor.innerHTML = myInsertAuthor;
   
   }); 

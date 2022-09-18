@@ -39,6 +39,7 @@ function tick() {
       <div>
         <button id='theButton' className="btn btn-primary" onClick={getQuote}>bouton</button>
         <h2 id="text"></h2>
+        <h2 id="author"></h2>
       </div>
     );
     ReactDOM.render(

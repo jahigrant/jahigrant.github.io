@@ -47,7 +47,8 @@ function tick() {
       <div>
         <button id='theButton' className="btn btn-primary" onClick={getQuote}>bouton</button>
         <p id="text"></p>
-        <footer class="blockquote-footer" id="author">Someone famous in <cite title="Source Title">Source Title</cite></footer>
+        <footer class="blockquote-footer" id="author"></footer>
+        <cite title="Source Title"></cite>
       </div>
     );
     ReactDOM.render(

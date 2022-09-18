@@ -47,8 +47,8 @@ function tick() {
 
       <div>
         <button id='theButton' className="btn btn-primary rounded-0" onClick={getQuote}>New Quote</button>
-        <p id="text">Hello</p><br>
-        <footer className="blockquote-footer" id="author">Bobby D</footer>
+        <p className="d-block" id="text">Hello</p>
+        <footer className="blockquote-footer d-block" id="author">Bobby D</footer>
         <cite title="Source Title"></cite>
       </div>
     );

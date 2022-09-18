@@ -80,9 +80,12 @@ function tick() {
 
       <div id="quote-box">
         <button id='new-quote' className="btn btn-primary rounded-0" onClick={getQuote}>New Quote</button>
-        <p className="d-block" id="text">Hello</p>
-        <footer className="blockquote-footer d-block" id="author" >Bobby D</footer>
-        <cite title="Source Title"></cite>
+        <blockquote className="blockquote d-block">
+          <p className="" id="text">Hello</p>
+        </blockquote>
+        <figcaption className="blockquote-footer d-block">
+          <footer className="" id="author" >Bobby D</footer>
+        </figcaption>
       </div>
     );
     ReactDOM.render(

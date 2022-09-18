@@ -20,14 +20,21 @@ var randomResult = [randomItem]
   const myText = document.getElementById('text');
   const myAuthor = document.getElementById('author');
 
-  btn.addEventListener('click', function(){
-    myText.innerHTML += "";
+  // btn.addEventListener('click', function(){
+  //   myText.innerHTML += "";
+  //   let myInsertText = randomResult[0];
+  // myText.innerHTML = myInsertText;
+  // let myInsertAuthor = randomResult[1];
+  // myAuthor.innerHTML = myInsertAuthor;
+  
+  // }); 
+
+  btn.onclick = () => {
     let myInsertText = randomResult[0];
   myText.innerHTML = myInsertText;
   let myInsertAuthor = randomResult[1];
   myAuthor.innerHTML = myInsertAuthor;
-  
-  }); 
+};
   }
   
 

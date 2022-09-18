@@ -30,6 +30,7 @@ var randomResult = [randomItem]
   // }); 
 
   btn.onclick = () => {
+    myText.innerHTML = "";
     let myInsertText = randomResult[0];
   myText.innerHTML = myInsertText;
   let myInsertAuthor = randomResult[1];

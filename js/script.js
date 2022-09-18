@@ -27,7 +27,7 @@ let randomResult = [randomItem]
   btn.onclick = () => {
 
     const choices = researchTitles.sort(() => Math.random() - 0.5).slice(0, 5)
-    console.log(choices);
+    console.log("Array " + choices[0][0], choices[0][1]);
 
     console.log(randomResult);
 

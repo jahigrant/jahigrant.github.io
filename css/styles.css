@@ -37,3 +37,8 @@
 .profile-imgs:hover {
     filter: grayscale(0%);
 }
+
+
+.blockquote-footer::before {
+    content: none;
+}

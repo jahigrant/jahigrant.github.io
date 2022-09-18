@@ -30,6 +30,7 @@ var randomResult = [randomItem]
   // }); 
 
   btn.onclick = () => {
+    console.log(randomResult);
     myText.innerHTML = "";
     let myInsertText = randomResult[0];
   myText.innerHTML = myInsertText;
@@ -46,7 +47,7 @@ function tick() {
 
       <div>
         <button id='theButton' className="btn btn-primary rounded-0" onClick={getQuote}>New Quote</button>
-        <p id="text">Hello</p>
+        <p id="text">Hello</p><br>
         <footer className="blockquote-footer" id="author">Bobby D</footer>
         <cite title="Source Title"></cite>
       </div>

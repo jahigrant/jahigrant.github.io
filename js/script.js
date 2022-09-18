@@ -32,7 +32,7 @@ let randomResult = [randomItem]
     
 
 let myInsertText = randomResult[0][2][0];    
-if (myInsertText !== myText) {
+if (myInsertText !== myText.innerHTML) {
   myText.innerHTML = myInsertText;
   console.log(randomResult[0][2][0]);
 } else {
@@ -41,7 +41,7 @@ if (myInsertText !== myText) {
 }
 
 let myInsertAuthor = randomResult[0][2][1];    
-if (myInsertAuthor !== myAuthor) {
+if (myInsertAuthor !== myAuthor.innerHTML) {
   myAuthor.innerHTML = myInsertAuthor;
   console.log(randomResult[0][2][1]);
 } else {

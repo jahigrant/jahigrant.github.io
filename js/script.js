@@ -11,7 +11,7 @@
     ["Quote 6", "Quote Author 6"]
   ]; 
  function random_item(items){
-    return items[Math.floor(Math.random()*items.length)]; 
+    return items.sort(() => Math.random() - 0.5).slice(0, 5); 
   }
 
   function getQuote() {

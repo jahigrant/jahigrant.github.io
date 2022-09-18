@@ -15,44 +15,34 @@
   }
 
   function getQuote() {
+    
+    let randomItem = random_item(researchTitles);
+    let randomResult = [randomItem]
 
-  let randomItem = random_item(researchTitles);
-let randomResult = [randomItem]
-
-   let btn = document.getElementById('theButton');
-  let myText = document.getElementById('text');
-  let myAuthor = document.getElementById('author');
+    let btn = document.getElementById('theButton');
+    let quoteText = document.getElementById('quote');
+    let authorName = document.getElementById('author');
 
  
   btn.onclick = () => {
+    let myInsertText = randomResult[0][2][0];    
+    if (myInsertText !== quoteText.innerHTML) {
+      quoteText.innerHTML = myInsertText;
+      console.log(randomResult[0][2][0]);
+    } else {
+      quoteText.innerHTML = randomResult[0][0][0];
+      console.log(randomResult[0][0][0]);
+    }
 
-    // const choices = researchTitles.sort(() => Math.random() - 0.5).slice(0, 5);
-    // console.log("Array " + choices[0][0], choices[0][1]);
-
-    
-
-let myInsertText = randomResult[0][2][0];    
-if (myInsertText !== myText.innerHTML) {
-  myText.innerHTML = myInsertText;
-  console.log(randomResult[0][2][0]);
-} else {
-  myText.innerHTML = randomResult[0][0][0];
-  console.log(randomResult[0][0][0]);
-}
-
-let myInsertAuthor = randomResult[0][2][1];    
-if (myInsertAuthor !== myAuthor.innerHTML) {
-  myAuthor.innerHTML = myInsertAuthor;
-  console.log(randomResult[0][2][1]);
-} else {
-  myAuthor.innerHTML = randomResult[0][0][1];
-  console.log(randomResult[0][0][1]);
-}
-    
-
-    
-
-};
+    let myInsertAuthor = randomResult[0][2][1];    
+    if (myInsertAuthor !== authorName.innerHTML) {
+      authorName.innerHTML = myInsertAuthor;
+      console.log(randomResult[0][2][1]);
+    } else {
+      authorName.innerHTML = randomResult[0][0][1];
+      console.log(randomResult[0][0][1]);
+    }
+  };
   }
   
 
@@ -63,8 +53,8 @@ function tick() {
 
       <div>
         <button id='theButton' className="btn btn-primary rounded-0" onClick={getQuote}>New Quote</button>
-        <p className="d-block" id="text">Hello</p>
-        <footer className="blockquote-footer d-block" id="author">Bobby D</footer>
+        <p className="d-block" id="quote" onLoad={getQuote}>Hello</p>
+        <footer className="blockquote-footer d-block" id="author" >Bobby D</footer>
         <cite title="Source Title"></cite>
       </div>
     );

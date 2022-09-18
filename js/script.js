@@ -31,9 +31,9 @@ let randomResult = [randomItem]
 
     console.log(randomResult);
 
-    let myInsertText = randomResult[0][0];
+    let myInsertText = randomResult[0][2][0];
   myText.innerHTML = myInsertText;
-  let myInsertAuthor = randomResult[0][1];
+  let myInsertAuthor = randomResult[0][2][1];
   myAuthor.innerHTML = myInsertAuthor;
 };
   }

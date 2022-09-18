@@ -14,15 +14,20 @@
     return items.sort(() => Math.random() - 0.5).slice(0, 5); 
   }
 
-  .addEventListener('load', function() {
-    console.log('All assets are loaded')
-})
+
 
   function loadQuote() {
     let randomItem = random_item(researchTitles);
     let randomResult = [randomItem];
+
+    let quoteBox = document.getElementById('quote-box');
     let quoteText = document.getElementById('text');
     let authorName = document.getElementById('author');
+
+    quoteBox.addEventListener('load', function() {
+    console.log('All assets are loaded')
+})
+
     let insertQuote = randomResult[0][0][0];  
     if (insertQuote) {
       quoteText.innerHTML = insertQuote;

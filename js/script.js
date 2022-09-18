@@ -19,8 +19,11 @@
     let randomResult = [randomItem];
     let quoteText = await document.getElementById('quote');
     let authorName = await document.getElementById('author');
-    let insertQuote = randomResult[0][0][0];    
-    quoteText.innerHTML = insertQuote;
+    let insertQuote = randomResult[0][0][0];  
+    if (insertQuote) {
+      quoteText.innerHTML = insertQuote;
+    }  
+    
     let insertAuthor = randomResult[0][0][1];
     authorName.innerHTML = insertAuthor;
   }

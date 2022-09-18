@@ -14,9 +14,12 @@
     return researchTitles[Math.floor(Math.random()*researchTitles.length)]; 
   }
 
+  var arr = researchTitles, shuffled = randoSequence(arr), 
+uniqueRandom = () => (shuffled.length ? shuffled : shuffled = randoSequence(arr)).pop().value;
+
   function getQuote() {
 
-  let randomItem = random_item();
+  let randomItem = arr;
 let randomResult = [randomItem]
 
    let btn = document.getElementById('theButton');

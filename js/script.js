@@ -24,7 +24,7 @@
     let insertAuthor = randomResult[0][0][1];
     authorName.innerHTML = insertAuthor;
   }
-  loadQuote();
+ 
 
   function getQuote() {
     

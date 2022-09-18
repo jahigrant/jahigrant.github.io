@@ -32,9 +32,9 @@ var randomResult = [randomItem]
   btn.onclick = () => {
     console.log(randomResult);
     myText.innerHTML = "";
-    let myInsertText = randomResult[0];
+    let myInsertText = randomResult[0][0];
   myText.innerHTML = myInsertText;
-  let myInsertAuthor = randomResult[1];
+  let myInsertAuthor = randomResult[0][1];
   myAuthor.innerHTML = myInsertAuthor;
 };
   }

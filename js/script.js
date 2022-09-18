@@ -23,19 +23,11 @@ let randomResult = [randomItem]
   let myText = document.getElementById('text');
   let myAuthor = document.getElementById('author');
 
-  // btn.addEventListener('click', function(){
-  //   myText.innerHTML += "";
-  //   let myInsertText = randomResult[0];
-  // myText.innerHTML = myInsertText;
-  // let myInsertAuthor = randomResult[1];
-  // myAuthor.innerHTML = myInsertAuthor;
-  
-  // }); 
-
+ 
   btn.onclick = () => {
 
     console.log(randomResult);
-    myText.value = '';
+
     let myInsertText = randomResult[0][0];
   myText.innerHTML = myInsertText;
   let myInsertAuthor = randomResult[0][1];

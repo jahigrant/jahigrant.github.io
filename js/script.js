@@ -47,7 +47,7 @@ function tick() {
       <div>
         <button id='theButton' className="btn btn-primary" onClick={getQuote}>bouton</button>
         <p id="text"></p>
-        <footer class="blockquote-footer" id="author"></footer>
+        <footer className="blockquote-footer" id="author"></footer>
         <cite title="Source Title"></cite>
       </div>
     );

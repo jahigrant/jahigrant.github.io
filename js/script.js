@@ -14,15 +14,15 @@
     return items.sort(() => Math.random() - 0.5).slice(0, 5); 
   }
 
-  function loadQuote() {
+  async function loadQuote() {
     let randomItem = random_item(researchTitles);
     let randomResult = [randomItem];
     let quoteText = document.getElementById('quote');
     let authorName = document.getElementById('author');
     let insertQuote = randomResult[0][0][0];    
-    quoteText.innerHTML = insertQuote;
+    quoteText.innerHTML = await insertQuote;
     let insertAuthor = randomResult[0][0][1];
-    authorName.innerHTML = insertAuthor;
+    authorName.innerHTML = await insertAuthor;
   }
   loadQuote();
 

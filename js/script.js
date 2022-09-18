@@ -14,12 +14,9 @@
     return researchTitles[Math.floor(Math.random()*researchTitles.length)]; 
   }
 
-  var arr = researchTitles, shuffled = randoSequence(arr), 
-uniqueRandom = () => (shuffled.length ? shuffled : shuffled = randoSequence(arr)).pop().value;
-
   function getQuote() {
 
-  let randomItem = arr;
+  let randomItem = random_item();
 let randomResult = [randomItem]
 
    let btn = document.getElementById('theButton');
@@ -28,6 +25,9 @@ let randomResult = [randomItem]
 
  
   btn.onclick = () => {
+
+    const choices = researchTitles.sort(() => Math.random() - 0.5).slice(0, 5)
+    console.log(choices);
 
     console.log(randomResult);
 

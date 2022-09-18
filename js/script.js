@@ -31,10 +31,23 @@ let randomResult = [randomItem]
 
     console.log(randomResult);
 
-    let myInsertText = randomResult[0][2][0];
+let myInsertText = randomResult[0][2][0];    
+if (myInsertText !== myText) {
   myText.innerHTML = myInsertText;
-  let myInsertAuthor = randomResult[0][2][1];
+} else {
+  myText.innerHTML = randomResult[0][0][0]
+}
+
+let myInsertAuthor = randomResult[0][2][1];    
+if (myInsertAuthor !== myText) {
   myAuthor.innerHTML = myInsertAuthor;
+} else {
+  myAuthor.innerHTML = randomResult[0][0][1]
+}
+    
+
+    
+
 };
   }
   

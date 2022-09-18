@@ -75,7 +75,7 @@
 function tick() {
     const element = (
 
-      <div>
+      <div id="quote-box">
         <button id='new-quote' className="btn btn-primary rounded-0" onClick={getQuote}>New Quote</button>
         <p className="d-block" id="text">Hello</p>
         <footer className="blockquote-footer d-block" id="author" >Bobby D</footer>

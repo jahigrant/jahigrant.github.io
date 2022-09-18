@@ -81,10 +81,10 @@ function tick() {
       <div id="quote-box">
         <button id='new-quote' className="btn btn-primary rounded-0" onClick={getQuote}>New Quote</button>
         <blockquote className="blockquote d-block">
-          <p className="" id="text"></p>
+          <p className="fs-1" id="text"></p>
         </blockquote>
         <figcaption className="blockquote-footer d-block">
-          <footer className="" id="author" ></footer>
+          <footer className="text-end" id="author" ></footer>
         </figcaption>
       </div>
     );

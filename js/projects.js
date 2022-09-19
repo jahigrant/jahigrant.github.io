@@ -453,11 +453,19 @@
       let insertAuthor = randomResult[0].author;    
       if (insertAuthor !== authorName.innerHTML) {
         authorName.innerHTML = insertAuthor;
-        tweetbtn.href = "https://twitter.com/intent/tweet?text=" + insertQuote + insertAuthor;
+        let twitterUrl = "https://twitter.com/intent/tweet?text=";
+        let quoteStr = insertQuote.toString();
+        let authorStr = insertAuthor.toString();
+        let urlString = twitterUrl + "\"" + quoteStr + "\"" + " - " + authorStr.toString();
+        tweetbtn.href = urlString;
         console.log(randomResult[0].author);
       } else {
         authorName.innerHTML = randomResult[1].author;
-        tweetbtn.href = "https://twitter.com/intent/tweet?text=" + "\""+randomResult[1].quote+"\"" + " - " + randomResult[1].author;
+        let twitterUrl = "https://twitter.com/intent/tweet?text=";
+        let quoteStr = insertQuote.toString();
+        let authorStr = insertAuthor.toString();
+        let urlString = twitterUrl + "\"" + quoteStr + "\"" + " - " + authorStr.toString();
+        tweetbtn.href = urlString;
         console.log(randomResult[1].author);
       }
     };

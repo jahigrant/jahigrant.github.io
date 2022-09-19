@@ -420,6 +420,8 @@ console.log(quoteItems);
     let randomItem = random_item(quoteItems);
     let randomResult = [randomItem];
 
+    console.log(randomResult);
+
     let btn = document.getElementById('new-quote');
     let quoteText = document.getElementById('text');
     let authorName = document.getElementById('author');

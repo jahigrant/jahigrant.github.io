@@ -457,7 +457,7 @@
         console.log(randomResult[0].author);
       } else {
         authorName.innerHTML = randomResult[1].author;
-        tweetbtn.href = "https://twitter.com/intent/tweet?text=" + randomResult[1].quote + randomResult[1].author;
+        tweetbtn.href = "https://twitter.com/intent/tweet?text=" + "\""+randomResult[1].quote+"\"" + " - " + randomResult[1].author;
         console.log(randomResult[1].author);
       }
     };

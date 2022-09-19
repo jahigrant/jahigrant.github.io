@@ -459,6 +459,7 @@
         let urlString = twitterUrl + "%22" + quoteStr + "%22" + "%20%2D%20" + authorStr.toString();
         tweetbtn.href = urlString;
         console.log(randomResult[0].author);
+        console.log(urlString);
       } else {
         authorName.innerHTML = randomResult[1].author;
         let twitterUrl = "https://twitter.com/intent/tweet?text=";
@@ -467,6 +468,7 @@
         let urlString = twitterUrl + "%22" + quoteStr + "%22" + "%20%2D%20" + authorStr.toString();
         tweetbtn.href = urlString;
         console.log(randomResult[1].author);
+        console.log(urlString);
       }
     };
 

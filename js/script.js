@@ -462,7 +462,7 @@ function tick() {
           </p>
         </blockquote>
         <figcaption className="blockquote-footer d-block">
-          <footer className="text-end" id="author" ></footer>
+          <footer className="text-end fw-light fs-3" id="author"></footer>
         </figcaption>
         <button id='new-quote' className="btn btn-primary rounded-1" onClick={getQuote}>New Quote</button>
       </div>

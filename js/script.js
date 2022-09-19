@@ -384,28 +384,25 @@
       ]
     },
   ]; 
- function random_item(items){
+
+  function random_item(items){
     return items.sort(() => Math.random() - 0.5).slice(0, 5); 
   }
 
-console.log(quoteItems);
-
   function loadQuote() {
     let randomItem = random_item(quoteItems);
-    let randomResult = [randomItem];
+    let randomResult = randomItem;
 
     let quoteBox = document.getElementById('quote-box');
     let quoteText = document.getElementById('text');
     let authorName = document.getElementById('author');
 
-
-
-    let insertQuote = randomResult[0][0][0];  
+    let insertQuote = randomResult[0].quote;  
     if (insertQuote) {
       quoteText.innerHTML = insertQuote;
     }  
     
-    let insertAuthor = randomResult[0][0][1];
+    let insertAuthor = randomResult[0].author;
     authorName.innerHTML = insertAuthor;
   }
   
@@ -427,7 +424,6 @@ console.log(quoteItems);
     let authorName = document.getElementById('author');
 
     btn.onclick = () => {
-      console.log(randomResult);
       let insertQuote = randomResult[0].quote;    
       if (insertQuote !== quoteText.innerHTML) {
         quoteText.innerHTML = insertQuote;

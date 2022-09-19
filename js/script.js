@@ -479,4 +479,5 @@ function tick() {
   }
   
 tick();
+getQuote();
 loadQuote();

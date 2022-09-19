@@ -38,18 +38,6 @@
     filter: grayscale(0%);
 }
 
-
 .blockquote-footer::before {
     content: none;
-}
-
-blockquote:before {
-    display: block;
-    padding-left: 20px;
-    content: "\201C";
-    font-size: 90px;
-    position: absolute;
-    left: 10px;
-    top: 75px;
-    font-family: sans-serif;
 }

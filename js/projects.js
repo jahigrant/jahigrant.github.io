@@ -456,7 +456,7 @@
         let twitterUrl = "https://twitter.com/intent/tweet?text=";
         let quoteStr = insertQuote.toString();
         let authorStr = insertAuthor.toString();
-        let urlString = twitterUrl + "\"" + quoteStr + "\"" + " - " + authorStr.toString();
+        let urlString = twitterUrl + "%22" + quoteStr + "%22" + "%20%2D%20" + authorStr.toString();
         tweetbtn.href = urlString;
         console.log(randomResult[0].author);
       } else {
@@ -464,7 +464,7 @@
         let twitterUrl = "https://twitter.com/intent/tweet?text=";
         let quoteStr = insertQuote.toString();
         let authorStr = insertAuthor.toString();
-        let urlString = twitterUrl + "\"" + quoteStr + "\"" + " - " + authorStr.toString();
+        let urlString = twitterUrl + "%22" + quoteStr + "%22" + "%20%2D%20" + authorStr.toString();
         tweetbtn.href = urlString;
         console.log(randomResult[1].author);
       }

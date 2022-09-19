@@ -407,7 +407,12 @@
   }
   
   window.addEventListener('load', function() {
-    console.log('All assets are loaded');
+    console.log('Window loaded');
+    loadQuote();
+  });
+
+  document.addEventListener('load', function() {
+    console.log('Document loaded');
     loadQuote();
   });
   
@@ -468,10 +473,10 @@ function tick() {
       </div>
     );
     ReactDOM.render(
-      loadQuote,
       element,
       document.getElementById('qoute_component')
     );
   }
   
 tick();
+loadQuote();

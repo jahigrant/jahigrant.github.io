@@ -468,6 +468,7 @@ function tick() {
       </div>
     );
     ReactDOM.render(
+      loadQuote,
       element,
       document.getElementById('qoute_component')
     );

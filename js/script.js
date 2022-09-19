@@ -418,7 +418,7 @@ console.log(quoteItems);
   function getQuote() {
     
     let randomItem = random_item(quoteItems);
-    let randomResult = [randomItem];
+    let randomResult = randomItem;
 
     
 

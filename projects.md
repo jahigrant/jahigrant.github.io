@@ -3,7 +3,7 @@ layout: projects
 title: Projects
 permalink: /projects/
 collections:
-  my_collection:
+  projects:
     output: true
-    permalink: /projects/quote-machine.html
+    permalink: /projects/:slug
 ---

@@ -420,13 +420,14 @@ console.log(quoteItems);
     let randomItem = random_item(quoteItems);
     let randomResult = [randomItem];
 
-    console.log(randomResult);
+    
 
     let btn = document.getElementById('new-quote');
     let quoteText = document.getElementById('text');
     let authorName = document.getElementById('author');
 
     btn.onclick = () => {
+      console.log(randomResult);
       let insertQuote = randomResult[0].quote;    
       if (insertQuote !== quoteText.innerHTML) {
         quoteText.innerHTML = insertQuote;

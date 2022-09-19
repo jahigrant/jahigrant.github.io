@@ -393,6 +393,7 @@
     let randomItem = random_item(quoteItems);
     let randomResult = randomItem;
 
+    let quoteBox = document.getElementById('quote-box');
     let tweetbtn = document.getElementById('tweet-quote');
     let quoteText = document.getElementById('text');
     let authorName = document.getElementById('author');
@@ -462,8 +463,6 @@
     };
 
   }
-
-  tweetQuote
   
 
 

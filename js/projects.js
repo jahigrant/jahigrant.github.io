@@ -428,7 +428,7 @@ console.log(randomItems);
 
     var opacity = 0;
     var intervalID = 0;
-    window.onload = fadeIn;
+    quoteBox.onload = fadeIn;
 
     function fadeIn() {
         setInterval(show, 200);

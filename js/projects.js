@@ -426,11 +426,7 @@ console.log(randomItems);
     let urlString = twitterUrl + "%22" + quoteStr + "%22" + "%20%2D%20" + authorStr.toString();
     tweetbtn.href = urlString;
 
-   
-
-  }
-
-      var opacity = 0;
+    var opacity = 0;
     var intervalID = 0;
     window.onload = fadeIn;
 
@@ -443,13 +439,16 @@ console.log(randomItems);
         opacity = Number(window.getComputedStyle(body)
                          .getPropertyValue("opacity"));
         if (opacity < 1) {
-            opacity = opacity + 1;
+            opacity = opacity + 0.1;
             body.style.opacity = opacity
         } else {
-            opacity = opacity + 0;
-            body.style.opacity = opacity
+            clearInterval(intervalID);
         }
     } 
+    show() 
+  }
+
+     
 
   setInterval(loadQuote, 10000);
   

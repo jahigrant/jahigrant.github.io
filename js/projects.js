@@ -499,7 +499,7 @@ console.log(randomItems);
 function tick() {
     const element = (
 
-      <div id="quote-box" className="fade">
+      <div id="quote-box" className="fade show">
         
         <blockquote className="blockquote d-block">
           <p className="fs-1 lh-sm fw-semibold">

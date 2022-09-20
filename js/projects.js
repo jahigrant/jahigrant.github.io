@@ -441,6 +441,9 @@ console.log(randomItems);
         if (opacity < 1) {
             opacity = opacity + 0.1;
             body.style.opacity = opacity
+        } else if (opacity > 1) {
+            opacity = opacity;
+            body.style.opacity = opacity
         } else {
             clearInterval(intervalID);
         }

@@ -404,7 +404,7 @@ console.log(randomItems);
 
 
   function loadQuote() {
-    let randomItem = random_item(quoteItems);
+    let randomItem = random_item(randomItems);
     let randomResult = randomItem;
 
     let quoteBox = document.getElementById('quote-box');

@@ -435,7 +435,7 @@ console.log(randomItems);
     window.onload = fadeIn;
 
     function fadeIn() {
-        setInterval(show, 200);
+        setInterval(show, 10000);
     }
 
     function show() {
@@ -446,7 +446,8 @@ console.log(randomItems);
             opacity = opacity + 0.1;
             body.style.opacity = opacity
         } else {
-            clearInterval(intervalID);
+            opacity = opacity + 0;
+            body.style.opacity = opacity
         }
     } 
 

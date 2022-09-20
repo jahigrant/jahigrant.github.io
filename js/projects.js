@@ -392,7 +392,7 @@ const quoteItems = [
     return items.sort(() => Math.random() - 0.5).slice(0, 5); 
   }
 
-console.log(random_item(apiResponse));
+console.log(apiResponse);
 
   function loadQuote() {
     let randomItem = random_item(quoteItems);

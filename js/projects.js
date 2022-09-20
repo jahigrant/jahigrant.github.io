@@ -395,7 +395,7 @@ console.log(quoteApi);
     return items.sort(() => Math.random() - 0.5).slice(0, 5); 
   }
 
-  let randomItems = random_item(quoteApi);
+  let randomItems = [random_item(quoteApi)];
 console.log(randomItems);
 
   function loadQuote() {

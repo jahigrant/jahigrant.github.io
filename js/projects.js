@@ -502,6 +502,8 @@ console.log(randomItems);
     // };
 
     btn.onclick = () => {
+
+        fadeIn()
       let insertQuote = randomResult[0].quote;    
       if (insertQuote !== quoteText.innerHTML) {
         quoteText.innerHTML = insertQuote;

@@ -382,10 +382,6 @@ const quoteItems = [
   ]; 
 
   
-  let apiResponse = fetch("https://gist.githubusercontent.com/awran5/355643af99164a61ae0f95c84206d151/raw/c62636e8eef7e73540fa04b67f753ca9b95ee21e/quotes-api.js").then(res => res.json()).then((parsedJson ) => {
-    return parsedJson ;
-});
-
 let quoteApi = fetch('https://gist.githubusercontent.com/awran5/355643af99164a61ae0f95c84206d151/raw/c62636e8eef7e73540fa04b67f753ca9b95ee21e/quotes-api.js')
 .then(response => response.json())
 .then(data => {
@@ -399,7 +395,8 @@ console.log(quoteApi);
     return items.sort(() => Math.random() - 0.5).slice(0, 5); 
   }
 
-console.log(JSON.stringify(apiResponse));
+  let randomItems = random_item(quoteApi);
+console.log(randomItems);
 
   function loadQuote() {
     let randomItem = random_item(quoteItems);

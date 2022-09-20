@@ -391,11 +391,23 @@ let quoteApi = fetch('https://gist.githubusercontent.com/awran5/355643af99164a61
 
 console.log(quoteApi);
 
+const objectArray = Object.entries(quoteApi);
+
+objectArray.forEach(([key, value]) => {
+  console.log(key); // 'one'
+  console.log(value); // 1
+});
+
+
   function random_item(items){
     return items.sort(() => Math.random() - 0.5).slice(0, 5); 
   }
 
-  let randomItems = [random_item(quoteApi)];
+
+
+  let randomItems = random_item(objectArray);
+
+
 console.log(randomItems);
 
   function loadQuote() {

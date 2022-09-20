@@ -435,7 +435,7 @@ console.log(randomItems);
     window.onload = fadeIn;
 
     function fadeIn() {
-        setInterval(show, 10000);
+        setInterval(show, 200);
     }
 
     function show() {
@@ -443,7 +443,7 @@ console.log(randomItems);
         opacity = Number(window.getComputedStyle(body)
                          .getPropertyValue("opacity"));
         if (opacity < 1) {
-            opacity = opacity + 0.1;
+            opacity = opacity + 1;
             body.style.opacity = opacity
         } else {
             opacity = opacity + 0;

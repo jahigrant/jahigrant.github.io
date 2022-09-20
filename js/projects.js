@@ -439,7 +439,7 @@ console.log(randomItems);
     }
 
     function fadeOut() {
-        setInterval(hide, 800);
+        setInterval(hide, 200);
     }
   
     function show() {
@@ -461,15 +461,13 @@ console.log(randomItems);
         if (opacity == 1) {
             opacity = opacity;
             body.style.opacity = opacity
-        } else {
-            clearInterval(intervalID);
         }
     }  
 
 
 
     setInterval(fadeIn, 100);
-    setInterval(fadeOut, 100);
+    setInterval(hide, 100);
   setInterval(loadQuote, 10000);
   
   window.addEventListener('load', function() {

@@ -426,16 +426,20 @@ console.log(randomItems);
     let urlString = twitterUrl + "%22" + quoteStr + "%22" + "%20%2D%20" + authorStr.toString();
     tweetbtn.href = urlString;
 
-    var opacity = 0;
+   
+
+  }
+
+      var opacity = 0;
     var intervalID = 0;
-    quoteBox.onload = fadeIn;
+    window.onload = fadeIn;
 
     function fadeIn() {
         setInterval(show, 200);
     }
 
     function show() {
-        var body = document.getElementById("quote-box");
+        var body = quoteBox;
         opacity = Number(window.getComputedStyle(body)
                          .getPropertyValue("opacity"));
         if (opacity < 1) {
@@ -444,9 +448,7 @@ console.log(randomItems);
         } else {
             clearInterval(intervalID);
         }
-    }    
-
-  }
+    } 
 
   setInterval(loadQuote, 10000);
   

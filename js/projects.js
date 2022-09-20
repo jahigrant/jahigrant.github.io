@@ -439,7 +439,7 @@ console.log(randomItems);
     }
 
     function show() {
-        var body = quoteBox;
+        var body = document.getElementById("quote-box");
         opacity = Number(window.getComputedStyle(body)
                          .getPropertyValue("opacity"));
         if (opacity < 1) {

@@ -395,12 +395,9 @@ let quoteApi = fetch('https://gist.githubusercontent.com/awran5/355643af99164a61
 .then(response => response.json())
 .then(data => {
   console.log(data) // Prints result from `response.json()` in getRequest
-  const objectArray = Object.entries(data);
+  const objectArray = Object.values(data);
 
-objectArray.forEach(([key, value]) => {
-  console.log(key); // 'one'
-  console.log(value); // 1
-});
+
 let randomItems = random_item(objectArray);
 console.log(randomItems);
 

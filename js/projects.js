@@ -445,21 +445,27 @@ console.log(randomItems);
         if (opacity < 1) {
             opacity = opacity + 0.1;
             body.style.opacity = opacity
-        } else if (opacity > 1) {
+        } else {
+            clearInterval(intervalID);
+        }
+    }  
+    
+    function fadeOut() {
+        var body = document.getElementById("quote-box");
+        opacity = Number(window.getComputedStyle(body)
+                         .getPropertyValue("opacity"));
+        if (opacity > 0.9) {
             opacity = opacity;
             body.style.opacity = opacity
         } else {
             clearInterval(intervalID);
         }
-    }    
+    }  
 
-    let i = 1;
-setTimeout(loadQuote fadeIn() {                      ^
-func(i++);
-setTimeout(show, 100);
-}, 100);
 
-    setInterval(fadeIn, 10000);
+
+    setInterval(fadeIn, 100);
+    setInterval(fadeOut, 9900);
   setInterval(loadQuote, 10000);
   
   window.addEventListener('load', function() {

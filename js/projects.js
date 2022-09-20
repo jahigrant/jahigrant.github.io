@@ -384,10 +384,18 @@ const quoteItems = [
   
 async function fetchQuotes() {
     let url = 'https://gist.githubusercontent.com/awran5/355643af99164a61ae0f95c84206d151/raw/c62636e8eef7e73540fa04b67f753ca9b95ee21e/quotes-api.js';
-    let response = await fetch(url);
-  
-    let fetchedQuotes = await response.json(); // read response body and parse as JSON
-    return fetchedQuotes;
+    fetch('url')
+    .then(response => {
+      //handle response            
+      console.log(response);
+    })
+    .then(data => {
+      //handle data
+      console.log(data);
+    })
+    .catch(error => {
+      //handle error
+    });
 }
 
 console.log(fetchQuotes())

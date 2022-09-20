@@ -382,8 +382,8 @@ const quoteItems = [
   ]; 
 
   
-  let apiResponse = fetch("https://gist.githubusercontent.com/awran5/355643af99164a61ae0f95c84206d151/raw/c62636e8eef7e73540fa04b67f753ca9b95ee21e/quotes-api.js").then(res => res.json()).then((data) => {
-    return data;
+  let apiResponse = fetch("https://gist.githubusercontent.com/awran5/355643af99164a61ae0f95c84206d151/raw/c62636e8eef7e73540fa04b67f753ca9b95ee21e/quotes-api.js").then(res => res.json()).then((parsedJson ) => {
+    return parsedJson ;
 });
 
 

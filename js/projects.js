@@ -437,6 +437,10 @@ console.log(randomItems);
     function fadeIn() {
         setInterval(show, 200);
     }
+
+    function fadeOut() {
+        setInterval(hide, 200);
+    }
   
     function show() {
         var body = document.getElementById("quote-box");
@@ -450,7 +454,7 @@ console.log(randomItems);
         }
     }  
     
-    function fadeOut() {
+    function hide() {
         var body = document.getElementById("quote-box");
         opacity = Number(window.getComputedStyle(body)
                          .getPropertyValue("opacity"));

@@ -382,23 +382,12 @@ const quoteItems = [
   ]; 
 
   
-async function fetchQuotes() {
-    let url = 'https://gist.githubusercontent.com/awran5/355643af99164a61ae0f95c84206d151/raw/c62636e8eef7e73540fa04b67f753ca9b95ee21e/quotes-api.js';
-    fetch('url')
-    .then(response => {
-      //handle response            
-      console.log(response);
-    })
-    .then(data => {
-      //handle data
-      console.log(data);
-    })
-    .catch(error => {
-      //handle error
-    });
-}
+  let apiResponse = fetch("https://gist.githubusercontent.com/awran5/355643af99164a61ae0f95c84206d151/raw/c62636e8eef7e73540fa04b67f753ca9b95ee21e/quotes-api.js").then(res => res.json()).then((data) => {
+    return data;
+});
 
-console.log(fetchQuotes())
+
+console.log(apiResponse)
 
 
   function random_item(items){

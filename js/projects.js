@@ -458,7 +458,7 @@ console.log(randomItems);
         var body = document.getElementById("quote-box");
         opacity = Number(window.getComputedStyle(body)
                          .getPropertyValue("opacity"));
-        if (opacity > 0.9) {
+        if (opacity == 1) {
             opacity = opacity;
             body.style.opacity = opacity
         } else {
@@ -469,7 +469,7 @@ console.log(randomItems);
 
 
     setInterval(fadeIn, 100);
-    setInterval(fadeOut, 9900);
+    setInterval(fadeOut, 9000);
   setInterval(loadQuote, 10000);
   
   window.addEventListener('load', function() {

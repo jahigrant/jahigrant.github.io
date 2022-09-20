@@ -519,7 +519,7 @@ console.log(randomItems);
 function tick() {
     const element = (
 
-      <div id="quote-box" style="opacity: 0;"v>
+      <div id="quote-box" style={{opacity: '0'}}>
         
         <blockquote className="blockquote d-block">
           <p className="fs-1 lh-sm fw-semibold">

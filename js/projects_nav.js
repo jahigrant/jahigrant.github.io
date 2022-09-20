@@ -1,6 +1,6 @@
 const quoteItems = [
     {
-      "quote": "Be yourself; everyone else is already taken.",
+      "slug": "Be yourself; everyone else is already taken.",
       "author": "Oscar Wilde",
       "profession": "Irish poet",
       "topics": [
@@ -381,13 +381,6 @@ const quoteItems = [
     },
   ]; 
 
-  
-
-  let url = 'https://gist.githubusercontent.com/awran5/355643af99164a61ae0f95c84206d151/raw/c62636e8eef7e73540fa04b67f753ca9b95ee21e/quotes-api.js';
-  let response = await fetch(url);
-  
-  let fetchedQuotes = await response.json(); // read response body and parse as JSON
-console.log(fetchedQuotes)
 
 
   function random_item(items){

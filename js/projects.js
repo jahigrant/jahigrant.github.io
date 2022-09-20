@@ -387,6 +387,7 @@ async function fetchQuotes() {
     let response = await fetch(url);
   
     let fetchedQuotes = await response.json(); // read response body and parse as JSON
+    return fetchedQuotes;
 }
 
 console.log(fetchQuotes())

@@ -382,33 +382,37 @@ const quoteItems = [
   ]; 
 
   
-let quoteApi = fetch('https://gist.githubusercontent.com/awran5/355643af99164a61ae0f95c84206d151/raw/c62636e8eef7e73540fa04b67f753ca9b95ee21e/quotes-api.js')
-.then(response => response.json())
-.then(data => {
-  console.log(data) // Prints result from `response.json()` in getRequest
-})
-.catch(error => console.error(error))
 
-console.log(quoteApi);
 
-const objectArray = Object.entries(quoteApi);
 
-objectArray.forEach(([key, value]) => {
-  console.log(key); // 'one'
-  console.log(value); // 1
-});
 
 
   function random_item(items){
     return items.sort(() => Math.random() - 0.5).slice(0, 5); 
   }
 
+let quoteApi = fetch('https://gist.githubusercontent.com/awran5/355643af99164a61ae0f95c84206d151/raw/c62636e8eef7e73540fa04b67f753ca9b95ee21e/quotes-api.js')
+.then(response => response.json())
+.then(data => {
+  console.log(data) // Prints result from `response.json()` in getRequest
+  const objectArray = Object.entries(data);
 
-
-  let randomItems = random_item(objectArray);
-
-
+objectArray.forEach(([key, value]) => {
+  console.log(key); // 'one'
+  console.log(value); // 1
+});
+let randomItems = random_item(objectArray);
 console.log(randomItems);
+
+})
+.catch(error => console.error(error))
+
+console.log(quoteApi);
+
+  
+
+
+
 
   function loadQuote() {
     let randomItem = random_item(quoteItems);

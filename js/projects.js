@@ -383,18 +383,9 @@ const quoteItems = [
 
   
   let apiResponse = fetch("https://gist.githubusercontent.com/awran5/355643af99164a61ae0f95c84206d151/raw/c62636e8eef7e73540fa04b67f753ca9b95ee21e/quotes-api.js").then(res => res.json()).then((data) => {
-    return data;
+    return data[0];
 });
 
-
-async function getAPI() {
-    let apiResponse = await fetch("https://gist.githubusercontent.com/awran5/355643af99164a61ae0f95c84206d151/raw/c62636e8eef7e73540fa04b67f753ca9b95ee21e/quotes-api.js");
-    let response = apiResponse.json();
-    // Since we waited for our API to respond using await
-    // The response variable will return the response from the API
-    // And not a promise.
-    console.log(response);
-}getAPI();
 
 
   function random_item(items){

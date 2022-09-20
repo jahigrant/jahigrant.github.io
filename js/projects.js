@@ -387,7 +387,7 @@ const quoteItems = [
 });
 
 
-async getAPI() {
+async function getAPI() {
     let apiResponse = await fetch("https://gist.githubusercontent.com/awran5/355643af99164a61ae0f95c84206d151/raw/c62636e8eef7e73540fa04b67f753ca9b95ee21e/quotes-api.js");
     let response = apiResponse.json();
     // Since we waited for our API to respond using await

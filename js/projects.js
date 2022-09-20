@@ -401,14 +401,6 @@ let quoteApi = fetch('https://gist.githubusercontent.com/awran5/355643af99164a61
 let randomItems = random_item(objectArray);
 console.log(randomItems);
 
-})
-.catch(error => console.error(error))
-
-console.log(quoteApi);
-
-  
-
-
 
 
   function loadQuote() {
@@ -544,3 +536,16 @@ function tick() {
 tick();
 getQuote();
 loadQuote();
+
+
+
+})
+.catch(error => console.error(error))
+
+console.log(quoteApi);
+
+  
+
+
+
+

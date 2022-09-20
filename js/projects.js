@@ -453,7 +453,12 @@ console.log(randomItems);
         }
     }    
 
-    
+    let i = 1;
+setTimeout(loadQuote fadeIn() {                      ^
+func(i++);
+setTimeout(show, 100);
+}, 100);
+
     setInterval(fadeIn, 10000);
   setInterval(loadQuote, 10000);
   

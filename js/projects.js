@@ -427,6 +427,8 @@ console.log(randomItems);
     tweetbtn.href = urlString;
 
   }
+
+  setInterval(loadQuote, 1000);
   
   window.addEventListener('load', function() {
     console.log('Window loaded');

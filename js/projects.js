@@ -439,7 +439,7 @@ console.log(randomItems);
     }
 
     function fadeOut() {
-        setInterval(hide, 200);
+        setInterval(hide, 800);
     }
   
     function show() {
@@ -469,7 +469,7 @@ console.log(randomItems);
 
 
     setInterval(fadeIn, 100);
-    setInterval(fadeOut, 300);
+    setInterval(fadeOut, 100);
   setInterval(loadQuote, 10000);
   
   window.addEventListener('load', function() {

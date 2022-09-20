@@ -386,7 +386,14 @@ const quoteItems = [
     return parsedJson ;
 });
 
+let quoteApi = fetch('https://gist.githubusercontent.com/awran5/355643af99164a61ae0f95c84206d151/raw/c62636e8eef7e73540fa04b67f753ca9b95ee21e/quotes-api.js')
+.then(response => response.json())
+.then(data => {
+  console.log(data) // Prints result from `response.json()` in getRequest
+})
+.catch(error => console.error(error))
 
+console.log(quoteApi);
 
   function random_item(items){
     return items.sort(() => Math.random() - 0.5).slice(0, 5); 

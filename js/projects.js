@@ -426,6 +426,26 @@ console.log(randomItems);
     let urlString = twitterUrl + "%22" + quoteStr + "%22" + "%20%2D%20" + authorStr.toString();
     tweetbtn.href = urlString;
 
+    var opacity = 0;
+    var intervalID = 0;
+    window.onload = fadeIn;
+
+    function fadeIn() {
+        setInterval(show, 200);
+    }
+
+    function show() {
+        var body = document.getElementById("quote-box");
+        opacity = Number(window.getComputedStyle(body)
+                         .getPropertyValue("opacity"));
+        if (opacity < 1) {
+            opacity = opacity + 0.1;
+            body.style.opacity = opacity
+        } else {
+            clearInterval(intervalID);
+        }
+    }    
+
   }
 
   setInterval(loadQuote, 10000);

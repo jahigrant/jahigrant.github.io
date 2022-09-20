@@ -452,13 +452,10 @@ console.log(randomItems);
             clearInterval(intervalID);
         }
     }    
-    let i = 1;
-    setTimeout(loadQuote run() {
-        func(i++);
-        setTimeout(fadeIn, 100);
-      }, 100);
 
-
+    
+    setInterval(fadeIn, 10000);
+  setInterval(loadQuote, 10000);
   
   window.addEventListener('load', function() {
     console.log('Window loaded');

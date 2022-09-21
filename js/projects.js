@@ -470,8 +470,11 @@ console.log(randomItems);
 
   
 
-    
- 
+  document.addEventListener('load', function() {
+    console.log('Document loaded');
+    loadQuote();
+  });
+  
 
   function getQuote() {
     

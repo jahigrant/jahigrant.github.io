@@ -176,10 +176,10 @@ let quoteApi = fetch('https://gist.githubusercontent.com/awran5/355643af99164a61
         );
     }
   
+
+    tick();
     getQuote();
     loadQuote();  
-    tick();
-
 })
 .catch(error => console.error(error))
 

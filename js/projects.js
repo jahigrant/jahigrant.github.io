@@ -12,8 +12,7 @@ let quoteApi = fetch('https://gist.githubusercontent.com/awran5/355643af99164a61
     console.log(randomItems);
   
     function loadQuote() {
-        var body = document.getElementById("quote-box");
-
+    
         let randomItem = random_item(randomItems);
         let randomResult = randomItem;
 
@@ -37,20 +36,20 @@ let quoteApi = fetch('https://gist.githubusercontent.com/awran5/355643af99164a61
         tweetbtn.href = urlString;
 
         var opacity = 0;
-        body.style.opacity = opacity
         var intervalID = 0;
         window.onload = fadeIn;
 
         function fadeIn() {
-            setInterval(show, 200);
+            setInterval(show, 100);
         }
 
         function show() {
-            
+            var body = document.getElementById("quote-box");
             opacity = Number(window.getComputedStyle(body)
                             .getPropertyValue("opacity"));
             if (opacity < 1) {
                 opacity = opacity + 0.1;
+                body.style.opacity = opacity
             } else {
                 clearInterval(intervalID);
             }

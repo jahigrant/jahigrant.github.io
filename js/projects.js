@@ -74,10 +74,12 @@ let quoteApi = fetch('https://gist.githubusercontent.com/awran5/355643af99164a61
     }
 
     window.addEventListener('load', function() {
-        document.addEventListener('load', function() {
-            console.log('Window & Document loaded');
-            loadQuote();
-        });
+        console.log('Window loaded');
+        loadQuote();
+    });
+    document.addEventListener('load', function() {
+        console.log('Document loaded');
+        loadQuote();
     });
   
     function getQuote() {

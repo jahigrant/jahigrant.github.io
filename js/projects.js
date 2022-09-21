@@ -401,10 +401,11 @@ let quoteApi = fetch('https://gist.githubusercontent.com/awran5/355643af99164a61
 let randomItems = random_item(objectArray);
 console.log(randomItems);
 
-let randomItem = random_item(randomItems);
+
 
   function loadQuote() {
     
+    let randomItem = random_item(randomItems);
     let randomResult = randomItem;
 
     let quoteBox = document.getElementById('quote-box');
@@ -470,11 +471,13 @@ let randomItem = random_item(randomItems);
 
   
   window.addEventListener('load', function() {
-    console.log('Window loaded');
-    loadQuote();
+    document.addEventListener('load', function() {
+        console.log('Window & Document loaded');
+        loadQuote();
+      });
   });
 
- 
+
   
 
   function getQuote() {

@@ -426,10 +426,6 @@ console.log(randomItems);
     let urlString = twitterUrl + "%22" + quoteStr + "%22" + "%20%2D%20" + authorStr.toString();
     tweetbtn.href = urlString;
 
-
- 
-  }
-
     var opacity = 0;
     var intervalID = 0;
     window.onload = fadeIn;
@@ -469,6 +465,10 @@ console.log(randomItems);
     setInterval(fadeIn, 100);
     setInterval(hide, 100);
   setInterval(loadQuote, 10000);
+ 
+  }
+
+
   
   window.addEventListener('load', function() {
     console.log('Window loaded');

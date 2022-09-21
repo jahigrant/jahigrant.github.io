@@ -12,7 +12,8 @@ let quoteApi = fetch('https://gist.githubusercontent.com/awran5/355643af99164a61
     console.log(randomItems);
   
     function loadQuote() {
-    
+        var body = document.getElementById("quote-box");
+
         let randomItem = random_item(randomItems);
         let randomResult = randomItem;
 
@@ -36,6 +37,7 @@ let quoteApi = fetch('https://gist.githubusercontent.com/awran5/355643af99164a61
         tweetbtn.href = urlString;
 
         var opacity = 0;
+        body.style.opacity = opacity
         var intervalID = 0;
         window.onload = fadeIn;
 
@@ -43,34 +45,17 @@ let quoteApi = fetch('https://gist.githubusercontent.com/awran5/355643af99164a61
             setInterval(show, 200);
         }
 
-        function fadeOut() {
-            setInterval(hide, 200);
-        }
-  
         function show() {
-            var body = document.getElementById("quote-box");
+            
             opacity = Number(window.getComputedStyle(body)
                             .getPropertyValue("opacity"));
             if (opacity < 1) {
                 opacity = opacity + 0.1;
-                body.style.opacity = opacity
             } else {
                 clearInterval(intervalID);
             }
         }  
-    
-        function hide() {
-            var body = document.getElementById("quote-box");
-            opacity = Number(window.getComputedStyle(body)
-                            .getPropertyValue("opacity"));
-            if (opacity == 1) {
-                opacity = opacity;
-                body.style.opacity = opacity
-            }
-        }  
   
-        // setInterval(loadQuote, 10000);
-
     }
 
     window.addEventListener('load', function() {
@@ -96,28 +81,19 @@ let quoteApi = fetch('https://gist.githubusercontent.com/awran5/355643af99164a61
         let quoteText = document.getElementById('text');
         let authorName = document.getElementById('author');
 
-        // tweetbtn.onclick = () => {
-        //     let insertQuote = randomResult[0].quote;    
-
-        //       quoteText.innerHTML = insertQuote;
-        //       console.log(randomResult[0].quote);
-
-        // };
-
         btn.onclick = () => {
 
-var body = document.getElementById("quote-box");
+            var body = document.getElementById("quote-box");
             var opacity = 0;
             body.style.opacity = opacity
             var intervalID = 0;
             window.onload = fadeIn;
     
             function fadeIn() {
-                setInterval(show, 200);
+                setInterval(show, 100);
             }
       
             function show() {
-                
                 opacity = Number(window.getComputedStyle(body)
                                 .getPropertyValue("opacity"));
                 if (opacity < 1) {
@@ -127,7 +103,6 @@ var body = document.getElementById("quote-box");
                     clearInterval(intervalID);
                 }
             }  
-
             
             let insertQuote = randomResult[0].quote;    
             if (insertQuote !== quoteText.innerHTML) {

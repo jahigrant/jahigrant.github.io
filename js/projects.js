@@ -462,8 +462,7 @@ console.log(randomItems);
 
 
 
-    setInterval(fadeIn, 100);
-    setInterval(hide, 100);
+    
   setInterval(loadQuote, 10000);
  
   }
@@ -586,7 +585,7 @@ loadQuote();
 })
 .catch(error => console.error(error))
 
-console.log(quoteApi);
+
 
   
 

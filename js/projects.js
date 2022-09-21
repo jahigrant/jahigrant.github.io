@@ -84,7 +84,7 @@ let quoteApi = fetch('https://gist.githubusercontent.com/awran5/355643af99164a61
   
     function getQuote() {
     
-        let randomItem = random_item(quoteItems);
+        let randomItem = random_item(objectArray);
         let randomResult = randomItem;
 
         let btn = document.getElementById('new-quote');

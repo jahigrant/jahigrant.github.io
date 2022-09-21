@@ -106,21 +106,18 @@ let quoteApi = fetch('https://gist.githubusercontent.com/awran5/355643af99164a61
 
         btn.onclick = () => {
 
-
+var body = document.getElementById("quote-box");
             var opacity = 0;
+            body.style.opacity = opacity
             var intervalID = 0;
             window.onload = fadeIn;
     
             function fadeIn() {
                 setInterval(show, 200);
             }
-    
-            function fadeOut() {
-                setInterval(hide, 200);
-            }
       
             function show() {
-                var body = document.getElementById("quote-box");
+                
                 opacity = Number(window.getComputedStyle(body)
                                 .getPropertyValue("opacity"));
                 if (opacity < 1) {
@@ -130,17 +127,6 @@ let quoteApi = fetch('https://gist.githubusercontent.com/awran5/355643af99164a61
                     clearInterval(intervalID);
                 }
             }  
-        
-            function hide() {
-                var body = document.getElementById("quote-box");
-                opacity = Number(window.getComputedStyle(body)
-                                .getPropertyValue("opacity"));
-                if (opacity == 1) {
-                    opacity = opacity;
-                    body.style.opacity = opacity
-                }
-            }  
-
 
             
             let insertQuote = randomResult[0].quote;    

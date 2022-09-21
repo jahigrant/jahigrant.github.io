@@ -469,16 +469,9 @@ console.log(randomItems);
 
 
   
-  window.addEventListener('load', function() {
-    console.log('Window loaded');
-    loadQuote();
-  });
 
-  document.addEventListener('load', function() {
-    console.log('Document loaded');
-    loadQuote();
-  });
-  
+    
+ 
 
   function getQuote() {
     

@@ -73,6 +73,13 @@ let quoteApi = fetch('https://gist.githubusercontent.com/awran5/355643af99164a61
         console.log('DOM Content loaded');
         loadQuote();
     };
+    if (document.readyState == 'loading') {
+        // still loading, wait for the event
+        document.addEventListener('DOMContentLoaded', loadQuote);
+    } else {
+    // DOM is ready!
+    loadQuote();
+    }
   
     function getQuote() {
     

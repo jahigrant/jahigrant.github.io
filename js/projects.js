@@ -74,10 +74,7 @@ let quoteApi = fetch('https://gist.githubusercontent.com/awran5/355643af99164a61
         loadQuote();
     };
     if (document.readyState == 'loading') {
-        // still loading, wait for the event
-        document.addEventListener('DOMContentLoaded', loadQuote);
     } else {
-    // DOM is ready!
     loadQuote();
     }
   

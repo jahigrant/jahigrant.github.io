@@ -61,11 +61,7 @@ let quoteApi = fetch('https://gist.githubusercontent.com/awran5/355643af99164a61
         console.log('Window loaded');
         loadQuote();
     });
-    document.addEventListener('load', function() {
-        console.log('Document loaded');
-        loadQuote();
-    });
-    window.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function() {
         console.log('DOM Content loaded');
         loadQuote();
     });
@@ -73,6 +69,10 @@ let quoteApi = fetch('https://gist.githubusercontent.com/awran5/355643af99164a61
         console.log('DOM Content loaded');
         loadQuote();
     });
+    window.onload = function() { 
+        console.log('DOM Content loaded');
+        loadQuote();
+    };
   
     function getQuote() {
     

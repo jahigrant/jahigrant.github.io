@@ -41,7 +41,7 @@ const navItems = [
       }
       // Open Address Bar Anchor Tag Tab Directly
       var hash = window.location.hash; //get the hash from url
-      cleanhash = hash.replace("#", ""); //remove the #
+      var cleanhash = hash.replace("#", ""); //remove the #
       cleanhash = cleanhash.replace("-", "");
       document.getElementById(cleanhash).click();
       });

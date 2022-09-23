@@ -11,7 +11,7 @@ const navItems = [
     }
   ]; 
 
-function tick() {
+function projectsNav() {
     const element = (
 
       <ul className="nav nav-pills">
@@ -33,4 +33,4 @@ function tick() {
     );
   }
   
-tick();
+projectsNav();

@@ -16,7 +16,7 @@ function projectsNav() {
 
       <ul className="nav nav-pills">
       <li className="nav-item">
-        <a className="nav-link active" aria-current="page" href="#">Quotes</a>
+        <a className="nav-link active rounded-0" aria-current="page" href="#">Quotes</a>
       </li>
       <li className="nav-item">
         <a className="nav-link" href="#">Link</a>

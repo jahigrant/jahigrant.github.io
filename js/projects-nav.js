@@ -17,7 +17,7 @@ const navItems = [
     window.addEventListener("load", function() {
       // store tabs variable
       var theTabs = document.querySelectorAll("ul.exeDIRECTtabsDIV-nav > li");
-      for (i = 0; i < theTabs.length; i++) {
+      for (var i = 0; i < theTabs.length; i++) {
       theTabs[i].addEventListener("click", theTabClicks)
       }
       function theTabClicks(tabClickEvent) {

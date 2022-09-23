@@ -16,13 +16,19 @@ function projectsNav() {
 
       <ul className="nav nav-pills">
       <li className="nav-item">
-        <a className="nav-link active rounded-0" aria-current="page" href="#">Quotes</a>
+        <a className="nav-link active rounded-0" aria-current="page" href="#">Quote Machine</a>
       </li>
       <li className="nav-item">
-        <a className="nav-link" href="#">Link</a>
+        <a className="nav-link" href="#">Markdown Previewer</a>
       </li>
       <li className="nav-item">
-        <a className="nav-link" href="#">Link</a>
+        <a className="nav-link" href="#">Drum Machine</a>
+      </li>
+      <li className="nav-item">
+        <a className="nav-link" href="#">JS Calculator</a>
+      </li>
+      <li className="nav-item">
+        <a className="nav-link" href="#">25 + 5 Clock</a>
       </li>
     </ul>
 

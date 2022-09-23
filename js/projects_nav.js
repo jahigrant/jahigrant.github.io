@@ -11,9 +11,6 @@ const navItems = [
     }
   ]; 
 
-
-
-
 function tick() {
     const element = (
 

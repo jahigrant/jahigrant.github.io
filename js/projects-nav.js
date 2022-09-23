@@ -21,7 +21,7 @@ const navItems = [
 function projectsNav() {
     const element = (
 
-      <ul className="nav nav-pills">
+      <ul className="nav nav-tabs">
         <li className="nav-item active">
           <a href="#quote-machine" data-toggle="tab" className="nav-link" id="quote-machine">Quote Machine</a>
         </li>

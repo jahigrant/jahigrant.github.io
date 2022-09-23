@@ -26,7 +26,7 @@ function projectsNav() {
           <a href="#quote-machine" className="nav-link" id="quote-machine">Quote Machine</a>
         </li>
         <li className="nav-item">
-          <a href="#tab-2" className="nav-link" id="tab2">Markdown Previewer</a>
+          <a href="#markdown-previewer" className="nav-link" id="markdown-previewer">Markdown Previewer</a>
         </li>
         <li className="nav-item">
           <a href="#tab-3" className="nav-link" id="tab3">Drum Machine</a>

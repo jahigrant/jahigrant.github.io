@@ -178,7 +178,7 @@ let quoteApi = fetch('https://gist.githubusercontent.com/awran5/355643af99164a61
         );
         ReactDOM.render(
             element,
-            document.getElementById('qoute_component')
+            document.getElementById('quote_component')
         );
     }
 

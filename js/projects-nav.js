@@ -31,7 +31,7 @@ const navItems = [
       
       //tabClickEvent.preventDefault(); //Stop Adding #ID In Addressbar
       var contentPanes = tabParent.querySelectorAll(".exeDIRECTtabsDIV-pane");
-      for (i = 0; i < contentPanes.length; i++) {
+      for (var i = 0; i < contentPanes.length; i++) {
       contentPanes[i].classList.remove("active");
       }
       var anchorReference = tabClickEvent.target;

@@ -14,7 +14,7 @@
         );
         ReactDOM.render(
             element,
-            document.getElementById('quote_component')
+            document.getElementById('markdown_component')
         );
     }
 

@@ -23,19 +23,19 @@ function projectsNav() {
 
       <ul className="nav nav-pills">
         <li className="nav-item active">
-          <a href="#quote-machine" data-toggle="tab" className="nav-link" id="quote-machine">Quote Machine</a>
+          <a href="#quote-machine" data-bs-toggle="list" className="nav-link" id="quote-machine">Quote Machine</a>
         </li>
         <li className="nav-item">
-          <a href="#markdown-previewer" data-toggle="tab" className="nav-link" id="markdown-previewer">Markdown Previewer</a>
+          <a href="#markdown-previewer" data-bs-toggle="list" className="nav-link" id="markdown-previewer">Markdown Previewer</a>
         </li>
         <li className="nav-item">
-          <a href="#tab-3" data-toggle="tab" className="nav-link" id="tab3">Drum Machine</a>
+          <a href="#tab-3" data-bs-toggle="list" className="nav-link" id="tab3">Drum Machine</a>
         </li>
         <li className="nav-item">
-          <a href="#tab-3" data-toggle="tab" className="nav-link" id="tab3">JS Calculator</a>
+          <a href="#tab-3" data-bs-toggle="list" className="nav-link" id="tab3">JS Calculator</a>
         </li>
         <li className="nav-item">
-          <a href="#tab-3" data-toggle="tab" className="nav-link" id="tab3">25 + 5 Clock</a>
+          <a href="#tab-3" data-bs-toggle="list" className="nav-link" id="tab3">25 + 5 Clock</a>
         </li>
       </ul>
 

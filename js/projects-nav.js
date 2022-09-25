@@ -23,6 +23,14 @@ triggerTabList.forEach(function (triggerEl) {
     tabTrigger.show()
   })
 })
+
+var tabElms = document.querySelectorAll('a[data-bs-toggle="list"]')
+tabElms.forEach(function(tabElm) {
+  tabElm.addEventListener('shown.bs.tab', function (event) {
+    event.target // newly activated tab
+    event.relatedTarget // previous active tab
+  })
+}
           
   }
 

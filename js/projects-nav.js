@@ -24,13 +24,13 @@ const navItems = [
 //   })
 // })
 
-var tabElms = document.querySelectorAll('a[role="tabpanel"]')
-tabElms.forEach(function(tabElm) {
-  tabElm.addEventListener('shown.bs.tab', function (event) {
-    event.target // newly activated tab
-    event.relatedTarget // previous active tab
-  })
-}
+// var tabElms = document.querySelectorAll('a[role="tabpanel"]')
+// tabElms.forEach(function(tabElm) {
+//   tabElm.addEventListener('shown.bs.tab', function (event) {
+//     event.target // newly activated tab
+//     event.relatedTarget // previous active tab
+//   })
+// }
           
   }
 

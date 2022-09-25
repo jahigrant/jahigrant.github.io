@@ -24,7 +24,7 @@ triggerTabList.forEach(function (triggerEl) {
   })
 })
 
-var tabElms = document.querySelectorAll('a[data-bs-toggle="list"]')
+var tabElms = document.querySelectorAll('a[role="tabpanel"]')
 tabElms.forEach(function(tabElm) {
   tabElm.addEventListener('shown.bs.tab', function (event) {
     event.target // newly activated tab

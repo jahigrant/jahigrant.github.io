@@ -14,33 +14,61 @@ const navItems = [
 
   function navigation() {
     
-//     var triggerTabList = [].slice.call(document.querySelectorAll('#myTab a'))
-// triggerTabList.forEach(function (triggerEl) {
-//   var tabTrigger = new bootstrap.Tab(triggerEl)
-
-//   triggerEl.addEventListener('click', function (event) {
-//     event.preventDefault()
-//     tabTrigger.show()
-//   })
-// })
-
-// var tabElms = document.querySelectorAll('a[role="tabpanel"]')
-// tabElms.forEach(function(tabElm) {
-//   tabElm.addEventListener('shown.bs.tab', function (event) {
-//     event.target // newly activated tab
-//     event.relatedTarget // previous active tab
-//   })
-// }
+    $(document).ready(() => {
+      let url = location.href.replace(/\/$/, "");
+     
+      if (location.hash) {
+        const hash = url.split("#");
+        $('#myTab a[href="#'+hash[1]+'"]').tab("show");
+        url = location.href.replace(/\/#/, "#");
+        history.replaceState(null, null, url);
+        setTimeout(() => {
+          $(window).scrollTop(0);
+        }, 400);
+      } 
+       
+      $('a[data-toggle="tab"]').on("click", function() {
+        let newUrl;
+        const hash = $(this).attr("href");
+        if(hash == "#home") {
+          newUrl = url.split("#")[0];
+        } else {
+          newUrl = url.split("#")[0] + hash;
+        }
+        newUrl += "/";
+        history.replaceState(null, null, newUrl);
+      });
+    });
           
   }
 
 function projectsNav() {
     const element = (
-      <div className="list-group" id="myList" role="tablist">
-        <a className="list-group-item list-group-item-action active" data-bs-toggle="list" href="#quote-machine" role="tab">Quote Machine</a>
-        <a className="list-group-item list-group-item-action" data-bs-toggle="list" href="#markdown-previewer" role="tab">Markdown Previewer</a>
-        <a className="list-group-item list-group-item-action" data-bs-toggle="list" href="#ab-3" role="tab">Drum Machine</a>
-        <a className="list-group-item list-group-item-action" data-bs-toggle="list" href="#ab-4" role="tab">JS Calculator</a>
+      <div className="" id="project-collapse-menu">
+
+<ul class="nav nav-mytabs" id="myTab" role="tablist">
+  <li class="nav-item">
+    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Home</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="history-tab" data-toggle="tab" href="#history" role="tab" aria-controls="history" aria-selected="false">History</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="city-attractions-tab" data-toggle="tab" href="#city-attractions" role="tab" aria-controls="city-attractions" aria-selected="false">City Attractions</a>
+  </li>
+</ul>
+<div class="tab-content mytab-content" id="myTabContent">
+  <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+    <!-- content here -->
+  </div>
+  <div class="tab-pane fade" id="history" role="tabpanel" aria-labelledby="history-tab">
+    <!-- content here -->
+  </div>
+  <div class="tab-pane fade" id="city-attractions" role="tabpanel" aria-labelledby="city-attractions-tab">
+    <!-- content here -->
+  </div>
+</div>
+ 
 
       <ul className="nav nav-pills">
         <li className="nav-item active">

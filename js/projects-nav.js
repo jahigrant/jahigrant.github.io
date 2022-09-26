@@ -27,7 +27,7 @@ const navItems = [
         }, 400);
       } 
        
-      $('a[data-toggle="tab"]').on("click", function() {
+      $('a[data-bs-toggle="tab"]').on("click", function() {
         let newUrl;
         const hash = $(this).attr("href");
         if(hash == "#home") {

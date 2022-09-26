@@ -20,7 +20,7 @@ const navItems = [
       if (location.hash) {
         const hash = url.split("#");
         $('#project-menu a[href="#'+hash[1]+'"]').tab("show");
-        url = location.href.replace(/\/#/, "#");
+        url = location.href.replace(/\/#/, "/");
         history.replaceState(null, null, url);
         setTimeout(() => {
           $(window).scrollTop(0);

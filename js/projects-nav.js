@@ -72,13 +72,13 @@ function projectsNav() {
 
       <ul className="nav nav-pills">
         <li className="nav-item active">
-          <a href="#quote-machine" data-bs-toggle="list" className="nav-link" id="quote-machine">Quote Machine</a>
+          <a href="#quote-machine" data-bs-toggle="list" className="nav-link" id="quote-machine" onClick={navigation}>Quote Machine</a>
         </li>
         <li className="nav-item">
-          <a href="#markdown-previewer" data-bs-toggle="list" className="nav-link" id="markdown-previewer">Markdown Previewer</a>
+          <a href="#markdown-previewer" data-bs-toggle="list" className="nav-link" id="markdown-previewer" onClick={navigation}>Markdown Previewer</a>
         </li>
         <li className="nav-item">
-          <a href="#drum-machine" data-bs-toggle="list" className="nav-link" id="drum-machine">Drum Machine</a>
+          <a href="#drum-machine" data-bs-toggle="list" className="nav-link" id="drum-machine" onClick={navigation}>Drum Machine</a>
         </li>
         <li className="nav-item">
           <a href="#tab-3" data-bs-toggle="list" className="nav-link" id="tab3">JS Calculator</a>

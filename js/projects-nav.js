@@ -20,7 +20,7 @@ const navItems = [
       if (location.hash) {
         const hash = url.split("#");
         $('#myTab a[href="#'+hash[1]+'"]').tab("show");
-        url = location.href.replace(/\/#/, "#");
+        url = location.href.replace(/\/#/, "/");
         history.replaceState(null, null, url);
         setTimeout(() => {
           $(window).scrollTop(0);
@@ -31,9 +31,9 @@ const navItems = [
         let newUrl;
         const hash = $(this).attr("href");
         if(hash == "#home") {
-          newUrl = url.split("#")[0];
+          newUrl = url.split("/")[0];
         } else {
-          newUrl = url.split("/#")[0] + hash;
+          newUrl = url.split("/")[0] + hash + ".html";
         }
         newUrl += "/";
         history.replaceState(null, null, newUrl);

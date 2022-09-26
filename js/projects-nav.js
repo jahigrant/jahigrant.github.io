@@ -35,7 +35,7 @@ const navItems = [
         } else {
           newUrl = url.split("/")[0] + hash + ".html";
         }
-        newUrl += "/";
+        newUrl += "";
         history.replaceState(null, null, newUrl);
       });
     });

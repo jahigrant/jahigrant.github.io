@@ -33,7 +33,7 @@ const navItems = [
         if(hash == "#home") {
           newUrl = url.split("#")[0];
         } else {
-          newUrl = url.split("#")[0] + hash;
+          newUrl = url.split("/#")[0] + hash;
         }
         newUrl += "/";
         history.replaceState(null, null, newUrl);

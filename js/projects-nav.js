@@ -32,10 +32,11 @@ const navItems = [
       $('a[data-bs-toggle="list"]').on("click", function() {
         let newUrl;
         const hash = $(this).attr("href");
+        let hashArray = [hash];
         if(hash == "#home") {
           newUrl = url.split("/")[0];
         } else {
-          newUrl = url.split("/")[0] + hash + ".html";
+          newUrl = url.split("/")[0] + hashArray[1] + ".html";
         }
         newUrl += "";
         history.replaceState(null, null, newUrl);

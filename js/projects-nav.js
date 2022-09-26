@@ -46,26 +46,26 @@ function projectsNav() {
     const element = (
       <div className="" id="project-collapse-menu">
 
-<ul class="nav nav-mytabs" id="myTab" role="tablist">
-  <li class="nav-item">
-    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Home</a>
+<ul className="nav nav-mytabs" id="myTab" role="tablist">
+  <li className="nav-item">
+    <a className="nav-link active" id="home-tab" data-toggle="tab" href="#quote-machine" role="tab" aria-controls="home" aria-selected="true">Quote Machine</a>
   </li>
-  <li class="nav-item">
-    <a class="nav-link" id="history-tab" data-toggle="tab" href="#history" role="tab" aria-controls="history" aria-selected="false">History</a>
+  <li className="nav-item">
+    <a className="nav-link" id="history-tab" data-toggle="tab" href="#markdown-previewer" role="tab" aria-controls="history" aria-selected="false">Markdown Previewer</a>
   </li>
-  <li class="nav-item">
-    <a class="nav-link" id="city-attractions-tab" data-toggle="tab" href="#city-attractions" role="tab" aria-controls="city-attractions" aria-selected="false">City Attractions</a>
+  <li className="nav-item">
+    <a className="nav-link" id="city-attractions-tab" data-toggle="tab" href="#drum-machine" role="tab" aria-controls="city-attractions" aria-selected="false">Drum Machine</a>
   </li>
 </ul>
-<div class="tab-content mytab-content" id="myTabContent">
-  <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-    123
+<div className="tab-content mytab-content" id="myTabContent">
+  <div className="tab-pane fade show active" id="quote-machine" role="tabpanel" aria-labelledby="quote-machine-tab">
+    Quote Machine
   </div>
-  <div class="tab-pane fade" id="history" role="tabpanel" aria-labelledby="history-tab">
-    456
+  <div className="tab-pane fade" id="markdown-previewer" role="tabpanel" aria-labelledby="markdown-previewer-tab">
+  Markdown Previewer
   </div>
-  <div class="tab-pane fade" id="city-attractions" role="tabpanel" aria-labelledby="city-attractions-tab">
-    789
+  <div className="tab-pane fade" id="drum-machine" role="tabpanel" aria-labelledby="drum-machine-tab">
+  Drum Machine
   </div>
 </div>
  

@@ -19,7 +19,7 @@ const navItems = [
      
       if (location.hash) {
         const hash = url.split("#");
-        $('#myTab a[href="#'+hash[1]+'"]').tab("show");
+        $('#project-menu a[href="#'+hash[1]+'"]').tab("show");
         url = location.href.replace(/\/#/, "#");
         history.replaceState(null, null, url);
         setTimeout(() => {
@@ -46,7 +46,7 @@ function projectsNav() {
     const element = (
       <div className="" id="project-collapse-menu">
 
-<ul className="nav nav-mytabs" id="myTab" role="tablist">
+<ul className="nav nav-mytabs" id="project-menu" role="tablist">
   <li className="nav-item">
     <a className="nav-link active" id="home-tab" data-toggle="tab" href="#quote-machine" role="tab" aria-controls="home" aria-selected="true">Quote Machine</a>
   </li>

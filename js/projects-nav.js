@@ -59,13 +59,13 @@ function projectsNav() {
 </ul>
 <div class="tab-content mytab-content" id="myTabContent">
   <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-    <!-- content here -->
+    123
   </div>
   <div class="tab-pane fade" id="history" role="tabpanel" aria-labelledby="history-tab">
-    <!-- content here -->
+    456
   </div>
   <div class="tab-pane fade" id="city-attractions" role="tabpanel" aria-labelledby="city-attractions-tab">
-    <!-- content here -->
+    789
   </div>
 </div>
  

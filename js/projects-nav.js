@@ -78,7 +78,7 @@ function projectsNav() {
           <a href="#markdown-previewer" data-bs-toggle="list" className="nav-link" id="markdown-previewer">Markdown Previewer</a>
         </li>
         <li className="nav-item">
-          <a href="#tab-3" data-bs-toggle="list" className="nav-link" id="tab3">Drum Machine</a>
+          <a href="#drum-machine" data-bs-toggle="list" className="nav-link" id="drum-machine">Drum Machine</a>
         </li>
         <li className="nav-item">
           <a href="#tab-3" data-bs-toggle="list" className="nav-link" id="tab3">JS Calculator</a>

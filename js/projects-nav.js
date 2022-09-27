@@ -33,7 +33,7 @@ const navItems = [
         let newUrl;
         const hash = $(this).attr("href");
         const hashSpli = hash.split("#");
-        console.log(hashSpli)
+        console.log(hashSpli[0])
         let hashArray = [hash];
         if(hash == "#") {
           newUrl = url.split("/")[0];

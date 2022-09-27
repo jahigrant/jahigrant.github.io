@@ -46,7 +46,7 @@ const navItems = [
           newUrl = url.split("/")[0] + hashSplit[1] + ".html";
         }
         newUrl += "";
-        const stateObj = { url: url.split("/")[0] + "/projects/"; };
+        const stateObj = url.split("/")[0] + "/projects/";
         history.replaceState(stateObj, null, newUrl);
       });
     });

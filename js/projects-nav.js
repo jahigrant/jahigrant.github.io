@@ -41,9 +41,9 @@ const navItems = [
 
         let hashArray = [hash];
         if(hash == "#") {
-          newUrl = url.split("/")[0];
+          newUrl = url.split("/")[0] + hashSplit[1] + ".html";
         } else {
-          newUrl = url.split("/")[0] + hash + ".html";
+          newUrl = url.split("/")[0] + hashSplit[1] + ".html";
         }
         newUrl += "";
         history.replaceState(null, null, newUrl);

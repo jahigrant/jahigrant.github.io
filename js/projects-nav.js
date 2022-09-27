@@ -29,17 +29,15 @@ const navItems = [
         }, 400);
       } 
        
-      $('a[data-bs-toggle="list"]').on("click", function(e) {
-        e.preventDefault();
+      $('a[data-bs-toggle="list"]').on("click", function() {
         let newUrl;
         let hash = $(this).attr("href");
-
         const hashSplit = hash.split("#");
-for (let i = 0; i < 1; i++) {
-  const element = hashSplit[i];
-  console.log(element)
-}
-        
+        for (let i = 0; i < hashSplit.length; i++) {
+          const element = hashSplit[i];
+          console.log(element)
+        }
+        console.log(hashSplit);
 
         let hashArray = [hash];
         if(hash == "#") {

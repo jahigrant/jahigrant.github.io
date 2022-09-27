@@ -31,9 +31,9 @@ const navItems = [
        
       $('a[data-bs-toggle="list"]').on("click", function() {
         let newUrl;
-        const hash = $(this).attr("href");
-        const hashSpli = hash.split("#");
-        console.log(hashSpli[0])
+        let hash = $(this).attr("href");
+        const hashSplit = hash.split("#");
+        console.log(hashSplit)
         let hashArray = [hash];
         if(hash == "#") {
           newUrl = url.split("/")[0];

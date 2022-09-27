@@ -4,4 +4,4 @@ site_path: https://jahigrant.github.io/
 collection:
   projects:
     output: true
-    permalink: /projects/:path/
+    permalink: /projects/:title.html

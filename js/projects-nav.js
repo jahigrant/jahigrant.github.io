@@ -29,7 +29,8 @@ const navItems = [
         }, 400);
       } 
        
-      $('a[data-bs-toggle="list"]').on("click", function() {
+      $('a[data-bs-toggle="list"]').on("click", function(e) {
+        e.preventDefault();
         let newUrl;
         let hash = $(this).attr("href");
         const hashSplit = hash.split("#");

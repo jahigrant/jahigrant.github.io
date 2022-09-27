@@ -37,7 +37,7 @@ const navItems = [
           const element = hashSplit[i];
           console.log(element)
         }
-        console.log(hashSplit);
+        console.log(hashSplit[0], hashSplit[1]);
 
         let hashArray = [hash];
         if(hash == "#") {

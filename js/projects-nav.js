@@ -45,8 +45,9 @@ const navItems = [
         } else {
           newUrl = url.split("/")[0] + hashSplit[1] + ".html";
         }
-        newUrl += location.href + "/" + hashSplit[1] + ".html";
-        history.replaceState(null, null, newUrl);
+        newUrl += "";
+        const stateObj = { url: url.split("/")[0] + "/projects/"; };
+        history.replaceState(stateObj, null, newUrl);
       });
     });
           

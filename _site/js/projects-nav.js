@@ -143,7 +143,7 @@ function projectsNav() {
             <a href="#js-calculator" data-bs-toggle="list" className="nav-link" id="js-calculator-link" onClick={navigation}>JS Calculator</a>
           </li>
           <li className="nav-item">
-            <a href="#twenty5-clock" data-bs-toggle="list" className="nav-link" id="twenty5-clock-link" onClick={navigation}>25 + 5 Clock</a>
+            <a href="#twenty5-clock" data-bs-toggle="list" className="nav-link" id="twenty5-clock-link" onClick={navigation}>20 + 5 Clock</a>
           </li>
         </ul>
 

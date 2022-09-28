@@ -1,4 +1,4 @@
-{% include 404_head.html %}
+{% include fourofour_head.html %}
     <body class="d-flex h-100 text-white bg-dark">
         <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
@@ -6,12 +6,12 @@
 
         <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
 
-        {% if page.404_header %}
-            {% include {{ page.404_header }} %}
+        {% if page.fourofour_header %}
+            {% include {{ page.fourofour_header }} %}
         {% endif %}
 
         <main class="px-3">
-            <h1>Error 404</h1>
+            <h1>Error fourofour</h1>
             <h3>Page: <span id="unknown-url" class="badge bg-danger rounded-0 pb-2"></span> is unknown</h3>
             <p class="lead">{{ content | markdownify }}</p>
             <p class="lead">
@@ -19,8 +19,8 @@
             </p>
         </main>
 
-        {% if page.404_footer %}
-            {% include {{ page.404_footer }} %}
+        {% if page.fourofour_footer %}
+            {% include {{ page.fourofour_footer }} %}
         {% endif %}
 
     </div>

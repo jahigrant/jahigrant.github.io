@@ -1,7 +1,5 @@
 # theme: jekyll-theme-minimal
 name: Musa Grant Portfolio
 site_path: https://jahigrant.github.io/
-collection:
-  projects:
-    output: true
-    permalink: /:title.html
+include: ['_projects']
+relative_permalinks: false

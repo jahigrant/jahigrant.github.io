@@ -1,7 +1,7 @@
 ---
-layout: 404
+layout: fourofour
 title: 404 Error
-404_header: 404_header.html
-404_footer: 404_footer.html
+404_header: fourofour_header.html
+404_footer: fourofour_footer.html
 ---
 The URL you're looking for has not been found, please try again.

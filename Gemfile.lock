@@ -60,6 +60,8 @@ GEM
     terminal-table (2.0.0)
       unicode-display_width (~> 1.1, >= 1.1.1)
     unicode-display_width (1.8.0)
+    wdm (0.1.1)
+    webrick (1.7.0)
 
 PLATFORMS
   x64-mingw-ucrt
@@ -68,6 +70,8 @@ DEPENDENCIES
   jekyll
   jekyll-feed
   jekyll-seo-tag
+  wdm (>= 0.1.0)
+  webrick
 
 BUNDLED WITH
    2.3.17

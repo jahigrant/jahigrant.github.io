@@ -7,35 +7,14 @@
         {% include header.html %}
         
             <div class="cover-container d-flex w-75 h-100 p-3 mx-auto flex-column mb-5 mt-5 pb-5 pt-5">
-            
                 <div id="profile-header" class="p-3 px-5 text-start">
-                    <h1>{{ page.title }}</h1>
+                    <h1 id="page-title">{{ page.title }}</h1>
                 </div>
-
-                <div id="projects-page" className="container" role="tabpanel">
-
-                    <div id="projects_nav" class="px-5"></div>
-
-                    <div class="card text-center p-5 m-5 bg-body shadow-lg rounded">
-                        <div class="card-body">
-
-                            <div className="tab-content">
-                                <div id="quote-machine" role="tabpanel" className="tab-pane fade in active">
-                                    {% include _projects/quote_machine.html %}
-                                </div>
-                                <div id="markdown-previewer" role="tabpanel" className="tab-pane fade">
-                                    {% include _projects/markdown_previewer.html %}
-                                </div>
-                                <div id="tab-3" role="tabpanel" className="tab-pane fade">
-                                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                                </div>
-                            </div>
-
-                        </div>
+                <div id="projects-page" className="container">
+                    <div className="" id="project-collapse-menu">
+                        <div id="projects_nav" class="px-5"></div>
                     </div>
-
                 </div>
-
             </div>
 
         {% include projects_footer.html %}

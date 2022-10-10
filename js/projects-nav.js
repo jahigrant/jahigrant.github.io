@@ -57,75 +57,66 @@ const navItems = [
           for(var i = 0; i< sentence.length; i++){
              sentence[i] = sentence[i][0].toUpperCase() + sentence[i].slice(1);
           }
-        sentence.join(" ");
-       return sentence;
-       }
+          sentence.join(" ");
+          return sentence;
+        }
        
-
-       const titleClean = titleCase(titleSplit);
-      document.getElementById("page-title").innerHTML = titleClean.toString().replace(",", " ");
-
+        const titleClean = titleCase(titleSplit);
+        document.getElementById("page-title").innerHTML = titleClean.toString().replace(",", " ");
+      
       });
 
-
-
       let switchNavMenuItem = (menuItems) => {
-
-        var current = location.hash
-    
+        var current = location.hash;
         $.each(menuItems, (index, item) => {
-    
-            // $(item).removeClass('active')
-    
+            // $(item).removeClass('active') 
             if ((current.includes($(item).attr('href')) && $(item).attr('href') !== "/") || ($(item).attr('href') === "/" && current === "/")){
               $(this).closest('li').addClass('active');
             }
         })
-    }
-    switchNavMenuItem($('#tabs-nav li a'))
-
-
-
+      }
+      switchNavMenuItem($('#tabs-nav li a'))
+    
     });
-          
-}
 
-function doQuote() {
-  return document.getElementById("quote-machine").innerHTML = `
-    <figure className="text-center">
-      <div id="quote_component" class="p-5"></div>
-    </figure>`;
-}
+  }
 
-function doMarkdown() {
-  return document.getElementById("markdown-previewer").innerHTML = `
-    <div className="text-center">
-      <div id="markdown_component" class="p-5">Markdown</div>
-    </div>`;
-}
+  function doQuote() {
+    return document.getElementById("quote-machine").innerHTML = `
+      <figure className="text-center">
+        <div id="quote_component" class="p-5"></div>
+      </figure>`;
+  }
 
-function doDrum() {
-  return document.getElementById("drum-machine").innerHTML = `
-    <div className="text-center">
-      <div id="drum_machine_component" class="p-5">Drum Machine</div>
-    </div>`;
-}
+  function doMarkdown() {
+    return document.getElementById("markdown-previewer").innerHTML = `
+      <div className="text-center">
+        <div id="markdown_component" class="p-5">Markdown</div>
+      </div>`;
+  }
 
-function doCalc() {
-  return document.getElementById("js-calculator").innerHTML = `
-    <div className="text-center">
-      <div id="js_calculator_component" class="p-5">JS Calculator</div>
-    </div>`;
-}
+  function doDrum() {
+    return document.getElementById("drum-machine").innerHTML = `
+      <div className="text-center">
+        <div id="drum_machine_component" class="p-5">Drum Machine</div>
+      </div>`;
+  }
 
-function doClock() {
-  return document.getElementById("twenty5-clock").innerHTML = `
-    <div className="text-center">
-      <div id="_20+5_clock_component" class="p-5">20 + 5 Clock</div>
-    </div>`;
-}
+  function doCalc() {
+    return document.getElementById("js-calculator").innerHTML = `
+      <div className="text-center">
+        <div id="js_calculator_component" class="p-5">JS Calculator</div>
+      </div>`;
+  }
 
-function projectsNav() {
+  function doClock() {
+    return document.getElementById("twenty5-clock").innerHTML = `
+      <div className="text-center">
+        <div id="20+5_clock_component" class="p-5">20 + 5 Clock</div>
+      </div>`;
+  }
+
+  function projectsNav() {
     const element = (
       <div>
         
@@ -143,7 +134,7 @@ function projectsNav() {
             <a href="#js-calculator" data-bs-toggle="list" className="nav-link" id="js-calculator-link" onClick={navigation}>JS Calculator</a>
           </li>
           <li className="nav-item">
-            <a href="#twenty5-clock" data-bs-toggle="list" className="nav-link" id="twenty5-clock-link" onClick={navigation}>20 + 5 Clock</a>
+            <a href="././#20+5-clock" data-bs-toggle="list" className="nav-link" id="20+5-clock-link" onClick={navigation}>20 + 5 Clock</a>
           </li>
         </ul>
 
@@ -154,7 +145,7 @@ function projectsNav() {
               <div className="tab-pane fade" id="markdown-previewer" role="tabpanel" aria-labelledby="markdown-previewer-tab"></div>
               <div className="tab-pane fade" id="drum-machine" role="tabpanel" aria-labelledby="drum-machine-tab"></div>
               <div className="tab-pane fade" id="js-calculator" role="tabpanel" aria-labelledby="js-calculator-tab"></div>
-              <div className="tab-pane fade" id="twenty5-clock" role="tabpanel" aria-labelledby="20+5-clock-tab"></div>
+              <div className="tab-pane fade" id="20+5-clock" role="tabpanel" aria-labelledby="20+5-clock-tab"></div>
             </div>
           </div>
         </div>

@@ -110,9 +110,9 @@ const navItems = [
   }
 
   function doClock() {
-    return document.getElementById("twenty5-clock").innerHTML = `
+    return document.getElementById("clock").innerHTML = `
       <div className="text-center">
-        <div id="20+5_clock_component" class="p-5">20 + 5 Clock</div>
+        <div id="clock_component" class="p-5">20 + 5 Clock</div>
       </div>`;
   }
 
@@ -134,7 +134,7 @@ const navItems = [
             <a href="#js-calculator" data-bs-toggle="list" className="nav-link" id="js-calculator-link" onClick={navigation}>JS Calculator</a>
           </li>
           <li className="nav-item">
-            <a href="././#20+5-clock" data-bs-toggle="list" className="nav-link" id="20+5-clock-link" onClick={navigation}>20 + 5 Clock</a>
+            <a href="#clock" data-bs-toggle="list" className="nav-link" id="clock-link" onClick={navigation}>20 + 5 Clock</a>
           </li>
         </ul>
 
@@ -145,7 +145,7 @@ const navItems = [
               <div className="tab-pane fade" id="markdown-previewer" role="tabpanel" aria-labelledby="markdown-previewer-tab"></div>
               <div className="tab-pane fade" id="drum-machine" role="tabpanel" aria-labelledby="drum-machine-tab"></div>
               <div className="tab-pane fade" id="js-calculator" role="tabpanel" aria-labelledby="js-calculator-tab"></div>
-              <div className="tab-pane fade" id="20+5-clock" role="tabpanel" aria-labelledby="20+5-clock-tab"></div>
+              <div className="tab-pane fade" id="clock" role="tabpanel" aria-labelledby="clock-tab"></div>
             </div>
           </div>
         </div>

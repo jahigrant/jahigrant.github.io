@@ -1,5 +1,5 @@
 ---
 layout: projects
-title: 20 + 5 Clock
+title: 25 + 5 Clock
 permalink: /projects/clock.html
 ---

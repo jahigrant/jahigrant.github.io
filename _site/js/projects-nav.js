@@ -62,7 +62,14 @@ const navItems = [
         }
        
         const titleClean = titleCase(titleSplit);
-        document.getElementById("page-title").innerHTML = titleClean.toString().replace(",", " ");
+        if (titleClean.toString().replace(",", " ") == 'Js Calculator') {
+          document.getElementById("page-title").innerHTML = 'JS Calculator';
+        } else if (titleClean.toString().replace(",", " ") == 'Clock') {
+          document.getElementById("page-title").innerHTML = '25 + 5 Clock';
+        } else {
+          document.getElementById("page-title").innerHTML = titleClean.toString().replace(",", " ");
+        }
+        
       
       });
 
@@ -112,7 +119,7 @@ const navItems = [
   function doClock() {
     return document.getElementById("clock").innerHTML = `
       <div className="text-center">
-        <div id="clock_component" class="p-5">20 + 5 Clock</div>
+        <div id="clock_component" class="p-5">Clock</div>
       </div>`;
   }
 
@@ -134,7 +141,7 @@ const navItems = [
             <a href="#js-calculator" data-bs-toggle="list" className="nav-link" id="js-calculator-link" onClick={navigation}>JS Calculator</a>
           </li>
           <li className="nav-item">
-            <a href="#clock" data-bs-toggle="list" className="nav-link" id="clock-link" onClick={navigation}>20 + 5 Clock</a>
+            <a href="#clock" data-bs-toggle="list" className="nav-link" id="clock-link" onClick={navigation}>Clock</a>
           </li>
         </ul>
 

@@ -28,6 +28,8 @@ const navItems = [
         setTimeout(() => {
           $(window).scrollTop(0);
         }, 400);
+
+        
       } 
        
       $('a[data-bs-toggle="list"]').on("click", function() {
@@ -70,14 +72,31 @@ const navItems = [
           document.getElementById("page-title").innerHTML = titleClean.toString().replace(",", " ");
         }
         
+        
       
       });
 
+
+
       let switchNavMenuItem = (menuItems) => {
+
+        const pathObj = location.pathname.split("/")[2];
+        const htmlObj = pathObj.split(".html")[0];
+
+        for (let i = 0; i < menuItems.length; i++) {
+          const element = menuItems[i].hash;
+          const elObj = element.split("#"); 
+          const elSplit = elObj[1];
+          if (elSplit == htmlObj) {
+            $('#tabs-nav li a[href="'+menuItems[i].hash+'"]').tab('show')
+          }
+        }
+
         var current = location.hash;
         $.each(menuItems, (index, item) => {
             // $(item).removeClass('active') 
             if ((current.includes($(item).attr('href')) && $(item).attr('href') !== "/") || ($(item).attr('href') === "/" && current === "/")){
+              console.log(index, item)
               $(this).closest('li').addClass('active');
             }
         })

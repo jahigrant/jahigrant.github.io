@@ -42,23 +42,18 @@ Ready to start writing?  Either start changing stuff on the left or [clear every
 [Markdown]: http://daringfireball.net/projects/markdown/  
 `
 
+const codeBlock = 'Use the `printf()` function.'
+
 const mdPlaceholder = `
 Markdown Editor
-===============
-
-Convert [Markdown] into HTML.  
-
+===============  
+Convert [Markdown] into HTML.  \n
 How To Use The Demo
--------------------
-
-![Alt text](https://cdn.icon-icons.com/icons2/3265/PNG/512/markdown_icon_207115.png "Optional title")  
-
-
-That's it. <code>Pretty</code> simple. There's also a drop-down option in the upper right to switch between various views:  
-
-**Preview:**  A live display of the generated HTML as it would render in a browser.  
-
-- Preview:  A live display of the generated HTML as it would render in a browser.  
+-------------------  
+![Alt text](https://cdn.iconscout.com/icon/free/png-256/markdown-2752127-2284944.png "Optional title")  \n  
+That's it. ` + codeBlock + `. There's also a drop-down option in the upper right to switch between various views:  \n  
+**Preview:**  A live display of the generated HTML as it would render in a browser.  \n
+- Preview:  A live display of the generated HTML as it would render in a browser.  \n
 
             function Panel(element, canClose, closeHandler) {
                 this.element = element;
@@ -68,21 +63,26 @@ That's it. <code>Pretty</code> simple. There's also a drop-down option in the up
                 };
             }  
 
-> publishable as-is, as plain text  
-
+> publishable as-is, as plain text  \n
+  
 Ready to start writing?  Either start changing stuff on the left or
-[clear everything](/demo/?text=) with a simple click.  
+[clear everything](/demo/?text=) with a simple click.  \n
 
 `
-const codeBlock = 'Use the `printf()` function.'
+
 
     document.getElementById('instructions').innerHTML = marked.parse(mdContent);
 
-    document.getElementById('preview').innerHTML = marked.parse(mdPlaceholder + codeBlock);
-    document.getElementById('editor').defaultValue = mdPlaceholder + codeBlock;
+    document.getElementById('preview').innerHTML = marked.parse(mdPlaceholder);
+    document.getElementById('editor').defaultValue = mdPlaceholder;
+
+    let myVar = setInterval(myTimer, 10000);
+
+    function myTimer() {
+        document.getElementById('editor').innerHTML = '';
+    }
 
     mdEditor.onkeyup = mdEditor.onkeypress = function(){
-        
         document.getElementById('preview').innerHTML = marked.parse(this.value);
     }
     

@@ -114,7 +114,7 @@ let quoteApi = fetch('https://gist.githubusercontent.com/awran5/355643af99164a61
     function tick() {
         const element = (
 
-            <div id="quote-box" className="fade show">
+            <div id="quote-box" className="justify-content-center fade show">
             
                 <blockquote className="blockquote d-block" id="quote-text">
                     <p className="fs-1 lh-sm fw-semibold">

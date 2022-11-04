@@ -110,35 +110,35 @@ const navItems = [
   function doQuote() {
     return document.getElementById("quote-machine").innerHTML = `
       <figure className="text-center">
-        <div id="quote_component" class="p-5"></div>
+        <div id="quote_component" className="p-5"></div>
       </figure>`;
   }
 
   function doMarkdown() {
     return document.getElementById("markdown-previewer").innerHTML = `
       <div className="text-center">
-        <div id="markdown_component" class="p-5">Markdown</div>
+        <div id="markdown_component" className="p-5"></div>
       </div>`;
   }
 
   function doDrum() {
     return document.getElementById("drum-machine").innerHTML = `
-      <div className="text-center">
-        <div id="drum_machine_component" class="p-5">Drum Machine</div>
+      <div>
+        <div id="drum_machine_component" className="p-0"></div>
       </div>`;
   }
 
   function doCalc() {
     return document.getElementById("js-calculator").innerHTML = `
       <div className="text-center">
-        <div id="js_calculator_component" class="p-5">JS Calculator</div>
+        <div id="js_calculator_component" className="p-5">JS Calculator</div>
       </div>`;
   }
 
   function doClock() {
     return document.getElementById("clock").innerHTML = `
       <div className="text-center">
-        <div id="clock_component" class="p-5">Clock</div>
+        <div id="clock_component" className="p-5">Clock</div>
       </div>`;
   }
 
@@ -164,9 +164,9 @@ const navItems = [
           </li>
         </ul>
 
-        <div className="card text-center p-0 pt-5 m-0 mt-5 bg-body shadow-lg rounded">
-          <div className="card-body">
-            <div className="tab-content mytab-content" id="TabContent">
+        <div className="card p-0 pt-5 m-0 mt-5 bg-body shadow-lg rounded">
+          <div className="card-body p-0">
+            <div className="tab-content project-content" id="TabContent">
               <div className="tab-pane fade show active" id="quote-machine" role="tabpanel" aria-labelledby="quote-machine-tab"></div>
               <div className="tab-pane fade" id="markdown-previewer" role="tabpanel" aria-labelledby="markdown-previewer-tab"></div>
               <div className="tab-pane fade" id="drum-machine" role="tabpanel" aria-labelledby="drum-machine-tab"></div>

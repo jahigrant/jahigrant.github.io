@@ -106,11 +106,11 @@
   }
 
 .seq-ui .mute:hover {
-    border-color: #ff9900;
+  border-color: #0700ff;
 }
 .seq-ui button:focus {
     outline: none;
-    border-color: #99ccaa;
+    border-color: #00bbff;
     -webkit-animation: focused 0.5s ease;
     animation: focused 0.5s ease;
     -webkit-animation-iteration-count: infinite;
@@ -119,9 +119,14 @@
     animation-direction: alternate;
 }
 
+
 .seq-ui .mute.active {
-    background: radial-gradient(#22ff55, transparent 50%);
-    box-shadow: inset 0 0 10px #111, 0 0 2px #22ff55;
+    box-shadow: inset 0 0 10px #111, 0 0 2px #2822ff;
+    top: calc(5% - 2px);
+    left: calc(5% - 2px);
+    background-color: #00e5ff;
+    box-shadow: 0 0 10px 1px #26deff, 0 0 10px 1px #0062ff, 0 0 10px 1px #00ffbe;
+    border: 0px;
 }
 
 .seq-ui .mute {
@@ -191,7 +196,7 @@
 }
 
 .seq-ui .transport button.transport-play {
-  color: #22ff55;
+  color: #22ddff;
 }
 .seq-ui .transport button {
   background: #222;
@@ -204,6 +209,33 @@
   box-shadow: 0 5px 10px rgb(0 0 0 / 40%);
 }
 
+.seq-ui .transport button.transport-play:focus {
+  background-image: radial-gradient(#0d7587b5, hsl(205deg 93% 17% / 33%));
+  box-shadow: 0 0 1px 1px #26deff, 0 0 10px 1px #0062ff, 0 0 10px 1px #00ffbe;
+  border-color: #00bbff;
+  -webkit-animation: focused 0.5s ease;
+  animation: focused 0.5s ease;
+  -webkit-animation-iteration-count: infinite;
+  animation-iteration-count: infinite;
+  -webkit-animation-direction: alternate;
+  animation-direction: alternate;
+
+}
+
+.seq-ui .transport button.transport-stop:active {
+  background-image: radial-gradient(#0d7587b5, hsl(205deg 93% 17% / 33%));
+  box-shadow: 0 0 1px 1px #26deff, 0 0 10px 1px #0062ff, 0 0 10px 1px #00ffbe;
+  border-color: #00bbff;
+  -webkit-animation: focused 0.5s ease;
+  animation: focused 0.5s ease;
+  -webkit-animation-iteration-count: infinite;
+  animation-iteration-count: infinite;
+  -webkit-animation-direction: alternate;
+  animation-direction: alternate;
+}
+
+
+
 .seq-ui .transport-tempo {
   width: 40px;
   background: #222;
@@ -213,8 +245,8 @@
   -moz-appearance: none;
   appearance: none;
   border: 1px solid #111;
-  color: #22ff55;
-  text-shadow: 0 0 10px #22ff55;
+  color: #22c6ff;
+  text-shadow: 0 0 10px #22f4ff;
   text-align: center;
 }
 .seq-ui button {
@@ -239,8 +271,13 @@
 }
 
 .seq-ui .seq-row span.seq-note {
-    background: #222 linear-gradient(#424942, #285028)!important;
-    border-color: #565;
+  background: #222 linear-gradient(#00e5ff, #00e5ff)!important;
+
+  box-shadow: inset 0 0 1px #111, 0 0 2px #2822ff;
+  top: calc(5% - 2px);
+  left: calc(5% - 2px);
+  box-shadow: 0 0 1px 1px #26deff, 0 0 10px 1px #0062ff, 0 0 10px 1px #00ffbe;
+  border: 0px;
 }
 .seq-ui .seq-row span.seq-step-measure {
     background: #222 linear-gradient(#353835, #161816);
@@ -329,11 +366,11 @@
   width: 25%;
 }
 .seq-ui .seq-row span.seq-playhead {
-  border-color: #2255ff;
-  box-shadow: 0 0 30px #2255ff;
+  border-color: #0dc1ff;
+  box-shadow: 0 0 30px #0dc1ff;
 }
 .seq-ui .metronome span.active {
-  box-shadow: 0 0 10px #2255ff;
-  background: #2255ff;
+  box-shadow: 0 0 10px #0dc1ff;
+  background: #0dc1ff;
 }
 

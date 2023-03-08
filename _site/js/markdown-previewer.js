@@ -50,6 +50,9 @@ Markdown Editor
 Convert [Markdown] into HTML.  \n
 How To Use The Demo
 -------------------  
+
+<kbd><kbd>ctrl</kbd> + <kbd>,</kbd></kbd>
+
 ![Alt text](https://cdn.iconscout.com/icon/free/png-256/markdown-2752127-2284944.png "Optional title")  \n  
 That's it. ` + codeBlock + `. There's also a drop-down option in the upper right to switch between various views:  \n  
 **Preview:**  A live display of the generated HTML as it would render in a browser.  \n

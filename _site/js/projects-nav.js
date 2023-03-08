@@ -28,8 +28,6 @@ const navItems = [
         setTimeout(() => {
           $(window).scrollTop(0);
         }, 400);
-
-        
       } 
        
       $('a[data-bs-toggle="list"]').on("click", function() {
@@ -41,7 +39,6 @@ const navItems = [
           console.log(element)
         }
         console.log(hashSplit[0], hashSplit[1]);
-
         let hashArray = [hash];
         if(hash == "#") {
           newUrl = url.split("/")[0] + hashSplit[1] + ".html";
@@ -51,9 +48,7 @@ const navItems = [
         newUrl += "";
         const stateObj = url.split("/")[0] + "/projects/";
         history.replaceState(stateObj, null, newUrl);
-
         const titleSplit = hashSplit[1].replace("-", " ")
-        
         function titleCase(string) {
           var sentence = string.toLowerCase().split(" ");
           for(var i = 0; i< sentence.length; i++){
@@ -62,24 +57,20 @@ const navItems = [
           sentence.join(" ");
           return sentence;
         }
-       
         const titleClean = titleCase(titleSplit);
         if (titleClean.toString().replace(",", " ") == 'Js Calculator') {
           document.getElementById("page-title").innerHTML = 'JS Calculator';
+          document.title = 'JS Calculator';
         } else if (titleClean.toString().replace(",", " ") == 'Clock') {
           document.getElementById("page-title").innerHTML = '25 + 5 Clock';
+          document.title = '25 + 5 Clock';
         } else {
           document.getElementById("page-title").innerHTML = titleClean.toString().replace(",", " ");
+          document.title = titleClean.toString().replace(",", " ");
         }
-        
-        
-      
       });
 
-
-
       let switchNavMenuItem = (menuItems) => {
-
         const pathObj = location.pathname.split("/")[2];
         const htmlObj = pathObj.split(".html")[0];
 
@@ -98,6 +89,9 @@ const navItems = [
             if ((current.includes($(item).attr('href')) && $(item).attr('href') !== "/") || ($(item).attr('href') === "/" && current === "/")){
               console.log(index, item)
               $(this).closest('li').addClass('active');
+            } else {
+              $('#tabs-nav > li').addClass('bg-light');
+              $('#tabs-nav > li:nth-child(n+2)').addClass('ms-2');
             }
         })
       }
@@ -147,8 +141,8 @@ const navItems = [
       <div>
         
         <ul className="nav nav-pills" id="tabs-nav">
-          <li className="nav-item active">
-            <a href="#quote-machine" data-bs-toggle="list" className="nav-link active" id="quote-machine-link" onClick={navigation}>Quote Machine</a>
+          <li className="nav-item ms-0">
+            <a href="#quote-machine" data-bs-toggle="list" className="nav-link" id="quote-machine-link" onClick={navigation}>Quote Machine</a>
           </li>
           <li className="nav-item">
             <a href="#markdown-previewer" data-bs-toggle="list" className="nav-link" id="markdown-previewer-link" onClick={navigation}>Markdown Previewer</a>
@@ -164,12 +158,12 @@ const navItems = [
           </li>
         </ul>
 
-        <div className="card p-0 pt-5 m-0 mt-5 bg-body shadow-lg rounded">
+        <div className="card p-0 m-0 mt-5 bg-body shadow-lg rounded">
           <div className="card-body p-0">
             <div className="tab-content project-content" id="TabContent">
               <div className="tab-pane fade show active" id="quote-machine" role="tabpanel" aria-labelledby="quote-machine-tab"></div>
               <div className="tab-pane fade" id="markdown-previewer" role="tabpanel" aria-labelledby="markdown-previewer-tab"></div>
-              <div className="tab-pane fade" id="drum-machine" role="tabpanel" aria-labelledby="drum-machine-tab"></div>
+              <div className="tab-pane fade shadow" id="drum-machine" role="tabpanel" aria-labelledby="drum-machine-tab"></div>
               <div className="tab-pane fade" id="js-calculator" role="tabpanel" aria-labelledby="js-calculator-tab"></div>
               <div className="tab-pane fade" id="clock" role="tabpanel" aria-labelledby="clock-tab"></div>
             </div>

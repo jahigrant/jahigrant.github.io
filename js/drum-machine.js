@@ -307,11 +307,14 @@ function maschine() {
     
       var _channelTemplate = Handlebars.compile(
         `\
-        <div class="col">
+        <div class="col align-self-center">
             <button class="control mute active"></button>\
         </div>\
         <div class="col">
-            <button class="control pad">{{ symbol }}</button>\
+          <div id="drum-snare-1" className="drum-pad">
+                        <audio id="{{ symbol }}" data-key="69" src="https://raw.githubusercontent.com/ArunMichaelDsouza/javascript-30-course/master/src/01-javascript-drum-kit/sounds/snare.wav" className="clip">{{ symbol }}</audio>
+                    </div>
+            <button class="control pad drum-pad">{{ symbol }}</button>\
         </div>\
         <div class="col">
             <div class="control meter vertical">\
@@ -319,7 +322,7 @@ function maschine() {
             </div>\
         </div>\
         <div class="col-12 col-xs-12 col-sm-12 col-md-9">
-            <div class="seq-row inline row gx-4 pt-2">\
+            <div class="seq-row inline row pt-2">\
                 {{#each notes}}\
                     <span data-tic="{{ @index }}" class="col"></span>\
                 {{/each}}\
@@ -425,7 +428,8 @@ function maschine() {
         <div class="module transport pb-2">\
           <button class="transport-play" title="Play">&#9658;</button>\
                 <button class="transport-stop" title="Stop">&#9632;</button>\
-                <input type="text" size="3" min="30" max="250" value="150" class="transport-tempo" /> \
+                <input type="text" size="3" min="30" max="250" value="150" class="transport-tempo"/> \
+                <span class="text-muted" style="font-family:system-ui;"><abbr title="Beats per minute">BPM</abbr></span> \
         </div>\
       '
       );
@@ -549,9 +553,6 @@ function maschine() {
       };
     })();
     
-    /**
-     * Preset pattern selector
-     **/
 
     
     /** Application **/
@@ -580,14 +581,7 @@ function maschine() {
           dispatcher.trigger(dispatcher.EventKeys.METRONOME_CLEAR);
         });
     
-        // Preset list -> tempo and sequencer
-        dispatcher.on(dispatcher.EventKeys.PRESET_SELECTED, function (preset) {
-          dispatcher.trigger(
-            dispatcher.EventKeys.TRANSPORT_CHANGE_TEMPO,
-            preset.tempo
-          );
-          dispatcher.trigger(dispatcher.EventKeys.SEQUENCER_SET_PATTERN, preset);
-        });
+
       },
     
       onLoad: function () {
@@ -595,10 +589,15 @@ function maschine() {
     
         var pattern = {
           sequence: {
+            boom:       "1000000000000000",
+            clap:       "1000000000000000",
+            hihat:      "1100110011001100",
             kick:       "1000000000000000",
+            openhat:    "1000000000000000",
+            ride:       "0000000010000000",
             snare:      "0000000010000000",
-            closedHat:  "0000000000000000",
-            openHat:    "0000000000000000"
+            tink:       "0000000000000010",
+            tom:        "0000000000000001"
           }
         };
     
@@ -619,10 +618,20 @@ function maschine() {
     
         // 808 or GTFO
         var samples = {},
-          sampleList = ["kick", "snare", "openHat", "closedHat", "kick", "snare", "openHat", "closedHat"];
+          sampleList = [
+            "boom",
+            "clap",
+            "hihat",
+            "kick",
+            "openhat",
+            "ride",
+            "snare",
+            "tink",
+            "tom"
+        ];
         sampleList.forEach(function (id) {
           samples[id] =
-            "https://s3-us-west-2.amazonaws.com/s.cdpn.io/101507/" + id + ".wav";
+            "https://raw.githubusercontent.com/jamesgeorge007/Drum-kit/master/assets/sounds/" + id + ".wav";
             console.log(samples[id]);
         });
     
@@ -651,8 +660,8 @@ function drumMachine() {
             <div id="drum-maschine" className="container mb-4-sm p-0">
                 <div id="display"></div>
 
-<div id="drum-app" className="seq-ui shadow rounded-3 p-3">
-  <div className="drum-app-region" id="r-head"></div>
+<div id="drum-app" className="seq-ui rounded-3 p-3 bg-dark bg-gradient">
+  <div className="drum-app-region pt-2" id="r-head"></div>
   <div className="drum-app-region" id="r-top"></div>
   <div className="drum-app-region" id="r-mid"></div>
   <div className="drum-app-region" id="r-bottom"></div>

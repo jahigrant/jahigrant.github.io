@@ -115,6 +115,8 @@
         <script src="/js/script.js" async defer></script>
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.min.js" integrity="sha512-3RlxD1bW34eFKPwj9gUXEWtdSMC59QqIqHnD8O/NoTwSJhgxRizdcFVQhUMFyTp5RwLTDL0Lbcqtl8b7bFAzog==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
      
         <div class="container-fluid">
 
@@ -134,5 +136,50 @@
               </ul>
             </footer>
           </div>
+
+          <script>
+
+let x, y;
+            function setup() {
+              let elt = document.getElementById('home-page-art');
+                const canvas = createCanvas(windowWidth, windowHeight);
+                canvas.parent(elt)
+                canvas.style("display", "block")
+                canvas.style("position", "fixed")
+                canvas.style("top", "0")
+                canvas.style("left", "0")
+                canvas.style("z-index", "-1")
+                canvas.style("opacity", "0.5")
+                x = windowWidth / 2;
+                y = windowHeight;
+
+
+     
+
+
+            }
+
+            function draw() {
+              for (let i = 0; i < 1000; i++) {
+                fill(random(255), random(255), random(255), random(255))
+
+                rect(
+                  random(x++), 
+                  random(y), 
+                  random(i++)
+                )
+                // rotate(PI + QUARTER_PI / random(i++))
+                // Jiggling randomly on the horizontal axis
+                x = x++ + random(i*0.1, i*0.1);
+                // Moving up at a constant speed
+                y = y++ - 10;
+                // Reset to the bottom
+                if (y < 3) {
+                  y = y++;
+                }
+              }
+            }
+
+        </script>
     </body>
 </html>

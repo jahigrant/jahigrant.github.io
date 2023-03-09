@@ -6,17 +6,31 @@
 
         {% include header.html %}
 
-        <div class="container">
-        <div class="row pt-4 pb-4">
-            
+        <div class="container" id="home-page-art">
+            <div class="row pt-4 pb-4">
+                
+                <div class="col-12">
+                    <div class="p-5 mb-5  rounded">
 
-            <div class="col-12">
-                <div class="p-5 mb-5 bg-body rounded">
-
-        {{ content }}
-        </div>
+                        <figure>
+                            <h1 class="display-3">Port​fo​lio</h1>
+                            <h3 class="display-6">Port·​fo·​lio</h3>
+                            <figcaption class="blockquote-footer">
+                                pɔːtˈfəʊ.li.əʊ
+                            </figcaption>
+                            <blockquote class="blockquote">
+                                <p class="lead">
+                                    A collection of drawings, documents, etc. that represent a person's, especially an artist's, work:
+                                </p>
+                            </blockquote>
+                        </figure>
+                        
+                        {{ content }}
+                    
+                    </div>
+                </div>
+                
             </div>
-          </div>
         </div>
     </div>
         {% include footer.html %}

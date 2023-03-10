@@ -76,7 +76,8 @@
         <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="https://jahigrant.github.io/">
-            Musa Grant's Portfolio 
+            <span class="bg-light p-1 pt-0 text-dark">Porfolio:</span> 
+            Musa Grant 
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -1006,7 +1007,7 @@
                 <span class="text-muted">
                   <svg xmlns="http://www.w3.org/2000/svg" style="margin-top:-3px;" width="12" height="12" fill="currentColor" class="bi bi-c-circle" viewBox="0 0 16 16">
                     <path d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8Zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0ZM8.146 4.992c-1.212 0-1.927.92-1.927 2.502v1.06c0 1.571.703 2.462 1.927 2.462.979 0 1.641-.586 1.729-1.418h1.295v.093c-.1 1.448-1.354 2.467-3.03 2.467-2.091 0-3.269-1.336-3.269-3.603V7.482c0-2.261 1.201-3.638 3.27-3.638 1.681 0 2.935 1.054 3.029 2.572v.088H9.875c-.088-.879-.768-1.512-1.729-1.512Z"/>
-                  </svg> 2023 <a class="text-decoration-none text-muted" href="https://jahigrant.github.io/">Musa Grant's Portfolio</a>. All rights reserved.
+                  </svg> 2023 <a class="text-decoration-none text-muted" href="https://jahigrant.github.io/"><span class="bg-dark p-2 text-light">Porfolio:</span> Musa Grant</a>. All rights reserved.
                 </span>
               </div>
           
@@ -1018,50 +1019,7 @@
             </footer>
           </div>
 
-          <script>
 
-let x, y;
-            function setup() {
-              let elt = document.getElementById('home-page-art');
-                const canvas = createCanvas(windowWidth, windowHeight);
-                canvas.parent(elt)
-                canvas.style("display", "block")
-                canvas.style("position", "fixed")
-                canvas.style("top", "0")
-                canvas.style("left", "0")
-                canvas.style("z-index", "-1")
-                canvas.style("opacity", "0.5")
-                x = windowWidth / 2;
-                y = windowHeight;
-
-
-     
-
-
-            }
-
-            function draw() {
-              for (let i = 0; i < 1000; i++) {
-                fill(random(255), random(255), random(255), random(255))
-
-                rect(
-                  random(x++), 
-                  random(y), 
-                  random(i++)
-                )
-                // rotate(PI + QUARTER_PI / random(i++))
-                // Jiggling randomly on the horizontal axis
-                x = x++ + random(i*0.1, i*0.1);
-                // Moving up at a constant speed
-                y = y++ - 10;
-                // Reset to the bottom
-                if (y < 3) {
-                  y = y++;
-                }
-              }
-            }
-
-        </script>
 
 <script>
             var a = document.querySelectorAll(".sidebar-menu a");

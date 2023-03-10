@@ -9,101 +9,84 @@
         <div class="container" id="home-page-art">
             <div class="row pt-4 pb-4">
                 
-
-
-
                 <script>
-
-let intervalID;
-
+                    
+                    let intervalID;
                     let x, y;
-                                function setup() {
-
-                                  let elt = document.getElementById('home-page-art');
-                                  
-                                    const canvas = createCanvas(windowWidth, windowHeight, WEBGL)
-                                    canvas.addClass('fade-in-canvas')
-                                    canvas.parent(elt)
-                                    canvas.style("display", "block")
-                                    canvas.style("position", "fixed")
-                                    canvas.style("top", "0")
-                                    canvas.style("left", "0")
-                                    canvas.style("z-index", "-1")
-                                    canvas.style("opacity", "0.5")
-                                    x = windowWidth / 2;
-                                    y = windowHeight;
                     
+                    function setup() {
+                        let elt = document.getElementById('home-page-art');
+                        const canvas = createCanvas(windowWidth, windowHeight, WEBGL)
+                        canvas.addClass('fade-in-canvas')
+                        canvas.parent(elt)
+                        canvas.style("display", "block")
+                        canvas.style("position", "fixed")
+                        canvas.style("top", "0")
+                        canvas.style("left", "0")
+                        canvas.style("z-index", "-1")
+                        canvas.style("opacity", "0.5")
+                        x = windowWidth / 2;
+                        y = windowHeight;
+                    }
                     
-                        
+                    function draw() {
+                        for (let i = 0; i < 1000; i++) {
+                        push();
+                        fill(
+                            random(255), 
+                            random(255), 
+                            random(255), 
+                            random(255)
+                        )
+                        square(
+                            random(x), 
+                            random(y), 
+                            random(i+10)
+                        )
+
+                        // Jiggling randomly on the horizontal axis
+                        x = x++ + random(i*0.1, i*0.1);
+                        // Moving up at a constant speed
+                        y = y++ - 10;
+                        // Reset to the bottom
+                        if (y < 0) {
+                            y = y++;
+                        }
+
+                        translate(100 / 10, 40);
+                        pop();
+                        }
+                    }
+
+                    function addClassDiv() {
+                        document.getElementById('defaultCanvas0').className = 'p5Canvas fade-in-canvas'
+                    }
+
+                    function start() {
+                        setup()   
+                        addClassDiv()
+                        document.getElementById('defaultCanvas0').className = 'p5Canvas fade-in-canvas'
+                    }
+
+                    function changeClass() {
+                        document.getElementById('defaultCanvas0').className = 'p5Canvas fade-out-canvas'
+                    }
                     
-                                }
-                    
-                                function draw() {
-                                  for (let i = 0; i < 1000; i++) {
-                                    push();
-                                    fill(
-                                        random(255), 
-                                        random(255), 
-                                        random(255), 
-                                        random(255)
-                                    )
-                                    rect(
-                                      random(x), 
-                                      random(y), 
-                                      random(i+10),
-                                      random(i+15),
-                                    )
+                    function stop() {
+                        changeClass()
+                        start()
+                        clearInterval(intervalID);
+                    }
 
-                                    // Jiggling randomly on the horizontal axis
-                                    x = x++ + random(i*0.1, i*0.1);
-                                    // Moving up at a constant speed
-                                    y = y++ - 10;
-                                    // Reset to the bottom
-                                    if (y < 0) {
-                                      y = y++;
-                                    }
-                              
-                                    
+                    setInterval(stop, 10000); 
 
-                                   
-  translate(100 / 10, 40);
-pop();
-                                  }
-                                  
-                                }
+                    window.addEventListener('resize', () => {
+                        start()
+                        setup()
+                        stop()
+                    });
 
-                                function addClassDiv() {
-                                    document.getElementById('defaultCanvas0').className = 'p5Canvas fade-in-canvas'
-                                }
-
-                                function start() {
-                                    setup()   
-                                    addClassDiv()
-                                    document.getElementById('defaultCanvas0').className = 'p5Canvas fade-in-canvas'
-                                }
-
-                                function changeClass() {
-                                    document.getElementById('defaultCanvas0').className = 'p5Canvas fade-out-canvas'
-                                }
-                                
-                                function stop() {
-                                    changeClass()
-                                    start()
-                                    clearInterval(intervalID);
-                                }
-
-                                setInterval(stop, 10000); 
-
-                                window.addEventListener('resize', () => {
-                                    start()
-                                    setup()
-                                    stop()
-                                });
-
-                            </script>
-
-
-
+                </script>
 
                 <div class="col-12">
                     <div class="p-5 mb-5">

@@ -10,3 +10,5 @@
    url: /interests/
  - title: Projects
    url: /projects/
+ - title: 404 Error
+   url: /*

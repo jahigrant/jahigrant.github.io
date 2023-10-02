@@ -95,7 +95,7 @@ Ready to start writing?  Either start changing stuff on the left or
 function markdown() {
     const element = (
 
-        <div>
+        <div className="p-5 m-5">
 
             <div className="container">
                 <div className="row text-start">
@@ -129,7 +129,7 @@ previewer();
 
 
 
-  
+
 
 
 

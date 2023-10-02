@@ -5,32 +5,24 @@
         <![endif]-->
 
         <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+            {% include fourofour_header.html %}
+            <main class="px-3">
+                <h1>Error fourofour</h1>
+                <h3>Page: <span id="unknown-url" class="badge bg-danger rounded-0 pb-2"></span> is unknown</h3>
+                <p class="lead">{{ content | markdownify }}</p>
+                <p class="lead">
+                    <a href="{% include mainurl.html %}/" class="btn btn-lg btn-success fw-bold border-white border-0 rounded-0">Home</a>
+                </p>
+            </main>
+            {% include fourofour_footer.html %}
+        </div>
 
-        {% if page.fourofour_header %}
-            {% include {{ page.fourofour_header }} %}
-        {% endif %}
-
-        <main class="px-3">
-            <h1>Error fourofour</h1>
-            <h3>Page: <span id="unknown-url" class="badge bg-danger rounded-0 pb-2"></span> is unknown</h3>
-            <p class="lead">{{ content | markdownify }}</p>
-            <p class="lead">
-                <a href="{{ site.site_path }}" class="btn btn-lg btn-success fw-bold border-white border-0 rounded-0">Home</a>
-            </p>
-        </main>
-
-        {% if page.fourofour_footer %}
-            {% include {{ page.fourofour_footer }} %}
-        {% endif %}
-
-    </div>
-
-    <script>
-        var url = window.location.href;
-        var url_split = url.split("/");
-        var secondLevelLocation = url_split.reverse();
-        document.getElementById("unknown-url").innerHTML = secondLevelLocation[0];
-    </script>
+        <script>
+            var url = window.location.href;
+            var url_split = url.split("/");
+            var secondLevelLocation = url_split.reverse();
+            document.getElementById("unknown-url").innerHTML = secondLevelLocation[0];
+        </script>
 
     </body>
 </html>

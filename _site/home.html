@@ -60,24 +60,29 @@
         <meta name="msapplication-TileImage" content="images/icon/cropped-cropped-favicon-1-1-270x270.png" >
         <!--complete list of meta tags at - https://gist.github.com/lancejpollard/1978404 -->
 
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+        <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous"> -->
 
-        
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+
 
         <link rel="stylesheet" href="/css/styles.css">
         
     </head>
 
-    <body>
+<body class="d-flex h-100">
         <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
 
-        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+
+
+        <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column" id="home-page-art">
+
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="https://jahigrant.github.io/">
+        <a class="navbar-brand" href="/">
             <span class="fs-6">Portfolio:</span> 
-            <span class="text-uppercase">Musa Grant</span>
+            <span class="text-uppercase">Jahi Grant</span>
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -89,9 +94,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/about.html">About</a>
                 </li>
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a class="nav-link" href="/projects/">Projects</a>
-                </li>
+                </li> -->
             </ul>
         </div>
     </div>
@@ -100,17 +105,15 @@
   
 
 
-        <div class="container" id="home-page-art">
-            <div class="row pt-4 pb-4">
+            <main class="row pt-4 pb-4">
                 
                 <script>
-                    
                     let intervalID;
                     let x, y;
                     
                     function setup() {
                         let elt = document.getElementById('home-page-art');
-                        const canvas = createCanvas(windowWidth, windowHeight, WEBGL)
+                        const canvas = createCanvas(windowWidth, windowHeight)
                         canvas.addClass('fade-in-canvas')
                         canvas.parent(elt)
                         canvas.style("display", "block")
@@ -118,81 +121,95 @@
                         canvas.style("top", "0")
                         canvas.style("left", "0")
                         canvas.style("z-index", "-1")
-                        canvas.style("opacity", "0.5")
-                        x = windowWidth / 2;
+                        canvas.style("opacity", "0.7")
+                        x = windowWidth;
                         y = windowHeight;
+                        rectMode(CENTER);
                     }
-                    
+ 
                     function draw() {
-                        for (let i = 0; i < 1000; i++) {
-                        push();
-                        fill(
-                            random(255), 
-                            random(255), 
-                            random(255), 
-                            random(255)
-                        )
-                        square(
-                            random(x), 
-                            random(y), 
-                            random(i+10)
-                        )
+                        const artworkName = `A Blocks Eye View (Connections)`
+                        const artDate = `© 2023`
+                        const artistName = `Jahi Grant`
+                        const canvas = document.getElementById("defaultCanvas0");
+                        const ctx = canvas.getContext("2d");
+                        ctx.fillStyle = "black";
+                        ctx.font = "14px arial";
+                        ctx.direction = "ltr";
+                        ctx.textRendering = "geometricPrecision";
+                        ctx.fontKerning = "none";
+                        ctx.textAlign = "left";
+                        ctx.imageSmoothingEnabled = true;
+                        ctx.imageSmoothingQuality = "high";
+                        ctx.lineWidth = 0.5;
+                        ctx.translate(0, 0);
+                        ctx.fillText(
+                            "Commission: " + artworkName, 
+                            20, 
+                            canvas.height-100
+                        );
+                        ctx.fillText(
+                            "Artist: " + artistName, 
+                            20, 
+                            canvas.height-84
+                        );    
+                        ctx.fillText(
+                            "Year: " + artDate, 
+                            20, 
+                            canvas.height-70
+                        );            
+                        let canvasMetadata = artworkName + " By " + artistName;
+                        document.getElementById("defaultCanvas0").title = canvasMetadata;
+                        document.getElementById("defaultCanvas0").setAttribute('alt', canvasMetadata);
 
-                        // Jiggling randomly on the horizontal axis
-                        x = x++ + random(i*0.1, i*0.1);
-                        // Moving up at a constant speed
-                        y = y++ - 10;
-                        // Reset to the bottom
-                        if (y < 0) {
-                            y = y++;
+                        for (let i = 0; i<radians(20); i+=radians(10000)) {
+
+                            push();
+
+                            const randomNumberSQGo = random(8);
+                            ctx.fillStyle = "grey";
+                            ctx.fillRect(random(x), random(y), randomNumberSQGo, randomNumberSQGo);
+
+                                rotate(0);
+                                fill(
+                                    random(255),
+                                    random(255),
+                                    random(255),
+                                    random(255)
+                                )
+                                square(
+                                    random(x),
+                                    random(y),
+                                    random(i-100)
+                                )
+                            pop();
                         }
-
-                        translate(100 / 10, 40);
-                        pop();
-                        }
                     }
 
-                    function addClassDiv() {
-                        document.getElementById('defaultCanvas0').className = 'p5Canvas fade-in-canvas'
-                    }
-
-                    function start() {
-                        setup()   
-                        addClassDiv()
-                        document.getElementById('defaultCanvas0').className = 'p5Canvas fade-in-canvas'
-                    }
-
-                    function changeClass() {
-                        document.getElementById('defaultCanvas0').className = 'p5Canvas fade-out-canvas'
-                    }
-                    
                     function stop() {
-                        changeClass()
-                        start()
                         clearInterval(intervalID);
+                        setup()
                     }
-
-                    setInterval(stop, 10000); 
+                    setInterval(stop, 100000); 
 
                     window.addEventListener('resize', () => {
-                        start()
+                        clearInterval(intervalID);
                         setup()
-                        stop()
                     });
-
+                    
                 </script>
 
                 <div class="col-12">
-                    <div class="p-5 mb-5">
-
+                    <div class="pt-5 mb-5">
+                        <h1 class="display-3 fw-bolder">Port​fo​lio</h1>
                         <figure>
-                            <h1 class="display-3">Port​fo​lio</h1>
-                            <h3 class="display-6 lh-1">Port·​fo·​lio</h3>
-                            <figcaption class="blockquote-footer">
+                            <h3 class="display-6 lh-1 fw-bolder">Port·​fo·​lio</h3>
+                            <figcaption class="blockquote-footer fw-bolder">
                                 pɔːtˈfəʊ.li.əʊ
                             </figcaption>
                             <blockquote class="blockquote">
-                                <p class="col-6 fs-5 fw-lighter lh-1 fst-italic">
+                            <h3 class="display-6 lh-1 fw- fw-bolder">Port·​fo·​lio</h3>
+                            <p class="col-6 fs-5 fw-lighter lh-1 fst-italic fw-bolder">
                                     A collection of drawings, documents, etc. that represent a person's, especially an artist's, work:
                                 </p>
                             </blockquote>
@@ -204,38 +221,46 @@
                     </div>
                 </div>
                 
-            </div>
-        </div>
-    </div>
-                
+            </main>
+                    
+        <script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha256-tG5mcZUtJsZvyKAxYLVXrmjKBVLd6VpVccqz/r4ypFE=" crossorigin="anonymous"></script>
+        
         <script src="/js/script.js" async defer></script>
 
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+        <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script> -->
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.min.js" integrity="sha512-3RlxD1bW34eFKPwj9gUXEWtdSMC59QqIqHnD8O/NoTwSJhgxRizdcFVQhUMFyTp5RwLTDL0Lbcqtl8b7bFAzog==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+        <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
      
         <div class="container-fluid">
 
             <footer class="col-12">
               <div class="text-md-start text-lg-start text-xl-start text-start">
-                <span class="text-muted">
+                <span class="text-dark">
                   <svg xmlns="http://www.w3.org/2000/svg" style="margin-top:-3px;" width="12" height="12" fill="currentColor" class="bi bi-c-circle" viewBox="0 0 16 16">
                     <path d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8Zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0ZM8.146 4.992c-1.212 0-1.927.92-1.927 2.502v1.06c0 1.571.703 2.462 1.927 2.462.979 0 1.641-.586 1.729-1.418h1.295v.093c-.1 1.448-1.354 2.467-3.03 2.467-2.091 0-3.269-1.336-3.269-3.603V7.482c0-2.261 1.201-3.638 3.27-3.638 1.681 0 2.935 1.054 3.029 2.572v.088H9.875c-.088-.879-.768-1.512-1.729-1.512Z"/>
                   </svg> 2023 
-                  <a class="text-decoration-none text-muted" href="https://jahigrant.github.io/">
-                    Musa Grant.
+                  <a class="text-dark" href="/">
+                    <span class="text-decoration">Jahi Grant</span>.
                   </a> All rights reserved.
                 </span>
               </div>
           
-              <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
+              <!-- <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
                 <li class="ms-3"><a class="text-muted" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#twitter"></use></svg></a></li>
                 <li class="ms-3"><a class="text-muted" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#instagram"></use></svg></a></li>
                 <li class="ms-3"><a class="text-muted" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#facebook"></use></svg></a></li>
-              </ul>
+              </ul> -->
             </footer>
           </div>
 
 
+        </div>
+
+        
     </body>
 </html>

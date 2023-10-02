@@ -91,7 +91,7 @@ const navItems = [
               $(this).closest('li').addClass('active');
             } else {
               $('#tabs-nav > li').addClass('bg-light');
-              $('#tabs-nav > li:nth-child(n+2)').addClass('ms-2');
+              $('#tabs-nav > li:nth-child(n+2)').addClass('ms-1');
             }
         })
       }
@@ -104,7 +104,7 @@ const navItems = [
   function doQuote() {
     return document.getElementById("quote-machine").innerHTML = `
       <figure className="text-center">
-        <div id="quote_component" className="p-5"></div>
+        <div id="quote_component" className="p-0"></div>
       </figure>`;
   }
 
@@ -122,10 +122,10 @@ const navItems = [
       </div>`;
   }
 
-  function doCalc() {
-    return document.getElementById("js-calculator").innerHTML = `
+  function doCalculator() {
+    return document.getElementById("calculator").innerHTML = `
       <div className="text-center">
-        <div id="js_calculator_component" className="p-5">JS Calculator</div>
+        <div id="calculator_component" className="p-5">Calculator</div>
       </div>`;
   }
 
@@ -136,36 +136,83 @@ const navItems = [
       </div>`;
   }
 
+  function doPython() {
+    return document.getElementById("python").innerHTML = `
+      <div className="text-center">
+        <div id="python_component" className="p-5">Python</div>
+      </div>`;
+  }
+
+
+
   function projectsNav() {
     const element = (
       <div>
         
         <ul className="nav nav-pills" id="tabs-nav">
           <li className="nav-item ms-0">
-            <a href="#quote-machine" data-bs-toggle="list" className="nav-link" id="quote-machine-link" onClick={navigation}>Quote Machine</a>
+            <a href="#quote-machine" data-bs-toggle="list" className="nav-link active rounded-0" id="quote-machine-link" onClick={navigation} title="Quote Machine">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-square-quote" viewBox="0 0 16 16">
+                <path d="M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1h-2.5a2 2 0 0 0-1.6.8L8 14.333 6.1 11.8a2 2 0 0 0-1.6-.8H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2.5a1 1 0 0 1 .8.4l1.9 2.533a1 1 0 0 0 1.6 0l1.9-2.533a1 1 0 0 1 .8-.4H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                <path d="M7.066 4.76A1.665 1.665 0 0 0 4 5.668a1.667 1.667 0 0 0 2.561 1.406c-.131.389-.375.804-.777 1.22a.417.417 0 1 0 .6.58c1.486-1.54 1.293-3.214.682-4.112zm4 0A1.665 1.665 0 0 0 8 5.668a1.667 1.667 0 0 0 2.561 1.406c-.131.389-.375.804-.777 1.22a.417.417 0 1 0 .6.58c1.486-1.54 1.293-3.214.682-4.112z"/>
+              </svg>
+            </a>
           </li>
           <li className="nav-item">
-            <a href="#markdown-previewer" data-bs-toggle="list" className="nav-link" id="markdown-previewer-link" onClick={navigation}>Markdown Previewer</a>
+            <a href="#markdown-previewer" data-bs-toggle="list" className="nav-link rounded-0" id="markdown-previewer-link" onClick={navigation} title="Markdown Previewer">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-markdown" viewBox="0 0 16 16">
+                <path d="M14 3a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h12zM2 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H2z"/>
+                <path fill-rule="evenodd" d="M9.146 8.146a.5.5 0 0 1 .708 0L11.5 9.793l1.646-1.647a.5.5 0 0 1 .708.708l-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 0 1 0-.708z"/>
+                <path fill-rule="evenodd" d="M11.5 5a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0v-4a.5.5 0 0 1 .5-.5z"/>
+                <path d="M3.56 11V7.01h.056l1.428 3.239h.774l1.42-3.24h.056V11h1.073V5.001h-1.2l-1.71 3.894h-.039l-1.71-3.894H2.5V11h1.06z"/>
+              </svg>
+            </a>
           </li>
           <li className="nav-item">
-            <a href="#drum-machine" data-bs-toggle="list" className="nav-link" id="drum-machine-link" onClick={navigation}>Drum Machine</a>
+            <a href="#drum-machine" data-bs-toggle="list" className="nav-link rounded-0" id="drum-machine-link" onClick={navigation} title="Drum Machine">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-boombox" viewBox="0 0 16 16">
+                <path d="M2.5 5a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1Zm2 0a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1Zm7.5-.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0Zm1.5.5a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1Zm-7-1a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1h-3Zm5.5 6.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0Z"/>
+                <path d="M11.5 13a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Zm0-1a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3ZM5 10.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0Z"/>
+                <path d="M7 10.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Zm-1 0a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0Z"/>
+                <path d="M14 0a.5.5 0 0 1 .5.5V2h.5a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1h12.5V.5A.5.5 0 0 1 14 0ZM1 3v3h14V3H1Zm14 4H1v7h14V7Z"/>
+              </svg>
+            </a>
           </li>
           <li className="nav-item">
-            <a href="#js-calculator" data-bs-toggle="list" className="nav-link" id="js-calculator-link" onClick={navigation}>JS Calculator</a>
+            <a href="#calculator" data-bs-toggle="list" className="nav-link rounded-0" id="calculator-link" onClick={navigation} title="JS Calculator">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calculator" viewBox="0 0 16 16">
+                <path d="M12 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h8zM4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H4z"/>
+                <path d="M4 2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5v-2zm0 4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm0 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm0 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3-6a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm0 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm0 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3-6a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm0 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-4z"/>
+              </svg>
+            </a>
           </li>
           <li className="nav-item">
-            <a href="#clock" data-bs-toggle="list" className="nav-link" id="clock-link" onClick={navigation}>Clock</a>
+            <a href="#clock" data-bs-toggle="list" className="nav-link rounded-0" id="clock-link" onClick={navigation} title="Clock">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clock" viewBox="0 0 16 16">
+                <path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z"/>
+                <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0z"/>
+              </svg>
+            </a>
+          </li>
+          <li className="nav-item">
+            <a href="#python" data-bs-toggle="list" className="nav-link rounded-0" id="python-link" onClick={navigation} title="Python">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-filetype-py" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M14 4.5V14a2 2 0 0 1-2 2H7v-1h5a1 1 0 0 0 1-1V4.5h-2A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v9H2V2a2 2 0 0 1 2-2h5.5L14 4.5ZM0 11.85h1.6c.289 0 .533.06.732.179.201.117.355.276.46.477.105.201.158.427.158.677 0 .25-.054.476-.16.677-.106.199-.26.357-.464.474a1.452 1.452 0 0 1-.732.173H.79v1.342H0V11.85Zm2.06 1.714a.795.795 0 0 0 .085-.381c0-.227-.062-.4-.185-.521-.123-.122-.294-.182-.513-.182H.788v1.406h.66a.794.794 0 0 0 .374-.082.574.574 0 0 0 .238-.24Zm2.963.75v1.535H4.23v-1.52L2.89 11.85h.876l.853 1.696h.032l.856-1.696h.855l-1.339 2.464Z"/>
+              </svg>
+            </a>
           </li>
         </ul>
 
-        <div className="card p-0 m-0 mt-5 bg-body shadow-lg rounded">
+        <div className="card p-0 m-0 mt-5 bg-body border border-muted shadow">
           <div className="card-body p-0">
-            <div className="tab-content project-content" id="TabContent">
+            <div className="tab-content project-content p-0" id="TabContent">
               <div className="tab-pane fade show active" id="quote-machine" role="tabpanel" aria-labelledby="quote-machine-tab"></div>
               <div className="tab-pane fade" id="markdown-previewer" role="tabpanel" aria-labelledby="markdown-previewer-tab"></div>
               <div className="tab-pane fade shadow" id="drum-machine" role="tabpanel" aria-labelledby="drum-machine-tab"></div>
-              <div className="tab-pane fade" id="js-calculator" role="tabpanel" aria-labelledby="js-calculator-tab"></div>
+              <div className="tab-pane fade" id="calculator" role="tabpanel" aria-labelledby="calculator-tab"></div>
               <div className="tab-pane fade" id="clock" role="tabpanel" aria-labelledby="clock-tab"></div>
+              <div className="tab-pane fade" id="python" role="tabpanel" aria-labelledby="python-tab"></div>
+              
             </div>
           </div>
         </div>
@@ -184,5 +231,6 @@ navigation();
 doQuote();
 doMarkdown();
 doDrum();
-doCalc();
+doCalculator();
 doClock();
+doPython();

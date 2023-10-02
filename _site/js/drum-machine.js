@@ -401,7 +401,7 @@ function maschine() {
       function init(options) {
         dispatcher.register(evs);
         new SequencerView(options).render();
-        setTempo(150);
+        setTempo(90);
         _initialized = true;
       }
     
@@ -428,7 +428,7 @@ function maschine() {
         <div class="module transport pb-2">\
           <button class="transport-play" title="Play">&#9658;</button>\
                 <button class="transport-stop" title="Stop">&#9632;</button>\
-                <input type="text" size="3" min="30" max="250" value="150" class="transport-tempo"/> \
+                <input type="text" size="3" min="30" max="250" value="90" class="transport-tempo"/> \
                 <span class="text-muted" style="font-family:system-ui;"><abbr title="Beats per minute">BPM</abbr></span> \
         </div>\
       '

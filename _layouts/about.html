@@ -6,7 +6,7 @@
         
         {% include header.html %}
         
-        <main class="container-fluid m-0 mt-5">
+        <main class="d-flex w-100 h-100 p-3 mx-auto flex-column container-fluid m-0 mt-5">
             
             <div class="row pt-4 pb-4">
             
@@ -22,17 +22,450 @@
                     </div>
 
                     <div id="profile" class="p-5 pt-5 mb-5 me-md-5 bg-body shadow-lg rounded">
-                        {% for info in site.data.infos.portfolio_info %}
-                            <h3 class="pt-5">
-                                Profile
-                            </h3>
+                        
+                        <div class="card mb-3 mt-0 p-0 border-0" >
+                            <div class="row g-0">
+
+                                <div class="col-md-4">
+                                    {% include simages/me.html %}
+                                </div>
+
+                                <div class="col-md-8">
+                                    <div class="card-body ps-md-4 pt-md-0 p-0 pt-3">
+
+                                    {% for info in site.data.infos.portfolio_info %}
+                                        <p class="card-text fs-3 lh-sm">
+                                            {{ info.profile_p_01 }}
+                                        </p>
+                                        <p class="card-text fs-5 lh-sm">
+                                            {{ info.profile_p_02 }}
+                                        </p>
+                                    {% endfor %}
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="card mb-3 mt-0 p-0 border-0">
+
+                            <div class="col-12">
+                                <h5 class="pb-2 fw-bold">Previous Graphic projects</h5>
+                            </div>
+
+                            <div class="row g-2">
+
+                                <div class="row row-cols-1 row-cols-md-3 g-0">
+
+                                    
+                                    
+                                    <div class="col">
+                                        <div class="card h-100 border-0">
+                                            <img class="card-img rounded-0" src="https://miro.medium.com/v2/resize:fill:224:224/0*0xP0yMD3tkmRjZ4q.jpeg" alt="">
+                                            <div class="card-img-overlay">
+                                                <!-- <p class="card-text">This is a wider.</p> -->
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col">
+                                        <div class="card h-100 border-0">
+                                            <img class="card-img rounded-0" src="{% include mainurl.html %}/img/pop_01.jpg" alt="" style="width:100%;height:inherit;
+                                            object-fit:cover;">
+                                            <div class="card-img-overlay">
+                                                <!-- <p class="card-text">This is a wider.</p> -->
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col">
+                                        <div class="card h-100 border-0">
+                                            <img class="card-img rounded-0" src="{% include mainurl.html %}/img/pop_02.jpg" alt="" style="width:100%;height:inherit;
+                                            object-fit:cover;">
+                                            <div class="card-img-overlay">
+                                                <!-- <p class="card-text">This is a wider.</p> -->
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col">
+                                        <div class="card h-100 border-0">
+                                            <img class="card-img rounded-0" src="{% include mainurl.html %}/img/pop_03.jpg" alt="" style="width:100%;height:inherit;
+                                            object-fit:cover;">
+                                            <div class="card-img-overlay">
+                                                <!-- <p class="card-text">This is a wider.</p> -->
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col">
+                                        <div class="card h-100 border-0">
+                                            <img class="card-img rounded-0" src="{% include mainurl.html %}/img/pop_04.jpg" alt="" style="width:100%;height:inherit;
+                                            object-fit:cover;">
+                                            <div class="card-img-overlay">
+                                                <!-- <p class="card-text">This is a wider.</p> -->
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col">
+                                        <div class="card h-100 border-0">
+                                            <img class="card-img rounded-0" src="{% include mainurl.html %}/img/pop_05.jpg" alt="" style="width:100%;height:inherit;
+                                            object-fit:cover;">
+                                            <div class="card-img-overlay">
+                                                <!-- <p class="card-text">This is a wider.</p> -->
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col">    
+                                        <div class="card h-100 border-0">
+                                            <img class="card-img rounded-0" src="{% include mainurl.html %}/img/pop_06.jpg" alt="" style="width:100%;height:inherit;
+                                            object-fit:cover;">
+                                            <div class="card-img-overlay">
+                                                <!-- <p class="card-text">This is a wider.</p> -->
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col">
+                                        <div class="card h-100 border-0">
+                                            <img class="card-img rounded-0" src="{% include mainurl.html %}/img/pop_07.jpg" alt="" style="width:100%;height:inherit;
+                                            object-fit:cover;">
+                                            <div class="card-img-overlay">
+                                                <!-- <p class="card-text">This is a wider.</p> -->
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col">
+                                        <div class="card h-100 border-0">
+                                            <img class="card-img rounded-0" src="{% include mainurl.html %}/img/pop_01.png" alt="" style="width:100%;height:inherit;
+                                            object-fit:cover;">
+                                            <div class="card-img-overlay">
+                                                <!-- <p class="card-text">This is a wider.</p> -->
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col">
+                                        <div class="card h-100 border-0">
+                                            <img class="card-img rounded-0" src="{% include mainurl.html %}/img/pop_02.png" alt="" style="width:100%;height:inherit;
+                                            object-fit:cover;">
+                                            <div class="card-img-overlay">
+                                                <!-- <p class="card-text">This is a wider.</p> -->
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col">
+                                        <div class="card h-100 border-0">
+                                            <img class="card-img rounded-0" src="https://miro.medium.com/v2/resize:fit:720/format:webp/0*DKA17wkjR6QUFET_.jpg" alt="" style="width:100%;height:inherit;
+                                            object-fit:cover;">
+                                            <div class="card-img-overlay">
+                                                <!-- <p class="card-text">This is a wider.</p> -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+
+                                    <div class="col">
+                                        <div class="card h-100 border-0">
+                                            <img class="card-img rounded-0" src="https://miro.medium.com/v2/resize:fit:640/format:webp/0*Mxs-QkRN9ZZCUIzN.jpg" alt="" style="width:100%;height:inherit;
+                                            object-fit:cover;">
+                                            <div class="card-img-overlay">
+                                                <!-- <p class="card-text">This is a wider.</p> -->
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col">
+                                        <div class="card h-100 border-0">
+                                            <img class="card-img rounded-0" src="https://miro.medium.com/v2/resize:fit:720/format:webp/0*_NllvFGpkaCBJOk0.png" alt="" style="width:100%;height:inherit;
+                                            object-fit:cover;">
+                                            <div class="card-img-overlay">
+                                                <!-- <p class="card-text">This is a wider.</p> -->
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col">
+                                        <div class="card h-100 border-0">
+                                            <img class="card-img rounded-0" src="https://miro.medium.com/v2/resize:fit:720/format:webp/1*iGimqNFfGwrEtffQyu2GDA.jpeg" alt="" style="width:100%;height:inherit;
+                                            object-fit:cover;">
+                                            <div class="card-img-overlay">
+                                                <!-- <p class="card-text">This is a wider.</p> -->
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col">
+                                        <div class="card h-100 border-0">
+                                            <img class="card-img rounded-0" src="https://miro.medium.com/v2/resize:fit:720/format:webp/1*EiuaD_d3mzZeHb90M_hGqw.jpeg" alt="" style="width:100%;height:inherit;
+                                            object-fit:cover;">
+                                            <div class="card-img-overlay">
+                                                <!-- <p class="card-text">This is a wider.</p> -->
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col">
+                                        <div class="card h-100 border-0">
+                                            <img class="card-img rounded-0" src="https://miro.medium.com/v2/resize:fit:720/format:webp/1*Bg5MLBKP347l1qAarc2Awg.jpeg" alt="" style="width:100%;height:inherit;
+                                            object-fit:cover;">
+                                            <div class="card-img-overlay">
+                                                <!-- <p class="card-text">This is a wider.</p> -->
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col">
+                                        <div class="card h-100 border-0">
+                                            <img class="card-img rounded-0" src="https://miro.medium.com/v2/resize:fit:720/format:webp/1*D4Z4bpTHEFdXucbw4WjWKQ.jpeg" alt="" style="width:100%;height:inherit;
+                                            object-fit:cover;">
+                                            <div class="card-img-overlay">
+                                                <!-- <p class="card-text">This is a wider.</p> -->
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col">
+                                        <div class="card h-100 border-0">
+                                            <img class="card-img rounded-0" src="https://miro.medium.com/v2/resize:fit:720/format:webp/1*-LqGfBCEdC6e6HRiyxBJNA.jpeg" alt="" style="width:100%;height:inherit;
+                                            object-fit:cover;">
+                                            <div class="card-img-overlay">
+                                                <!-- <p class="card-text">This is a wider.</p> -->
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col">
+                                        <div class="card h-100 border-0">
+                                            <img class="card-img rounded-0" src="https://miro.medium.com/v2/resize:fit:1100/format:webp/1*VRI0MASBFjaB2onSVy5_BQ.jpeg" alt="" style="width:100%;height:inherit;
+                                            object-fit:cover;">
+                                            <div class="card-img-overlay">
+                                                <!-- <p class="card-text">This is a wider.</p> -->
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col">
+                                        <div class="card h-100 border-0">
+                                            <img class="card-img rounded-0" src="https://miro.medium.com/v2/resize:fit:720/format:webp/1*qNT7DFeEEQxPme7qrPjTpA.png" alt="" style="width:100%;height:inherit;
+                                            object-fit:cover;">
+                                            <div class="card-img-overlay">
+                                                <!-- <p class="card-text">This is a wider.</p> -->
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col">
+                                        <div class="card h-100 border-0">
+                                            <img class="card-img rounded-0" src="https://miro.medium.com/v2/resize:fit:4800/format:webp/1*tShsyDP4vewg-1rNFvSndw.jpeg" alt="" style="width:100%;height:inherit;
+                                            object-fit:cover;">
+                                            <div class="card-img-overlay">
+                                                <!-- <p class="card-text">This is a wider.</p> -->
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col">
+                                        <div class="card h-100 border-0">
+                                            <img class="card-img rounded-0" src="{% include mainurl.html %}/img/caribinn.png" alt="" style="width:100%;height:inherit;
+                                            object-fit:cover;">
+                                            <div class="card-img-overlay">
+                                                <!-- <p class="card-text">This is a wider.</p> -->
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col">
+                                        <div class="card h-100 border-0">
+                                            <img class="card-img rounded-0" src="http://soundervine.com/wp-content/uploads/2023/07/soundervine-logo-official-150x150.png" alt="" style="width:100%;height:inherit;
+                                            object-fit:cover;">
+                                            <div class="card-img-overlay">
+                                                <!-- <p class="card-text">This is a wider.</p> -->
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col">
+                                        <div class="card h-100 border-0">
+                                            <img class="card-img rounded-0" src="{% include mainurl.html %}/img/c7logo.png" alt="" style="width:100%;height:inherit;
+                                            object-fit:cover;">
+                                            <div class="card-img-overlay">
+                                                <!-- <p class="card-text">This is a wider.</p> -->
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col">
+                                        <div class="card h-100 border-0">
+                                            <img class="card-img rounded-0" src="{% include mainurl.html %}/img/pwr_logo.jpg" alt="" style="width:100%;height:inherit;
+                                            object-fit:cover;">
+                                            <div class="card-img-overlay">
+                                                <!-- <p class="card-text">This is a wider.</p> -->
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col">
+                                        <div class="card h-100 border-0">
+                                            <img class="card-img rounded-0" src="{% include mainurl.html %}/img/Moringa_Tea_24_bags_(2020)_4up_Front.jpg" alt="" style="width:100%;height:inherit;
+                                            object-fit:cover;">
+                                            <div class="card-img-overlay">
+                                                <!-- <p class="card-text">This is a wider.</p> -->
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col">
+                                        <div class="card h-100 border-0">
+                                            <img class="card-img rounded-0" src="{% include mainurl.html %}/img/coffee.jpg" alt="" style="width:100%;height:inherit;
+                                            object-fit:cover;">
+                                            <div class="card-img-overlay">
+                                                <!-- <p class="card-text">This is a wider.</p> -->
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col">
+                                        <div class="card h-100 border-0">
+                                            <img class="card-img rounded-0" src="{% include mainurl.html %}/img/logo.png" alt="" style="width:100%;height:inherit;
+                                            object-fit:cover;">
+                                            <div class="card-img-overlay">
+                                                <!-- <p class="card-text">This is a wider.</p> -->
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col">
+                                        <div class="card h-100 border-0">
+                                            <img class="card-img rounded-0" src="{% include mainurl.html %}/img/malarkes-logo.svg" alt="" style="width:100%;height:inherit;
+                                            object-fit:cover;">
+                                            <div class="card-img-overlay">
+                                                <!-- <p class="card-text">This is a wider.</p> -->
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col">
+                                        <div class="card h-100 border-0">
+                                            <img class="card-img rounded-0" src="{% include mainurl.html %}/img/pwr_logo.jpg" alt="" style="width:100%;height:inherit;
+                                            object-fit:cover;">
+                                            <div class="card-img-overlay">
+                                                <!-- <p class="card-text">This is a wider.</p> -->
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col">
+                                        <div class="card h-100 border-0">
+                                            <img class="card-img rounded-0" src="{% include mainurl.html %}/img/sndrvn_promo_leaflet_01.jpg" alt="" style="width:100%;height:inherit;
+                                            object-fit:cover;">
+                                            <div class="card-img-overlay">
+                                                <!-- <p class="card-text">This is a wider.</p> -->
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col">
+                                        <div class="card h-100 border-0">
+                                            <img class="card-img rounded-0" src="{% include mainurl.html %}/img/soundervine-logos.png" alt="" style="width:100%;height:inherit;
+                                            object-fit:cover;">
+                                            <div class="card-img-overlay">
+                                                <!-- <p class="card-text">This is a wider.</p> -->
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col">
+                                        <div class="card h-100 border-0">
+                                            <img class="card-img rounded-0" src="{% include mainurl.html %}/img/soundervine-logo-02.png" alt="" style="width:100%;height:inherit;
+                                            object-fit:cover;">
+                                            <div class="card-img-overlay">
+                                                <!-- <p class="card-text">This is a wider.</p> -->
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col">
+                                        <div class="card h-100 border-0">
+                                            <img class="card-img rounded-0" src="{% include mainurl.html %}/img/soundervine-logo-03.png" alt="" style="width:100%;height:inherit;
+                                            object-fit:cover;">
+                                            <div class="card-img-overlay">
+                                                <!-- <p class="card-text">This is a wider.</p> -->
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col">
+                                        <div class="card h-100 border-0">
+                                            <img class="card-img rounded-0" src="{% include mainurl.html %}/img/soundervine-logo-04.png" alt="" style="width:100%;height:inherit;
+                                            object-fit:cover;">
+                                            <div class="card-img-overlay">
+                                                <!-- <p class="card-text">This is a wider.</p> -->
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col">
+                                        <div class="card h-100 border-0">
+                                            <img class="card-img rounded-0" src="{% include mainurl.html %}/img/soundervine-logo-05.png" alt="" style="width:100%;height:inherit;
+                                            object-fit:cover;">
+                                            <div class="card-img-overlay">
+                                                <!-- <p class="card-text">This is a wider.</p> -->
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col">
+                                        <div class="card h-100 border-0">
+                                            <img class="card-img rounded-0" src="{% include mainurl.html %}/img/soundervine-logo-06.png" alt="" style="width:100%;height:inherit;
+                                            object-fit:cover;">
+                                            <div class="card-img-overlay">
+                                                <!-- <p class="card-text">This is a wider.</p> -->
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col">
+                                        <div class="card h-100 border-0">
+                                            <img class="card-img rounded-0" src="{% include mainurl.html %}/img/soundervine-logo-07.png" alt="" style="width:100%;height:inherit;
+                                            object-fit:cover;">
+                                            <div class="card-img-overlay">
+                                                <!-- <p class="card-text">This is a wider.</p> -->
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col">
+                                        <div class="card h-100 border-0">
+                                            <img class="card-img rounded-0" src="{% include mainurl.html %}/img/soundervine-logo-08.png" alt="" style="width:100%;height:inherit;
+                                            object-fit:cover;">
+                                            <div class="card-img-overlay">
+                                                <!-- <p class="card-text">This is a wider.</p> -->
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>        
+                        
+                        
+                        <!-- {% for url in site.data.infos.portfolio_info %}
                             <p>
-                                {{ info.profile_p_01 }}
+                                {{ url.hyperion_link_text }}
+                                <a class="text-capitalize" target="_blank" href="{{ url.hyperion_portfolio }}">
+                                    {{ url.hyperion_name }}
+                                </a>
                             </p>
-                            <p>
-                                {{ info.profile_p_02 }}
-                            </p>
-                        {% endfor %}    
+
+                        {% endfor %}  -->
+
                     </div>
 
                     <div id="skills" class="p-5 pt-5 mb-5 me-md-5 bg-body shadow-lg rounded">

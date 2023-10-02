@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Pacifico&display=swap');
+
 body {
   font-family: "Segoe UI Emoji"
 }
@@ -86,13 +88,13 @@ body {
 
   #quote-box {
 
-    opacity: 100%;
+    opacity: 1;
   }
   
   
   /*the fade animations*/
   
-  @keyframes fade-out {
+  @keyframes fadeOut {
     from {
       opacity: 100%;
     }
@@ -101,7 +103,7 @@ body {
     }
   }
   
-  @keyframes fade-in {
+  @keyframes fadeIn {
     from {
       opacity: 0%;
     }
@@ -557,67 +559,184 @@ border:#0ed600;
   border-radius: 0.25rem;
 }
 
-
-.fade-in-canvas { 
-  animation: fadeIn 2s; 
-  -webkit-animation: fadeIn ease 2s;
-  -moz-animation: fadeIn ease 2s;
-  -o-animation: fadeIn ease 2s;
-  -ms-animation: fadeIn ease 2s;
+#text, #author, #quotemark, #image-copyright, #buttons {
+  opacity:0;
+  animation: fadeIn 6s; 
+  -webkit-animation: fadeIn ease 6s;
+  -moz-animation: fadeIn ease 6s;
+  -o-animation: fadeIn ease 6s;
+  -ms-animation: fadeIn ease 6s;
 }
-@keyframes fadeIn {
-  0% { opacity: 0; }
-  100% { opacity: 0.5; }
-}
-
-@-moz-keyframes fadeIn {
-  0% { opacity: 0; }
-  100% { opacity: 0.5; }
+#text.fade.show, #author.fade.show, #quotemark.fade.show, #image-copyright.fade.show, #buttons.fade.show  {
+  opacity:1;
 }
 
-@-webkit-keyframes fadeIn {
-  0% { opacity: 0; }
-  100% { opacity: 0.5; }
+#auth-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-@-o-keyframes fadeIn {
-  0% { opacity: 0; }
-  100% { opacity: 0.5; }
+#author-img,
+#mobile-bg { 
+  /* margin-top: -30px; */
+  /* object-fit: cover!important; */
+  /* object-position: 0px 0px!important; */
+  animation: fadeIn 6s; 
+  -webkit-animation: fadeIn ease 6s;
+  -moz-animation: fadeIn ease 6s;
+  -o-animation: fadeIn ease 6s;
+  -ms-animation: fadeIn ease 6s;
+
+  /* height: 100%!important;  */
+  /* display: block!important;  */
+  flex-shrink: 0!important; 
+  /* height: 112%!important; */
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
-@-ms-keyframes fadeIn {
-  0% { opacity: 0; }
-  100% { opacity: 0.5; }
+#quotemark svg {
+  vertical-align: baseline;
+  stroke-width: 0.2px!important;
 }
 
-.fade-out-canvas { 
-  animation: fadeOut  2s; 
-  -webkit-animation: fadeOut  ease 2s;
-  -moz-animation: fadeOut  ease 2s;
-  -o-animation: fadeOut  ease 2s;
-  -ms-animation: fadeOut  ease 2s;
-}
-@keyframes fadeOut  {
-  0% { opacity: 0.5; }
-  100% { opacity: 0; }
+
+
+
+
+.py-terminal {
+  min-height: 10em;
+  background-color: rgba(0, 0, 0, 0)!important;
+  color: inherit!important;
+  padding: 0.5rem;
+  overflow: auto;
 }
 
-@-moz-keyframes fadeOut  {
-  0% { opacity: 0.5; }
-  100% { opacity: 0; }
+figure {
+  margin: 0 0 0rem!important;
 }
 
-@-webkit-keyframes fadeOut  {
-  0% { opacity: 0.5; }
-  100% { opacity: 0; }
+.ratio-4x3 {
+  --bs-aspect-ratio: 100%;
 }
 
-@-o-keyframes fadeOut  {
-  0% { opacity: 0.5; }
-  100% { opacity: 0; }
+#quote-text > p > #text {
+  font-family: 'Segoe UI Emoji', cursive!important;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+}
+#author {
+  font-family: 'Gloria Hallelujah', cursive!important;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
 }
 
-@-ms-keyframes fadeOut  {
-  0% { opacity: 0.5; }
-  100% { opacity: 0; }
+#image-copyright {
+  font-family: 'arial', cursive!important;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
 }
+
+#new-quote {
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+}
+
+
+/* `sm` applies to x-small devices (portrait phones, less than 576px) */
+@media (min-width:0px) and (max-width:575.98px) { 
+  /* .card-img-overlay {
+    position: relative;
+  }
+  .card-img {
+    margin-top: -20px;
+  }
+  #auth-image {
+    align-items: start;
+  }
+
+  .ratio-4x3 {
+    --bs-aspect-ratio: 0;
+  } */
+  #auth-image .overlay,
+  #author-img {
+    object-fit: cover!important;
+    height: 100%!important;
+  }
+  .ratio-1x1 {
+    --bs-aspect-ratio: 150%; 
+    height: 100vh!important;
+  }
+}
+
+
+.overlay {
+  position: absolute;
+  image-rendering: pixelated;
+  opacity: 0.9;
+}
+
+/* `md` applies to small devices (landscape phones, less than 768px) */
+@media (min-width:575.99px) and (max-width: 767.98px) {}
+
+/* `lg` applies to medium devices (tablets, less than 992px) */
+@media (min-width: 767.99px) and (max-width: 991.98px) {}
+
+/* `xl` applies to large devices (desktops, less than 1200px) */
+@media (min-width: 991.99px) and (max-width: 1199.98px) {}
+
+
+
+
+
+
+
+
+/* calculator */
+.keys {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 10px;
+  padding: 10px;
+  margin:auto;
+}
+
+.keys-and-screen {
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 10px;
+  margin:auto;
+  width: 90%;
+}
+
+
+
+
+
+.screen{
+  background-color:rgb(171, 219, 231);
+  justify-content: left;
+  color: black;
+  font-size: medium;
+  padding: 10px; 
+  margin: auto;
+}
+
+
+#calc-screen-clear input{
+  line-height: 2!important;
+}
+
+
+
+#artwork-data span,
+#new-quote,
+#tweet-quote {
+  width: fit-content;
+  --bs-bg-opacity: 0.4;
+  background-color: rgba(var(--bs-dark-rgb),var(--bs-bg-opacity))!important;
+}
+
+#artwork-data span:hover,
+#new-quote:hover,
+#tweet-quote:hover {
+  --bs-bg-opacity: 1;
+    background-color: #000!important;
+}
+

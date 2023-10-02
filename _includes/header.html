@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="{{ site.site_path }}">
+        <a class="navbar-brand" href="{% include mainurl.html %}/">
             <span class="fs-6">{{ site.title }}:</span> 
             <span class="text-uppercase">{{ site.name }}</span>
         </a>
@@ -34,9 +34,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/about.html">About</a>
                 </li>
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a class="nav-link" href="/projects/">Projects</a>
-                </li>
+                </li> -->
             </ul>
         </div>
     </div>

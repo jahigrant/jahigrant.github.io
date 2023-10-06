@@ -12,7 +12,7 @@ skills_info:
 - name: Web3
   level: 40
   url: https://web3.foundation/
-  img_url: https://repository-images.githubusercontent.com/24655114/c71c5800-6a8c-11e9-9117-8ec357c9f69e
+  img_url: logos/web3.png
 
 - name: Solidity
   level: 30
@@ -67,7 +67,7 @@ skills_info:
 - name: Babylon.js
   level: 40
   url: https://www.babylonjs.com/
-  img_url: https://upload.wikimedia.org/wikipedia/commons/8/8e/Babylon_logo_v4.svg
+  img_url: https://www.wittystore.com/image/cache/data/brands_logos/logo-babylon-js-650x650.jpg
 
 softwares_info:
 - name: VS Code
@@ -129,3 +129,18 @@ softwares_info:
   level: 70
   url: https://www.microsoft.com/en-gb/microsoft-365/powerpoint
   img_url: https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Microsoft_Office_PowerPoint_%282019%E2%80%93present%29.svg/800px-Microsoft_Office_PowerPoint_%282019%E2%80%93present%29.svg.png
+
+- name: Designer
+  level: 50
+  url: https://affinity.serif.com/en-gb/designer/
+  img_url: https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Affinity_Designer_2-logo.svg/1200px-Affinity_Designer_2-logo.svg.png
+
+- name: Photo
+  level: 60
+  url: https://affinity.serif.com/en-gb/photo/
+  img_url: https://static.photoprice.ca/product_images/07162.medium.gif
+
+- name: Publisher
+  level: 45
+  url: https://affinity.serif.com/en-gb/publisher/
+  img_url: https://dlpure.com/wp-content/uploads/2020/05/Serif-Affinity-Publisher_icon.png

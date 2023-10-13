@@ -9,34 +9,11 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
-
-                {%- if site.data.global.navigation -%}
-                {%- assign navigation = site.data.global.navigation -%}
-              {%- else -%}
-                {%- assign navigation = '' | split: ',' -%}
-
-                {%- capture nav_data -%}
-                {%- include navigation.yml -%}
-                {%- endcapture -%}
-
-                {%- assign nav_array = nav_data | split: ' - ' %}
-                {%- for nav_item in nav_array -%}
-                  {%- if nav_item != '' -%}
-                    {%- assign nav_cleaned = nav_item | strip | replace: 'title: ', '' | replace: '   url: ', '' -%}
-                    {%- assign navigation = navigation | push: nav_cleaned -%}
-                  {%- endif -%}
-                {%- endfor -%}
-              {%- endif -%}
-
+                {% for navitem in site.data.navigation.navigation_data %}
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/home.html">Home</a>
+                    <a class="nav-link" aria-current="page" href="{{ navitem.url }}">{{ navitem.title }}</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/about.html">About</a>
-                </li>
-                <!-- <li class="nav-item">
-                    <a class="nav-link" href="/projects/">Projects</a>
-                </li> -->
+                {% endfor %}
             </ul>
         </div>
     </div>

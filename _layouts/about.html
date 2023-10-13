@@ -24,14 +24,27 @@
                     <div id="profile" class="p-5 pt-5 mb-5 me-md-5 bg-body shadow-lg rounded">
                         
                         <div class="card mb-3 mt-0 p-0 border-0" >
-                            <div class="row g-0">
+                            <div class="row">
 
-                                <div class="col-md-4">
-                                    {% include simages/me.html %}
-                                </div>
+                                <div class="clearfix">
 
-                                <div class="col-md-8">
-                                    <div class="card-body ps-md-4 pt-md-0 p-0 pt-3">
+                                    <a class="float-end mb-3 ms-3 col-4" data-bs-toggle="modal" data-bs-target="#profilePic">
+                                        {% include simages/me.html %}
+                                    </a>    
+
+                                   <div class="modal rounded-0 fade" id="profilePic" tabindex="-1" aria-labelledby="profilePicLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header" style="z-index: 1;border-bottom: 0px;" data-bs-theme="dark">
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="background-color: aliceblue;"></button>
+                                                </div>
+                                                <div class="modal-body p-0 m-0 row align-items-center" style="margin-top: -50px !important;z-index: 0;width: 115%;
+                                                margin-left: -10% !important;">
+                                                    {% include simages/me.html %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
 
                                     {% for info in site.data.infos.portfolio_info %}
                                         <p class="card-text fs-3 lh-sm">
@@ -42,7 +55,8 @@
                                         </p>
                                     {% endfor %}
 
-                                    </div>
+ 
+                                
                                 </div>
                             </div>
                         </div>
@@ -63,13 +77,7 @@
                         <h3 class="pt-5">
                             Graphic Design
                         </h3>
-                        <div class="row">
-                         
-                            <div class="row g-2">
-                                <div class="row row-cols-1 row-cols-md-3 g-0" id="image-modals"></div>
-                            </div>
-
-                        </div>
+                        <div class="row row-cols-1 row-cols-md-6 g-2" id="image-modals"></div>
                     </div>
 
                     <div id="skills" class="p-5 pt-5 mb-5 me-md-5 bg-body shadow-lg rounded">
@@ -155,14 +163,16 @@
                         <div class="row g-5">
 
                             {% for certificate in site.data.certificates.certificates_info %}
-                                <div class="card border-0 p-0 col-12 col-sm-12 col-md-12 col-lg-12 col-xl-6 col-xxl-6" style="filter:grayscale(200%);">
-                                    <div class="card-body bg-primary p-5 m-3">
+                                <div class="card border-0 p-0 col-12 col-sm-12 col-md-12 col-lg-12 col-xl-6 col-xxl-6">
+                                    <div class="card-body bg-success p-5 m-3">
 
                                         <p class="text-white fw-light mb-0">This certifies that:<br></p>
-                                        <h3 class="card-title text-white"><span class="badge bg-secondary text-wrap text-start rounded-0">{{ certificate.awarded_to }}</span></h3>
+                                        <h3 class="card-title text-white"><span class="badge bg-secondary text-wrap text-start rounded-0" style="background-color: #006400!important;">{{ certificate.awarded_to }}</span></h3>
                                         <p class="text-white fw-light lh-1">has successfully completed, via freeCodeCamp, the below named certificate</p>
 
-                                        <h3 class="card-title text-white"><span class="badge bg-secondary text-wrap text-start rounded-0">{{ certificate.name }}*</span></h3>
+                                        <img class="mb-3 px-4" src="{{ certificate.logo_url }}" style="width: 60%;display: block;background-color: #006400!important;" alt="">
+
+                                        <h3 class="card-title text-white"><span class="badge bg-secondary text-wrap text-start rounded-0" style="background-color: #006400!important;">{{ certificate.name }}*</span></h3>
 
                                         <p class="mb-3">
                                             <small class="text-white fw-light">Date issued: {{ certificate.issue_date }}</small>
@@ -193,21 +203,23 @@
                         <div class="row g-5">
 
                             {% for qualification in site.data.qualifications.qualification_info %}
-                                <div class="card border-0 p-0 col-12 col-sm-12 col-md-12 col-lg-12 col-xl-6 col-xxl-6" style="filter:grayscale(200%);">
+                                <div class="card border-0 p-0 col-12 col-sm-12 col-md-12 col-lg-12 col-xl-6 col-xxl-6">
                                     <div class="card-body bg-primary p-5 m-3">
 
                                         <p class="text-white fw-light mb-0">This certifies that:<br></p>
-                                        <h3 class="card-title text-white"><span class="badge bg-secondary text-wrap text-start rounded-0">{{ qualification.awarded_to }}</span></h3>
+                                        <h3 class="card-title text-white"><span class="badge bg-secondary text-wrap text-start rounded-0" style="background-color: #01033c!important;">{{ qualification.awarded_to }}</span></h3>
                                         <p class="text-white fw-light lh-1">has successfully obtained, via University of Greenwich, the below named qualification</p>
 
-                                        <h3 class="card-title text-white"><span class="badge bg-secondary text-wrap text-start rounded-0">{{ qualification.name }}*</span></h3>
+                                        <img class="pb-3" src="{{ qualification.logo_url }}" style="width: 60%;display: block;" alt="">
+
+                                        <h3 class="card-title text-white"><span class="badge bg-secondary text-wrap text-start rounded-0" style="background-color: #01033c!important;">{{ qualification.name }}*</span></h3>
 
                                         <p class="mb-3">
                                             <small class="text-white fw-light">Date issued: {{ qualification.issue_date }}</small>
                                         </p>
                                         
-                                        <p class="card-text text-white fw-light lh-1"><small>*Awarded CertHE.</small></p>
-                                        <a href="{{ qualification.cert_link }}" class="card-link text-white text-decoration-none" target="_blank" title="Link to original certificate">
+                                        <p class="card-text text-white fw-light fs-6 lh-1"><small>*Awarded CertHE.</small></p>
+                                        <a href="{{ qualification.outline_link }}" class="card-link text-white text-decoration-none fs-6" target="_blank" title="Link to original certificate">
                                             Qualification outline
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-link-45deg" viewBox="0 0 16 16">
                                                 <path d="M4.715 6.542 3.343 7.914a3 3 0 1 0 4.243 4.243l1.828-1.829A3 3 0 0 0 8.586 5.5L8 6.086a1.002 1.002 0 0 0-.154.199 2 2 0 0 1 .861 3.337L6.88 11.45a2 2 0 1 1-2.83-2.83l.793-.792a4.018 4.018 0 0 1-.128-1.287z"></path>
@@ -244,7 +256,7 @@
               };
             }
 
-            jQuery(document).ready(function($) {
+
 
                 const img_modals = document.getElementById("image-modals");
 
@@ -257,7 +269,7 @@
                 for (let i = 0; i < img_local_urls.length; ++i) {
                     const element = img_local_urls[i];
                     img_modals.innerHTML += `
-                    <div class="col">
+                    <div class="col-3 col-md-2">
                         <div class="card h-100 border-0">
                             <img class="card-img rounded-0" src="{{% include mainurl.html %}}` + folder_dir + element + `" style="width:100%;height:inherit;object-fit:cover;">
                             <a class="" data-bs-toggle="modal" data-bs-target="#imageModal`+[i]+`">
@@ -266,7 +278,7 @@
                         </div>
                     </div>
                     <div class="modal rounded-0 fade" id="imageModal`+[i]+`" tabindex="-1" aria-labelledby="imageModal`+[i]+`Label" aria-hidden="true">
-                        <div class="modal-dialog modal-fullscreen-lg-down">
+                        <div class="modal-dialog ">
                             <div class="modal-content">
                                 <div class="modal-header" style="z-index: 1;border-bottom: 0px;" data-bs-theme="dark">
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="background-color: aliceblue;"></button>
@@ -283,7 +295,7 @@
                 for (let i = 0; i < img_remote_urls.length; ++i) {
                     const element = img_remote_urls[i];
                     img_modals.innerHTML += `
-                    <div class="col">
+                    <div class="col-3 col-md-2">
                         <div class="card h-100 border-0">
                             <img class="card-img rounded-0" src="` + element + `" style="width:100%;height:inherit;object-fit:cover;">
                             <a class="" data-bs-toggle="modal" data-bs-target="#remoteImageModal`+[i]+`">
@@ -292,7 +304,7 @@
                         </div>
                     </div>
                     <div class="modal rounded-0 fade" id="remoteImageModal`+[i]+`" tabindex="-1" aria-labelledby="remoteImageModal`+[i]+`Label" aria-hidden="true">
-                        <div class="modal-dialog modal-fullscreen-lg-down">
+                        <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header" style="z-index: 1;border-bottom: 0px;" data-bs-theme="dark">
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="background-color: aliceblue;"></button>
@@ -310,7 +322,7 @@
   
  
                 
-            });
+     
 
 
 

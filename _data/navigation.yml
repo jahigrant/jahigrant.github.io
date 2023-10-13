@@ -1,0 +1,14 @@
+navigation_data:
+ - title: Home
+   url: /home.html
+ - title: About
+   url: /about.html
+ - title: Projects
+   url: /projects/
+ - title: Contact Me
+   url: /contact.html
+ - title: Blog
+   url: /blog.html
+errorpage_data:
+ - title: 404 Error
+   url: /*

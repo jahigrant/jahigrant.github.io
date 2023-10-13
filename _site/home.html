@@ -1,3 +1,42 @@
+<style>
+    .user_msg{
+        text-align: right;
+        margin-left: 30%;
+        display: flex;
+        flex-direction: row-reverse;  
+        font-synthesis: none;
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        -webkit-text-size-adjust: 100%;
+        font-size: 5vw;
+    }
+    .waiting_msg{
+        text-align: left;
+        margin-right: 30%;
+        display: flex;
+        flex-direction: row;  
+        font-synthesis: none;
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        -webkit-text-size-adjust: 100%;
+        font-size: 5vw;
+    }
+    .dbbot_msg{
+        text-align: left;
+        margin-right: 30%;
+        display: flex;
+        flex-direction: row;  
+        font-synthesis: none;
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        -webkit-text-size-adjust: 100%;
+        font-size: 5vw;
+    }
+</style>
+
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
@@ -13,10 +52,10 @@
         <meta http-equiv='pragma' content='no-cache'>
 
         <link rel="pingback" href="https: //domainname.com/xmlrpc.php" >
-        <title>Home</title>
+        <title>Home | Jahi Grant</title>
         <!-- style and script resources -->
-        <link rel="stylesheet" href="" media="all">
-        <script src=""></script>
+        <!-- <link rel="stylesheet" href="" media="all">
+        <script src=""></script> -->
         <!--meta properties -->
         <meta name="description" content=" Your site description." >
         <!--detailed robots meta https://developers.google.com/search/reference/robots_meta_tag -->
@@ -69,16 +108,15 @@
         
     </head>
 
+
 <body class="d-flex h-100">
-        <!--[if lt IE 7]>
-            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
+    <!--[if lt IE 7]>
+        <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+    
+    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column" id="home-page">
 
-
-
-        <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column" id="home-page-art">
-
-<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="/">
             <span class="fs-6">Portfolio:</span> 
@@ -88,15 +126,28 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav"><li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/home.html">Home</a>
-                </li>
+            <ul class="navbar-nav">
+                
                 <li class="nav-item">
-                    <a class="nav-link" href="/about.html">About</a>
+                    <a class="nav-link" aria-current="page" href="/home.html">Home</a>
                 </li>
-                <!-- <li class="nav-item">
-                    <a class="nav-link" href="/projects/">Projects</a>
-                </li> -->
+                
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="/about.html">About</a>
+                </li>
+                
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="/projects/">Projects</a>
+                </li>
+                
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="/contact.html">Contact Me</a>
+                </li>
+                
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="/blog.html">Blog</a>
+                </li>
+                
             </ul>
         </div>
     </div>
@@ -106,115 +157,26 @@
 
 
             <main class="row pt-4 pb-4">
-                
-                <script>
-                    let intervalID;
-                    let x, y;
-                    
-                    function setup() {
-                        let elt = document.getElementById('home-page-art');
-                        const canvas = createCanvas(windowWidth, windowHeight)
-                        canvas.addClass('fade-in-canvas')
-                        canvas.parent(elt)
-                        canvas.style("display", "block")
-                        canvas.style("position", "fixed")
-                        canvas.style("top", "0")
-                        canvas.style("left", "0")
-                        canvas.style("z-index", "-1")
-                        canvas.style("opacity", "0.7")
-                        x = windowWidth;
-                        y = windowHeight;
-                        rectMode(CENTER);
-                    }
- 
-                    function draw() {
-                        const artworkName = `A Blocks Eye View (Connections)`
-                        const artDate = `© 2023`
-                        const artistName = `Jahi Grant`
-                        const canvas = document.getElementById("defaultCanvas0");
-                        const ctx = canvas.getContext("2d");
-                        ctx.fillStyle = "black";
-                        ctx.font = "14px arial";
-                        ctx.direction = "ltr";
-                        ctx.textRendering = "geometricPrecision";
-                        ctx.fontKerning = "none";
-                        ctx.textAlign = "left";
-                        ctx.imageSmoothingEnabled = true;
-                        ctx.imageSmoothingQuality = "high";
-                        ctx.lineWidth = 0.5;
-                        ctx.translate(0, 0);
-                        ctx.fillText(
-                            "Commission: " + artworkName, 
-                            20, 
-                            canvas.height-100
-                        );
-                        ctx.fillText(
-                            "Artist: " + artistName, 
-                            20, 
-                            canvas.height-84
-                        );    
-                        ctx.fillText(
-                            "Year: " + artDate, 
-                            20, 
-                            canvas.height-70
-                        );            
-                        let canvasMetadata = artworkName + " By " + artistName;
-                        document.getElementById("defaultCanvas0").title = canvasMetadata;
-                        document.getElementById("defaultCanvas0").setAttribute('alt', canvasMetadata);
-
-                        for (let i = 0; i<radians(20); i+=radians(10000)) {
-
-                            push();
-
-                            const randomNumberSQGo = random(8);
-                            ctx.fillStyle = "grey";
-                            ctx.fillRect(random(x), random(y), randomNumberSQGo, randomNumberSQGo);
-
-                                rotate(0);
-                                fill(
-                                    random(255),
-                                    random(255),
-                                    random(255),
-                                    random(255)
-                                )
-                                square(
-                                    random(x),
-                                    random(y),
-                                    random(i-100)
-                                )
-                            pop();
-                        }
-                    }
-
-                    function stop() {
-                        clearInterval(intervalID);
-                        setup()
-                    }
-                    setInterval(stop, 100000); 
-
-                    window.addEventListener('resize', () => {
-                        clearInterval(intervalID);
-                        setup()
-                    });
-                    
-                </script>
 
                 <div class="col-12">
                     <div class="pt-5 mb-5">
-                        <h1 class="display-3 fw-bolder">Port​fo​lio</h1>
-                        <figure>
-                            <h3 class="display-6 lh-1 fw-bolder">Port·​fo·​lio</h3>
-                            <figcaption class="blockquote-footer fw-bolder">
-                                pɔːtˈfəʊ.li.əʊ
-                            </figcaption>
-                            <blockquote class="blockquote">
-                            <h3 class="display-6 lh-1 fw- fw-bolder">Port·​fo·​lio</h3>
-                            <p class="col-6 fs-5 fw-lighter lh-1 fst-italic fw-bolder">
-                                    A collection of drawings, documents, etc. that represent a person's, especially an artist's, work:
-                                </p>
-                            </blockquote>
-                        </figure>
                         
+                        <div id="chat" class="card bg-dark p-3 rounded-bottom-0"></div>
+                        <div id="chat-container" class="card bg-dark p-3 rounded-top-0">
+                            <div class="input-group mb-0 pt-0 mt-0">
+                                <input 
+                                    type="text" 
+                                    class="form-control form-control-lg" 
+                                    name="question" 
+                                    id="user-input" 
+                                    placeholder="Type question &#x23CE;" 
+                                    aria-label="Ask question" 
+                                    aria-describedby="question-input"
+                                >
+                                <button type="submit" id="submit-button" class="btn btn-secondary" onclick="getVal()">Send</button>
+                            </div>
+                        </div>
+                    
                         
 
                     
@@ -222,6 +184,7 @@
                 </div>
                 
             </main>
+
                     
         <script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha256-tG5mcZUtJsZvyKAxYLVXrmjKBVLd6VpVccqz/r4ypFE=" crossorigin="anonymous"></script>
         
@@ -235,6 +198,8 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.min.js" integrity="sha512-3RlxD1bW34eFKPwj9gUXEWtdSMC59QqIqHnD8O/NoTwSJhgxRizdcFVQhUMFyTp5RwLTDL0Lbcqtl8b7bFAzog==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
         <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
+
+        <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
      
         <div class="container-fluid">
 
@@ -244,8 +209,8 @@
                   <svg xmlns="http://www.w3.org/2000/svg" style="margin-top:-3px;" width="12" height="12" fill="currentColor" class="bi bi-c-circle" viewBox="0 0 16 16">
                     <path d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8Zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0ZM8.146 4.992c-1.212 0-1.927.92-1.927 2.502v1.06c0 1.571.703 2.462 1.927 2.462.979 0 1.641-.586 1.729-1.418h1.295v.093c-.1 1.448-1.354 2.467-3.03 2.467-2.091 0-3.269-1.336-3.269-3.603V7.482c0-2.261 1.201-3.638 3.27-3.638 1.681 0 2.935 1.054 3.029 2.572v.088H9.875c-.088-.879-.768-1.512-1.729-1.512Z"/>
                   </svg> 2023 
-                  <a class="text-dark" href="/">
-                    <span class="text-decoration">Jahi Grant</span>.
+                  <a class="text-dark text-decoration-none" href="/">
+                    <span>Jahi Grant</span>.
                   </a> All rights reserved.
                 </span>
               </div>
@@ -259,8 +224,116 @@
           </div>
 
 
+
         </div>
 
-        
+        <script>
+            const dbbotResponses = {
+                "greetings": ["Yo!", "Wha gwan?", "Hey!", "Word up?"],
+                "questions": {
+                    "name": ["My name is Dogsbody.", "I'm Dogsbody, nice to meet you!"],
+                    "age": ["I don't have an age.", "Age is just a number for bots!"],
+                    "default": ["Don't be silly I'm Dogsbody not your mama.", "Yeah I don't understand that."]
+                },
+                "farewell": ["Goodbye!", "See you later!", "Farewell!", "Bye!"]
+            };
+
+            function getResponse(input) {
+                const lowerCaseInput = input.toLowerCase();
+
+                if (lowerCaseInput.includes("hello") || lowerCaseInput.includes("hi")) {
+                    return getRandomResponse(dbbotResponses.greetings);
+                } else if (lowerCaseInput.includes("name")) {
+                    return getRandomResponse(dbbotResponses.questions.name);
+                } else if (lowerCaseInput.includes("age")) {
+                    return getRandomResponse(dbbotResponses.questions.age);
+                } else if (lowerCaseInput.includes("bye")) {
+                    return getRandomResponse(dbbotResponses.farewell);
+                } else {
+                    return getRandomResponse(dbbotResponses.questions.default);
+                }
+            }
+
+            function getRandomResponse(responses) {
+                const randomIndex = Math.floor(Math.random() * responses.length);
+                return responses[randomIndex];
+            }
+
+            async function getVal() {
+
+                const user_chat = document.querySelector('#chat');
+                const val = document.querySelector('#user-input').value;
+                const submit_btn = document.querySelector('#submit-button');
+
+
+                $(submit_btn).attr('disabled', true);
+                $('input[id="user-input"]').on('keyup', function () {
+                    var text_value = $('input[name="question"]').val();
+                    if (text_value != '') {
+                        $('button[id="submit-button"]').attr('disabled', false);
+                    } else {
+                        $('button[id="submit-button"]').attr('disabled', true);
+                    }
+                });
+
+                if (val == '') {
+                } else {
+
+
+                    console.log(val);
+                    // Example usage
+
+                    const userInput = val;
+                    const botResponse = getResponse(userInput);
+                    console.log("Bot:", botResponse);
+
+                    user_chat.innerHTML += `
+                        <div class="user_msg rounded-4 bg-primary text-light p-3 px-4 mt-2 text-capitalize" style="border-bottom-right-radius: 0!important;">
+                            <div class="container text-center">
+                                <p class="text-break mb-0">
+                                    `+ val +`
+                                </p>
+                            </div>
+                        </div>
+
+                        <div id="waiting_msg" class="waiting_msg p-3 px-4 mt-2">
+                            <div class="dot-flashing"></div>
+                        </div>
+                    `;
+
+                    const resTimeout = setTimeout(dbResponse, 2000);
+                    function dbResponse() {
+                        const element = document.getElementById("waiting_msg");
+                        element.remove();
+                        user_chat.innerHTML += `
+                            <div class="bot_msg rounded-4 bg-success text-light p-3 px-4 mt-2" style="border-bottom-left-radius: 0!important;">
+                                <p class="text-break mb-0">
+                                    `+ botResponse +`
+                                </p>
+                            </div>
+                        `;
+                    }
+
+                    document.querySelector("#user-input").value = '';
+                }
+
+            }
+
+            var input = document.getElementById("user-input");//get textarea tag
+            //NOW replace this with: var input = document.getElementById("myTextarea")
+
+            // Execute a function when the user presses a key on the keyboard
+            input.addEventListener("keypress", function(event) {
+            // If the user presses the "Enter" key on the keyboard
+            if (event.key === "Enter") {
+                // Cancel the default action, if needed
+                event.preventDefault();
+                // Trigger the button element with a click
+                document.getElementById("submit-button").click();
+            }
+            }); 
+
+        </script>
+
     </body>
 </html>

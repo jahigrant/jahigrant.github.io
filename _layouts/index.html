@@ -1,19 +1,18 @@
-{% include head.html %}
+{% include index_head.html %}
+
 <body class="d-flex h-100">
-        <!--[if lt IE 7]>
-            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
+    <!--[if lt IE 7]>
+        <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
 
+    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column" id="home-page-art">
 
-
-        <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column" id="home-page-art">
-
-{% include header.html %}
+        {% include header.html %}
 
             <main class="row pt-4 pb-4">
                 
                 <script>
-                    let intervalID;
+                    // let intervalID;
                     let x, y;
                     
                     function setup() {
@@ -26,10 +25,11 @@
                         canvas.style("top", "0")
                         canvas.style("left", "0")
                         canvas.style("z-index", "-1")
-                        canvas.style("opacity", "0.7")
+                        canvas.style("opacity", "0.6")
                         x = windowWidth;
                         y = windowHeight;
                         rectMode(CENTER);
+                        frameRate(1);
                     }
  
                     function draw() {
@@ -44,10 +44,10 @@
                         ctx.textRendering = "geometricPrecision";
                         ctx.fontKerning = "none";
                         ctx.textAlign = "left";
-                        ctx.imageSmoothingEnabled = true;
-                        ctx.imageSmoothingQuality = "high";
+                        ctx.imageSmoothingEnabled = false;
+                        ctx.imageSmoothingQuality = "low";
                         ctx.lineWidth = 0.5;
-                        ctx.translate(0, 0);
+                        ctx.translate(0, 10);
                         ctx.fillText(
                             "Commission: " + artworkName, 
                             20, 
@@ -67,11 +67,11 @@
                         document.getElementById("defaultCanvas0").title = canvasMetadata;
                         document.getElementById("defaultCanvas0").setAttribute('alt', canvasMetadata);
 
-                        for (let i = 0; i<radians(20); i+=radians(100)) {
-
+                        for (let i = 0; i<radians(100); i=radians(100)) {
+                            for (let j = 0; j<radians(100); j=radians(100)) {
                             push();
 
-                            const randomNumberSQGo = random(8);
+                            const randomNumberSQGo = random(1);
                             ctx.fillStyle = "grey";
                             ctx.fillRect(random(x), random(y), randomNumberSQGo, randomNumberSQGo);
 
@@ -85,36 +85,46 @@
                                 square(
                                     random(x),
                                     random(y),
-                                    random(i-100)
+                                    random(i-j-100)
                                 )
-                            pop();
-                        }
-                    }
 
+
+
+
+
+                            pop();
+                        }}
+
+             
+
+
+
+
+
+                    }
+                    let intervalID = setInterval(setup, 100);
                     function stop() {
                         clearInterval(intervalID);
-                        // setup()
                     }
-                    setInterval(stop, 1000); 
-
-                    window.addEventListener('resize', () => {
-                        clearInterval(intervalID);
-                        // setup()
-                    });
+                    stop();
+                    
+                    // window.addEventListener('resize', () => {
+                    //     clearInterval(intervalID);
+                    //     // setup()
+                    // });
                     
                 </script>
 
                 <div class="col-12">
                     <div class="pt-5 mb-5">
-                        <h1 class="display-3 fw-bolder">Port​fo​lio</h1>
+                        <h1 class="display-3 fw-bolder" style="display:initial;">Port​fo​lio</h1>
                         <figure>
-                            <h3 class="display-6 lh-1 fw-bolder">Port·​fo·​lio</h3>
-                            <figcaption class="blockquote-footer fw-bolder">
+                            <h3 class="display-6 lh-1 fw-bolder fs-4">Port·​fo·​lio</h3>
+                            <figcaption class="blockquote-footer fw-bolder fs-5">
                                 pɔːtˈfəʊ.li.əʊ
                             </figcaption>
                             <blockquote class="blockquote">
-                            <h3 class="display-6 lh-1 fw- fw-bolder">Port·​fo·​lio</h3>
-                            <p class="col-6 fs-5 fw-lighter lh-1 fst-italic fw-bolder">
+                            <p class="col-6 fs-6 fw-lighter lh-1 fst-italic">
                                     A collection of drawings, documents, etc. that represent a person's, especially an artist's, work:
                                 </p>
                             </blockquote>
@@ -129,6 +139,13 @@
             {% include footer.html %}
         </div>
 
-        
+        <script>
+            $(window).bind('resize', function(e){
+                console.log('window resized..');
+                this.location.reload(false);
+            });
+        </script>
+
+
     </body>
 </html>

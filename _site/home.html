@@ -229,13 +229,13 @@
 
         <script>
             const dbbotResponses = {
-                "greetings": ["Yo!", "Wha gwan?", "Hey!", "Word up?"],
+                "greetings": ["Yo!", "Wha gwan?", "Hey!", "Word up?", "Guten tag", "Salaam", "Hola", "Ciao"],
                 "questions": {
                     "name": ["My name is Dogsbody.", "I'm Dogsbody, nice to meet you!"],
                     "age": ["I don't have an age.", "Age is just a number for bots!"],
-                    "default": ["Don't be silly I'm Dogsbody not your mama.", "Yeah I don't understand that."]
+                    "default": ["Don't be silly! What is that ish?", "Yeah I don't understand that one."]
                 },
-                "farewell": ["Goodbye!", "See you later!", "Farewell!", "Bye!"]
+                "farewell": ["Goodbye!", "See you later!", "Farewell!", "Bye!", "Ciao!"]
             };
 
             function getResponse(input) {
@@ -243,11 +243,11 @@
 
                 if (lowerCaseInput.includes("hello") || lowerCaseInput.includes("hi")) {
                     return getRandomResponse(dbbotResponses.greetings);
-                } else if (lowerCaseInput.includes("name")) {
+                } else if (lowerCaseInput.includes("name") || lowerCaseInput.includes("call")) {
                     return getRandomResponse(dbbotResponses.questions.name);
-                } else if (lowerCaseInput.includes("age")) {
+                } else if (lowerCaseInput.includes("age")  || lowerCaseInput.includes("old")) {
                     return getRandomResponse(dbbotResponses.questions.age);
-                } else if (lowerCaseInput.includes("bye")) {
+                } else if (lowerCaseInput.includes("bye") || lowerCaseInput.includes("ciao")) {
                     return getRandomResponse(dbbotResponses.farewell);
                 } else {
                     return getRandomResponse(dbbotResponses.questions.default);
@@ -285,13 +285,20 @@
 
                     const userInput = val;
                     const botResponse = getResponse(userInput);
+
+                    const d = new Date();
+                    let hour = d.getHours();
+                    let minutes = d.getMinutes();
+                    let seconds = d.getSeconds();
+
                     console.log("Bot:", botResponse);
 
                     user_chat.innerHTML += `
-                        <div class="user_msg rounded-4 bg-primary text-light p-3 px-4 mt-2 text-capitalize" style="border-bottom-right-radius: 0!important;">
-                            <div class="container text-center">
-                                <p class="text-break mb-0">
-                                    `+ val +`
+                        <div class="user_msg rounded-4 bg-primary text-light p-3 px-4 mt-2" style="border-bottom-right-radius: 0!important;">
+                            <div class="container p-0 m-0">
+                                <p class="lh-sm fw-lighter fs-6 p-0 m-0 text-lowercase">`+d.toLocaleTimeString('en-GB', { hour12: true })+`</p>
+                                <p class="text-break lh-sm fw-lighter mb-0 fs-2">
+                                    `+ _.upperFirst(val) +`
                                 </p>
                             </div>
                         </div>
@@ -303,13 +310,19 @@
 
                     const resTimeout = setTimeout(dbResponse, 2000);
                     function dbResponse() {
+
+                        let res_d = new Date();
+
                         const element = document.getElementById("waiting_msg");
                         element.remove();
                         user_chat.innerHTML += `
-                            <div class="bot_msg rounded-4 bg-success text-light p-3 px-4 mt-2 text-capitalize" style="border-bottom-left-radius: 0!important;">
-                                <p class="text-break mb-0">
-                                    `+ botResponse +`
-                                </p>
+                            <div class="bot_msg rounded-4 bg-success text-light p-3 px-4 mt-2" style="border-bottom-left-radius: 0!important;">
+                                <div class="container p-0 m-0">
+                                    <p class="lh-sm fw-lighter fs-6 p-0 m-0 text-lowercase">`+res_d.toLocaleTimeString('en-GB', { hour12: true })+`</p>
+                                    <p class="text-break lh-sm fw-lighter mb-0 fs-2">
+                                        `+ _.upperFirst(botResponse) +`
+                                    </p>
+                                </div>
                             </div>
                         `;
                     }

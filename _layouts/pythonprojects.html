@@ -1,0 +1,30 @@
+{% include python_projects_head.html %}
+    <body>
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
+        <div id="progress-bar-container" class="progress" role="progressbar" aria-label="Example 1px high" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="height:200px!important;">
+            <div id="progress-bar" class="progress-bar"></div>
+        </div>
+
+        {% include header.html %}
+        
+            <div class="col-12 col-md-10 col-lg-8 h-100 mb-5 p-md-2 p-3-md mx-auto flex-column mb-5-md mt-5-md pb-5-md pt-5-md mt-4 overflow-hidden">
+             
+                
+                <div id="profile-header" class="p-3 mt-5 text-start">
+                    <h1 id="page-title">{{ page.title }}</h1>
+                </div>
+                <div id="python-projects-page" class="container">
+                    <div class="" id="project-collapse-menu">
+                        <div id="python_projects_nav" class="px-1 px-md-5"></div>
+                    </div>
+                </div>
+            
+            </div>
+
+        {% include python_projects_footer.html %}
+        
+    </body>
+</html>

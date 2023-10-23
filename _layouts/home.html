@@ -1,40 +1,5 @@
 <style>
-    .user_msg{
-        text-align: right;
-        margin-left: 30%;
-        display: flex;
-        flex-direction: row-reverse;  
-        font-synthesis: none;
-        text-rendering: optimizeLegibility;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-        -webkit-text-size-adjust: 100%;
-        font-size: 5vw;
-    }
-    .waiting_msg{
-        text-align: left;
-        margin-right: 30%;
-        display: flex;
-        flex-direction: row;  
-        font-synthesis: none;
-        text-rendering: optimizeLegibility;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-        -webkit-text-size-adjust: 100%;
-        font-size: 5vw;
-    }
-    .dbbot_msg{
-        text-align: left;
-        margin-right: 30%;
-        display: flex;
-        flex-direction: row;  
-        font-synthesis: none;
-        text-rendering: optimizeLegibility;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-        -webkit-text-size-adjust: 100%;
-        font-size: 5vw;
-    }
+
 </style>
 
 {% include head.html %}
@@ -53,22 +18,15 @@
                 <div class="col-12">
                     <div class="pt-5 mb-5">
                         
-                        <div id="chat" class="card bg-dark p-3 rounded-bottom-0"></div>
-                        <div id="chat-container" class="card bg-dark p-3 rounded-top-0">
-                            <div class="input-group mb-0 pt-0 mt-0">
-                                <input 
-                                    type="text" 
-                                    class="form-control form-control-lg" 
-                                    name="question" 
-                                    id="user-input" 
-                                    placeholder="Type question &#x23CE;" 
-                                    aria-label="Ask question" 
-                                    aria-describedby="question-input"
-                                >
-                                <button type="submit" id="submit-button" class="btn btn-secondary" onclick="getVal()">Send</button>
-                            </div>
-                        </div>
+               
+
+                        <img src="{% include mainurl.html %}/animated/boxed.svg" alt="">
+
+
+
+
                     
+
                         {{ content }}
                     
                     </div>
@@ -81,125 +39,75 @@
         </div>
 
         <script>
-            const dbbotResponses = {
-                "greetings": ["Yo!", "Wha gwan?", "Hey!", "Word up?", "Guten tag", "Salaam", "Hola", "Ciao"],
-                "questions": {
-                    "name": ["My name is Dogsbody.", "I'm Dogsbody, nice to meet you!"],
-                    "age": ["I don't have an age.", "Age is just a number for bots!"],
-                    "default": ["Don't be silly! What is that ish?", "Yeah I don't understand that one."]
-                },
-                "farewell": ["Goodbye!", "See you later!", "Farewell!", "Bye!", "Ciao!"]
-            };
 
-            function getResponse(input) {
-                const lowerCaseInput = input.toLowerCase();
+                // const originalNumber = w; // Replace this with your original number
+                // const percentageToSubtract = 20; // 10% of the original number
+                // const subtractedWindow = originalNumber - (originalNumber * percentageToSubtract / 100);
+                // canvas.setAttribute("width", subtractedWindow);
+                // canvas.setAttribute("height", subtractedWindow);
+                // canvas.style.width = subtractedWindow;
+                // canvas.style.height = subtractedWindow;            
 
-                if (lowerCaseInput.includes("hello") || lowerCaseInput.includes("hi")) {
-                    return getRandomResponse(dbbotResponses.greetings);
-                } else if (lowerCaseInput.includes("name") || lowerCaseInput.includes("call")) {
-                    return getRandomResponse(dbbotResponses.questions.name);
-                } else if (lowerCaseInput.includes("age")  || lowerCaseInput.includes("old")) {
-                    return getRandomResponse(dbbotResponses.questions.age);
-                } else if (lowerCaseInput.includes("bye") || lowerCaseInput.includes("ciao")) {
-                    return getRandomResponse(dbbotResponses.farewell);
-                } else {
-                    return getRandomResponse(dbbotResponses.questions.default);
-                }
-            }
-
-            function getRandomResponse(responses) {
-                const randomIndex = Math.floor(Math.random() * responses.length);
-                return responses[randomIndex];
-            }
-
-            async function getVal() {
-
-                const user_chat = document.querySelector('#chat');
-                const val = document.querySelector('#user-input').value;
-                const submit_btn = document.querySelector('#submit-button');
+var w = window.innerWidth;
+var h = window.innerHeight;
 
 
-                $(submit_btn).attr('disabled', true);
-                $('input[id="user-input"]').on('keyup', function () {
-                    var text_value = $('input[name="question"]').val();
-                    if (text_value != '') {
-                        $('button[id="submit-button"]').attr('disabled', false);
-                    } else {
-                        $('button[id="submit-button"]').attr('disabled', true);
-                    }
-                });
-
-                if (val == '') {
-                } else {
 
 
-                    console.log(val);
-                    // Example usage
 
-                    const userInput = val;
-                    const botResponse = getResponse(userInput);
 
-                    const d = new Date();
-                    let hour = d.getHours();
-                    let minutes = d.getMinutes();
-                    let seconds = d.getSeconds();
 
-                    console.log("Bot:", botResponse);
 
-                    user_chat.innerHTML += `
-                        <div class="user_msg rounded-4 bg-primary text-light p-3 px-4 mt-2" style="border-bottom-right-radius: 0!important;">
-                            <div class="container p-0 m-0">
-                                <p class="lh-sm fw-lighter fs-6 p-0 m-0 text-lowercase">`+d.toLocaleTimeString('en-GB', { hour12: true })+`</p>
-                                <p class="text-break lh-sm fw-lighter mb-0 fs-2">
-                                    `+ _.upperFirst(val) +`
-                                </p>
-                            </div>
-                        </div>
+     
 
-                        <div id="waiting_msg" class="waiting_msg p-3 px-4 mt-2">
-                            <div class="dot-flashing"></div>
-                        </div>
-                    `;
 
-                    const resTimeout = setTimeout(dbResponse, 2000);
-                    function dbResponse() {
 
-                        let res_d = new Date();
+//     document.addEventListener('resize', function() {
+//     // Code to run when the window is resized
+//     console.log('Windowsssss resize! ' + w + h + " numbers" + window.innerWidth);
+//     location.reload(); 
 
-                        const element = document.getElementById("waiting_msg");
-                        element.remove();
-                        user_chat.innerHTML += `
-                            <div class="bot_msg rounded-4 bg-success text-light p-3 px-4 mt-2" style="border-bottom-left-radius: 0!important;">
-                                <div class="container p-0 m-0">
-                                    <p class="lh-sm fw-lighter fs-6 p-0 m-0 text-lowercase">`+res_d.toLocaleTimeString('en-GB', { hour12: true })+`</p>
-                                    <p class="text-break lh-sm fw-lighter mb-0 fs-2">
-                                        `+ _.upperFirst(botResponse) +`
-                                    </p>
-                                </div>
-                            </div>
-                        `;
-                    }
+//     anim_container = document.getElementById("animation_container");
+//                 anim_container.style.width = w-10;
+//                 anim_container.style.height = w-10;
+  
+//                 dom_overlay_container = document.getElementById("dom_overlay_container");
+//                 dom_overlay_container.style.width = w;
+//                 dom_overlay_container.style.height = w;                
 
-                    document.querySelector("#user-input").value = '';
-                }
+//                 canvas = document.getElementById("canvas");
+//                 const originalNumber = w; // Replace this with your original number
+//                 const percentageToSubtract = 0; // 10% of the original number
+//                 const subtractedWindow = originalNumber - (originalNumber * percentageToSubtract / 100);
+//                 canvas.setAttribute("width", subtractedWindow);
+//                 canvas.setAttribute("height", subtractedWindow);
+//                 canvas.style.width = subtractedWindow;
+//                 canvas.style.height = subtractedWindow;
 
-            }
+// }); 
 
-            var input = document.getElementById("user-input");//get textarea tag
-            //NOW replace this with: var input = document.getElementById("myTextarea")
 
-            // Execute a function when the user presses a key on the keyboard
-            input.addEventListener("keypress", function(event) {
-            // If the user presses the "Enter" key on the keyboard
-            if (event.key === "Enter") {
-                // Cancel the default action, if needed
-                event.preventDefault();
-                // Trigger the button element with a click
-                document.getElementById("submit-button").click();
-            }
-            }); 
+  
 
-        </script>
+
+
+// function resizeCanvas() {
+//     canvas.width = window.innerWidth;
+//     canvas.height = window.innerHeight;
+//     console.log('Windowsssss resize! ' + w + "w X " + h + "h numbers " + window.innerWidth);
+//     console.log('canvass Size! ' + canvas.width + "w X " + canvas.height + "h");
+//     // Redraw content or reposition elements here if necessary
+//     // For example, context.fillRect(0, 0, canvas.width, canvas.height);
+// }
+
+// // Initial canvas sizing
+// resizeCanvas();
+
+// // Add event listener for window resize
+// window.addEventListener('resize', resizeCanvas);
+
+
+            </script>
 
     </body>
 </html>

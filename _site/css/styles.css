@@ -600,7 +600,12 @@ border:#0ed600;
   font-family: arial;
   color:rgb(0, 0, 0);
   height: 10vw !important;
-  margin-top: -7vw;
+  margin-top: -7vw;  
+  text-shadow:
+  3px 3px 0 #ffffff,
+  -3px 3px 0 #ffffff,
+  -3px -3px 0 #ffffff,
+  3px -3px 0 #ffffff;
 }
 
 #quotemarks .container .row #text {
@@ -619,15 +624,15 @@ border:#0ed600;
   font-size: 3vw!important;
   font-family: "Young Serif";
   text-shadow:
-  1px 1px 0 #ffffff,
-  -1px 1px 0 #ffffff,
-  -1px -1px 0 #ffffff,
-  1px -1px 0 #ffffff;
+  3px 3px 0 #ffffff,
+  -3px 3px 0 #ffffff,
+  -3px -3px 0 #ffffff,
+  3px -3px 0 #ffffff;
 }
 
 
 #artwork-data p{
-  font-weight: 900;
+  font-weight: 400;
   text-shadow:
   1px 1px 0 #ffffff,
   -1px 1px 0 #ffffff,
@@ -664,7 +669,7 @@ figure {
   height:50vh!important; 
 }
 /* `sm` applies to x-small devices (portrait phones, less than 576px) */
-@media (min-width:0px) and (max-width:360px) { 
+@media (min-width:0px) and (max-width:412px) { 
   #quotemarks .container .row #text {
     font-size: 8vw !important;
     padding-left: 0px!important;
@@ -676,10 +681,15 @@ figure {
   #auth-image #image-overlay,
   #auth-image #author-img {
     object-fit: cover!important;
-    background-size: 100% 100%;
-    width: 250% !important;
-    height: 175% !important;
+    /* background-size: 100% 100%; */
+    width: 100vw !important; 
+    height: 175% !important; 
   }
+
+  #author-img{
+    background-size: 300vw 70vh !important;
+  }
+
 
   .vh-50 {
     height: 60vh !important;
@@ -691,7 +701,7 @@ figure {
 
 
 /* `sm` applies to x-small devices (portrait phones, less than 576px) */
-@media (min-width:361px) and (max-width:575.98px) { 
+@media (min-width:413px) and (max-width:575.98px) { 
   /* .card-img-overlay {
     position: relative;
   }
@@ -783,11 +793,71 @@ figure {
 
 
 #image-overlay {
-  opacity: 0.5!important;
+  opacity: 0!important;
 }
 #author-img {
-  opacity: 0.4!important;
+  opacity: 1!important;
+  background-size: 100vw 100vh;
+  width: 100vw !important;
 }
+
+
+.image-wrap {
+  width: 100%;
+  height: 50vw;
+  margin: 0 auto;
+  overflow: hidden;
+  position: relative;
+}
+
+.image-wrap img {
+  width: 100%;
+  animation: move 440s ease;
+  /* Add infinite to loop. */
+  
+  -ms-animation: move 440s ease;
+  -webkit-animation: move 440s ease;
+  -0-animation: move 440s ease;
+  -moz-animation: move 440s ease;
+  position: absolute;
+}
+
+@-webkit-keyframes move {
+  0% {
+    -webkit-transform-origin: bottom left;
+    -moz-transform-origin: bottom left;
+    -ms-transform-origin: bottom left;
+    -o-transform-origin: bottom left;
+    transform-origin: bottom left;
+    transform: scale(1.0);
+    -ms-transform: scale(1.0);
+    /* IE 9 */
+    
+    -webkit-transform: scale(1.0);
+    /* Safari and Chrome */
+    
+    -o-transform: scale(1.0);
+    /* Opera */
+    
+    -moz-transform: scale(1.0);
+    /* Firefox */
+  }
+  100% {
+    transform: scale(1.2);
+    -ms-transform: scale(1.2);
+    /* IE 9 */
+    
+    -webkit-transform: scale(1.2);
+    /* Safari and Chrome */
+    
+    -o-transform: scale(1.2);
+    /* Opera */
+    
+    -moz-transform: scale(1.2);
+    /* Firefox */
+  }
+}
+
 
 #image-overlay,
 #author-img {
@@ -871,4 +941,44 @@ figure {
   50%, 100% {
     background-color: rgba(152, 128, 255, 0.2);
   }
+}
+
+
+
+
+.user_msg{
+  text-align: right;
+  margin-left: 30%;
+  display: flex;
+  flex-direction: row-reverse;  
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+  font-size: 5vw;
+}
+.waiting_msg{
+  text-align: left;
+  margin-right: 30%;
+  display: flex;
+  flex-direction: row;  
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+  font-size: 5vw;
+}
+.dbbot_msg{
+  text-align: left;
+  margin-right: 30%;
+  display: flex;
+  flex-direction: row;  
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+  font-size: 5vw;
 }

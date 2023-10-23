@@ -5,6 +5,8 @@ navigation_data:
    url: /about.html
  - title: Projects
    url: /projects/
+ - title: Python Projects
+   url: /projects/python-projects.html
  - title: Contact Me
    url: /contact.html
  - title: Blog

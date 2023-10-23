@@ -7,7 +7,7 @@ def hello_world_script():
 
 <py-script>
 def math_script():
-    print(int(50) * int(50) % int(66))
+    print(int(50) * int(50) % int(45))
     print('=========================')
 </py-script>
  

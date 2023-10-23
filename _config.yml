@@ -2,5 +2,5 @@
 name: Jahi Grant
 title: Portfolio
 site_path: https://jahigrant.github.io/
-include: ['_projects']
+include: ['_projects', '_python_projects']
 relative_permalinks: false

@@ -224,18 +224,18 @@ $(document).ready(() => {
         
                             authorImg.innerHTML = ""
         
-                            authorImg.innerHTML += `<div id="image-overlay" class="overlay fade show" style="background-image: url(` + UrlFormat + `);width:`+w*2+`px;height:`+w*2+`px;" alt="` + imgAltText + `"></div>`
+                            authorImg.innerHTML += `<div id="image-overlay" class="image-wrap overlay fade show" style="background-image: url(` + UrlFormat + `);width:`+w*2+`px;height:`+h*2+`px;" alt="` + imgAltText + `"></div>`
                                 
-                            authorImg.innerHTML += `<div id="author-img" class="fade show" style="background-image: url(` + UrlFormat + `);width:`+w*2+`px;height:`+w*2+`px;" alt="` + imgAltText + `"></div>`
+                            authorImg.innerHTML += `<div id="author-img" class="image-wrap fade show" style="background-image: url(` + UrlFormat + `);width:`+w*2+`px;height:`+h*2+`px;" alt="` + imgAltText + `"></div>`
                                 
                         } 
                         if (authorImg.src == "https://www.artic.edu/iiif/2/null/full/843,/0/default.jpg"){
         
                             authorImg.innerHTML = ""
         
-                            authorImg.innerHTML += `<div id="image-overlay" class="overlay card-img h-100 fade show rounded-0" style="background-image: url("https://www.artic.edu/iiif/2/40b5d8dc-45a8-6629-5ace-32c86c0905e1/full/843,/0/default.jpg");width:`+w*2+`px;height:`+h*2+`px;" alt="` + imgCopyFormat + `"></div>`
+                            authorImg.innerHTML += `<div id="image-overlay" class="image-wrap overlay card-img h-100 fade show rounded-0" style="background-image: url("https://www.artic.edu/iiif/2/40b5d8dc-45a8-6629-5ace-32c86c0905e1/full/843,/0/default.jpg");width:`+w*2+`px;height:`+h*2+`px;" alt="` + imgCopyFormat + `"></div>`
         
-                            authorImg.innerHTML += `<div id="author-img" class="card-img h-100 fade show rounded-0" style="background-image: url("https://www.artic.edu/iiif/2/40b5d8dc-45a8-6629-5ace-32c86c0905e1/full/843,/0/default.jpg");width:`+w*2+`px;height:`+h*2+`px;" alt="` + imgCopyFormat + `"></div>`
+                            authorImg.innerHTML += `<div id="author-img" class="image-wrap card-img h-100 fade show rounded-0" style="background-image: url("https://www.artic.edu/iiif/2/40b5d8dc-45a8-6629-5ace-32c86c0905e1/full/843,/0/default.jpg");width:`+w*2+`px;height:`+h*2+`px;" alt="` + imgCopyFormat + `"></div>`
         
                         }
         
@@ -473,15 +473,15 @@ imgLoading.innerHTML = loading_dots;
 
                         authorImg.innerHTML = ""
                         
-                        authorImg.innerHTML += `<div id="image-overlay" class="overlay fade show" style="background-image: url(` + UrlFormat + `);width:`+w*2+`px;height:`+w*2+`px;" alt="` + imgAltText + `"></div>`
+                        authorImg.innerHTML += `<div id="image-overlay" class="image-wrap overlay fade show" style="background-image: url(` + UrlFormat + `);width:`+w*2+`px;height:`+h*2+`px;" alt="` + imgAltText + `"></div>`
 
-                        authorImg.innerHTML += `<div id="author-img" class="fade show" style="background-image: url(` + UrlFormat + `);width:`+w*2+`px;height:`+w*2+`px;" alt="` + imgAltText + `"></div>`
+                        authorImg.innerHTML += `<div id="author-img" class="image-wrap fade show" style="background-image: url(` + UrlFormat + `);width:`+w*2+`px;height:`+h*2+`px;" alt="` + imgAltText + `"></div>`
                     } 
                     
                     if (UrlFormat == "https://www.artic.edu/iiif/2/null/full/843,/0/default.jpg" || !imgAltText){
                         
-                        authorImg.innerHTML += `<div id="image-overlay" class="overlay card-img h-100 fade show rounded-0" style="background-image: url("https://www.artic.edu/iiif/2/40b5d8dc-45a8-6629-5ace-32c86c0905e1/full/843,/0/default.jpg");width:`+w*2+`px;height:`+h*2+`px;" alt="` + imgCopyFormat + `"></div>`
-                        authorImg.innerHTML += `<div id="author-img" class="card-img h-100 fade show rounded-0" style="background-image: url("https://www.artic.edu/iiif/2/40b5d8dc-45a8-6629-5ace-32c86c0905e1/full/843,/0/default.jpg");width:`+w*2+`px;height:`+h*2+`px;" alt="` + imgCopyFormat + `"></div>`
+                        authorImg.innerHTML += `<div id="image-overlay" class="image-wrap overlay card-img h-100 fade show rounded-0" style="background-image: url("https://www.artic.edu/iiif/2/40b5d8dc-45a8-6629-5ace-32c86c0905e1/full/843,/0/default.jpg");width:`+w*2+`px;height:`+h*2+`px;" alt="` + imgCopyFormat + `"></div>`
+                        authorImg.innerHTML += `<div id="author-img" class="image-wrap card-img h-100 fade show rounded-0" style="background-image: url("https://www.artic.edu/iiif/2/40b5d8dc-45a8-6629-5ace-32c86c0905e1/full/843,/0/default.jpg");width:`+w*2+`px;height:`+h*2+`px;" alt="` + imgCopyFormat + `"></div>`
                         
                     }
 
@@ -535,59 +535,72 @@ imgLoading.innerHTML = loading_dots;
 
     function tick() {
         const element = (
-            
-            <div id="quote-box" className="card-img justify-content-center fade show rounded-0" style={{overflow: 'hidden'}}>
+            <div className="p-0 m-0">
+                <div id="quote-box" className="card-img justify-content-center fade show rounded-0" style={{overflow: 'hidden'}}>
 
-                <div className="w-100 h-100 p-0 m-0">
-                    <span id="loading-dots">
-                        <div className="progress rounded-0" role="progressbar" aria-label="Basic example" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-                            <div className="progress-bar rounded-0" style={{width: '0%'}}></div>
-                        </div>
-                    </span>
-                </div>
-                <div className="card-img shadow-lg rounded-0 vh-50 fade show">
-
-                    <figure className="figure m-0 p-0 w-100 ratio ratio-1x1">
-                        <div id="auth-image" className="fade show"></div>
-                    </figure>
-
-                    <div className="inner-card card-img-overlay rounded-0" id="quote-text-area">
-
-                        <div id="quotemarks" className="pt-2">
-                            <div className="container">
-                                <div class="d-flex align-items-start flex-column mb-3">
-                                    <div className="row">
-                                        <div id="quotemark" className="vw-quote col-2"></div>
-                                        <div id="text" className="vw-font lh-sm col-10"></div>
-                                        <div id="author" className="text-end vw-author col-12 pb-4"></div>
-                                    </div>
-                                    <div className="row">
-                                            <div className="figure-caption text-start mb-0 pb-0 m-0" id="image-copyright"></div>
-                                    </div>
-                                    <div className="row pt-4" id="buttons">
-                                        <div className="col-auto">
-                                            <a id='tweet-quote' className="btn btn-dark btn-lg border-0 rounded-0" href="#" role="button" target="_blank">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" stroke="black" strokeWidth={{strokeWidth}} className="bi bi-twitter" viewBox="0 0 16 16">
-                                                    <path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z"/>
-                                                </svg>
-                                            </a>
-                                        </div>
-                                        <div className="col-auto">
-                                            <button id='new-quote' type="button" className="btn btn-dark btn-lg border-0 rounded-0">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
-                                                    <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/>
-                                                    <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"/>
-                                                </svg>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
+                    <div className="w-100 h-100 p-0 m-0">
+                        <span id="loading-dots">
+                            <div className="progress rounded-0" role="progressbar" aria-label="Basic example" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                                <div className="progress-bar rounded-0" style={{width: '0%'}}></div>
                             </div>
+                        </span>
+                    </div>
+
+                    <div className="card-img shadow-lg rounded-0 vh-50 fade show">
+                        <figure className="figure m-0 p-0 w-100 ratio ratio-1x1">
+                            <div id="auth-image" className="fade show"></div>
+                        </figure>
+                        <div className="inner-card card-img-overlay rounded-0" id="quote-text-area">
                         </div>
-         
                     </div>
 
                 </div>
+                
+                <div id="quotemarks" className="pt-2 inner-card" style={{
+                    display: "block",
+                    zIndex: "1050", 
+                    position: "relative", 
+                    animation: "5s ease 0s 1 normal none running fadeIn" 
+                }}>
+                    <div className="container">
+                        <div className="d-flex align-items-start flex-column mb-3">
+                            <div className="row">
+                                <div id="quotemark" className="vw-quote col-2"></div>
+                                <div id="text" className="vw-font lh-sm col-10"></div>
+                                <div id="author" className="text-end vw-author col-12 pb-4"></div>
+                            </div>
+                            <div className="row">
+                                <div className="figure-caption text-start mb-0 pb-0 m-0" id="image-copyright"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                            
+                <div className="row pt-4" id="buttons" style={{
+                    display: "block",
+                    zIndex: "1050", 
+                    position: "relative", 
+                    animation: "5s ease 0s 1 normal none running fadeIn",
+                    marginLeft: "0px"
+                }}>
+                    <div className="p-0 m-0" style={{display: "inline"}}>
+                        <a id='tweet-quote' className="btn btn-dark btn-lg border-0 rounded-0" href="#" role="button" target="_blank">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" stroke="black" strokeWidth={{strokeWidth}} className="bi bi-twitter" viewBox="0 0 16 16">
+                                <path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z"/>
+                            </svg>
+                        </a>
+                    </div>
+                    <div className="p-0 m-0" style={{display: "inline"}}>
+                        <button id='new-quote' type="button" className="btn btn-dark btn-lg border-0 rounded-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" className="bi bi-arrow-clockwise" viewBox="0 0 16 16">
+                                <path fillRule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/>
+                                <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                
             </div>
 
         );
@@ -609,10 +622,21 @@ imgLoading.innerHTML = loading_dots;
 
 
 
-$('button[id^="new-quote"]').on("click", function() {
+async function btnClick() {
+    var input = await document.getElementsByTagName("new-quote");
 
+    input.addEventListener("click", function(event) {
+      event.preventDefault();
+    
+      // Number 13 is the "Enter" key on the keyboard
+    
+      if (event.key === 13) {
+        event.preventDefault();
+                document.getElementById("new-quote").click();
+      }
+    });
+}
 
-});
 
 var count = 10;
 var counting = setInterval(function(){

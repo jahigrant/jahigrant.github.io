@@ -203,7 +203,7 @@
                         <div class="row g-5">
 
                             {% for qualification in site.data.qualifications.qualification_info %}
-                                <div class="card border-0 p-0 col-12 col-sm-12 col-md-12 col-lg-12 col-xl-6 col-xxl-6">
+                                <div class="card border-0 p-0 col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
                                     <div class="card-body bg-primary p-5 m-3">
 
                                         <p class="text-white fw-light mb-0">This certifies that:<br></p>
@@ -271,20 +271,20 @@
                     img_modals.innerHTML += `
                     <div class="col-3 col-md-2">
                         <div class="card h-100 border-0">
-                            <img class="card-img rounded-0" src="{{% include mainurl.html %}}` + folder_dir + element + `" style="width:100%;height:inherit;object-fit:cover;">
+                            <img class="card-img rounded-0" src="{% include mainurl.html %}` + folder_dir + element + `" style="width:100%;height:inherit;object-fit:cover;">
                             <a class="" data-bs-toggle="modal" data-bs-target="#imageModal`+[i]+`">
                                 <div class="card-img-overlay"></div>
                             </a>    
                         </div>
                     </div>
-                    <div class="modal rounded-0 fade" id="imageModal`+[i]+`" tabindex="-1" aria-labelledby="imageModal`+[i]+`Label" aria-hidden="true">
+                    <div class="modal rounded-0 fade m-0" id="imageModal`+[i]+`" tabindex="-1" aria-labelledby="imageModal`+[i]+`Label" aria-hidden="true">
                         <div class="modal-dialog ">
                             <div class="modal-content">
                                 <div class="modal-header" style="z-index: 1;border-bottom: 0px;" data-bs-theme="dark">
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="background-color: aliceblue;"></button>
                                 </div>
                                 <div class="modal-body p-0 m-0 row align-items-center" style="margin-top: -50px !important;z-index: 0;">
-                                    <img class="p-0 m-0" src="{{% include mainurl.html %}}` + folder_dir + element + `" alt="" style="width: 100%;height:inherit;object-fit:cover;">
+                                    <img class="p-0 m-0" src="{% include mainurl.html %}` + folder_dir + element + `" alt="" style="width: 100%;height:inherit;object-fit:cover;">
                                 </div>
                             </div>
                         </div>

@@ -79,11 +79,11 @@ Ready to start writing?  Either start changing stuff on the left or
     document.getElementById('preview').innerHTML = marked.parse(mdPlaceholder);
     document.getElementById('editor').defaultValue = mdPlaceholder;
 
-    let myVar = setInterval(myTimer, 10000);
+    // let myVar = setInterval(myTimer, 10000);
 
-    function myTimer() {
-        document.getElementById('editor').innerHTML = '';
-    }
+    // function myTimer() {
+    //     document.getElementById('editor').innerHTML = '';
+    // }
 
     mdEditor.onkeyup = mdEditor.onkeypress = function(){
         document.getElementById('preview').innerHTML = marked.parse(this.value);

@@ -150,6 +150,8 @@ const navItems = [
       </div>`;
   }
 
+  
+
   function projectsNav() {
     const element = (
       <div>
@@ -224,7 +226,6 @@ const navItems = [
               {/* <div className="tab-pane fade shadow" id="drum-machine" role="tabpanel" aria-labelledby="drum-machine-tab"></div> */}
               {/* <div className="tab-pane fade" id="calculator" role="tabpanel" aria-labelledby="calculator-tab"></div> */}
               {/* <div className="tab-pane fade" id="clock" role="tabpanel" aria-labelledby="clock-tab"></div> */}
-              <div className="tab-pane fade" id="python" role="tabpanel" aria-labelledby="python-tab"></div>
               <div className="tab-pane fade" id="chatbot" role="tabpanel" aria-labelledby="chatbot-tab"></div>
             </div>
           </div>

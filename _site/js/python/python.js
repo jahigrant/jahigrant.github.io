@@ -1,7 +1,7 @@
 function python() {
 
 
-    getText("/python/hello_world.py");
+    getText("../hello_world.py");
 
     async function getText(file) {
         let newObject = await fetch(file);
@@ -42,7 +42,7 @@ function python() {
                 ]
 
                 [[fetch]]
-                files = ["./utils.py"]
+                files = ["../utils.py"]
             </py-config>
 
             <py-repl id="page-repl" auto-generate="false"></py-repl>

@@ -11,5 +11,7 @@ navigation:
    url: /interests/
  - title: Projects
    url: /projects/
+ - title: Python Projects
+   url: /python-projects/
  - title: 404 Error
    url: /*

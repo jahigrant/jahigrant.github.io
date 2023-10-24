@@ -1,7 +1,7 @@
 function python() {
 
 
-    getText("/python/hello_world.py");
+    getText("../python/hello_world.py");
 
     async function getText(file) {
         let newObject = await fetch(file);
@@ -10,21 +10,13 @@ function python() {
     }
 
 
-    
+    getText()
     const element = (
         <div>
-            <h1 id="python-scripts">Python Scripts</h1>
+            <h6 id="python-scripts">Code</h6>
 
             <div id="python_component"></div>
             
-
-
-            {/* <pre id="code-text"><code>
-                print("Hello World")
-
-                print("Hello World")
-                print('=========================')
-            </code></pre> */}
 
             <py-config>
                 [splashscreen]
@@ -33,26 +25,60 @@ function python() {
                     "datetime"
                 ]
                 plugins = [
+                    "https://pyscript.net/latest/plugins/python/py_tutor.py"
                 ]
 
                 [[fetch]]
-                files = ["./hello_world.py"]
+                files = ["../python/hello_world.py"]
             </py-config>
 
-            <py-repl id="page-repl" auto-generate="false"></py-repl>
+
+
+<div className="row pb-0 mb-0">
+    <code>
+        print("Hello World")
+    </code>
+</div>
+<div className="row pb-0 mb-0">
+    <code>
+        from datetime import datetime
+    </code>
+</div>
+<div className="row pb-0 mb-0">
+    <code>
+        now = datetime.now()
+    </code>
+</div>
+<div className="row pb-0 mb-0">
+    <code>
+        print(now.strftime("%m/%d/%Y, %H:%M:%S"))
+    </code>
+</div>
+<div className="row pt-0 mt-0 pb-0 mb-0">
+    <code>
+        print('=========================')
+    </code>
+</div>
+
+
+    
+    
+
+            {/* <py-repl id="page-repl" auto-generate="false"></py-repl> */}
             {/* <button id="run-code">Submit</button> */}
 
 
-            <div className="btn-group" role="group" aria-label="python scripts">
-                <button type="button" onClick={clearTheTextField()} className="btn btn-primary rounded-0" py-click="hello_world_script()" id="hello-world-manual">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-play-btn" viewBox="0 0 16 16">
+            <div className="btn-group pt-4" role="group" aria-label="python scripts">
+                <button type="button" onClick={clearTheTextField} className="btn btn-primary rounded-0" py-click="hello_world_script()" id="hello-world-manual">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-play-btn" viewBox="0 0 16 16">
   <path d="M6.79 5.093A.5.5 0 0 0 6 5.5v5a.5.5 0 0 0 .79.407l3.5-2.5a.5.5 0 0 0 0-.814l-3.5-2.5z"/>
   <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm15 0a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"/>
-</svg> Run
+</svg> Run "Hello world" script
                 </button>
             </div>
 
             <div id="python_script"></div>
+            
             <py-terminal></py-terminal>
         </div>
     );
@@ -79,15 +105,15 @@ async function printCode() {
     cliObjArr.innerHTML = "hello";
 }
 
-async function btnClick() {
-    var btn = await document.getElementById("hello-world-manual");
+// async function btnClick() {
+//     var btn = await document.getElementById("hello-world-manual");
 
-    btn.addEventListener("click", function() {
+//     btn.addEventListener("click", function() {
         
-        document.getElementsByTagName("py-repl").innerHTML = '';
+//         document.getElementsByTagName("py-repl").innerHTML = '';
       
-    });
-}
+//     });
+// }
 
 async function clearREPL() {
 
@@ -97,7 +123,7 @@ async function clearREPL() {
 }
 
 printCode();
-btnClick();
+// btnClick();
 python();
 clearCLI();
 

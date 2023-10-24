@@ -13,7 +13,7 @@
         <meta http-equiv='pragma' content='no-cache'>
 
         <link rel="pingback" href="https: //domainname.com/xmlrpc.php" >
-        <title>Markdown Previewer</title>
+        <title>Python Projects</title>
         <!-- style and script resources -->
         <link rel="stylesheet" href="" media="all">
         <script src=""></script>
@@ -64,7 +64,7 @@
         
         <link rel="stylesheet" href="/css/styles.css">
 
-        <!-- <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" /> -->
+        <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
 
         <!-- <script defer src="https://pyscript.net/latest/pyscript.js"></script> -->
 
@@ -78,6 +78,10 @@
         <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
+
+        <div id="progress-bar-container" class="progress" role="progressbar" aria-label="Example 1px high" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="height:200px!important;">
+            <div id="progress-bar" class="progress-bar"></div>
+        </div>
 
         <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
     <div class="container-fluid">
@@ -128,11 +132,11 @@
              
                 
                 <div id="profile-header" class="p-3 mt-5 text-start">
-                    <h1 id="page-title">Markdown Previewer</h1>
+                    <h1 id="page-title">Python Projects</h1>
                 </div>
-                <div id="projects-page" class="container">
+                <div id="python-projects-page" class="container">
                     <div class="" id="project-collapse-menu">
-                        <div id="projects_nav" class="px-1 px-md-5"></div>
+                        <div id="python_projects_nav" class="px-1 px-md-5"></div>
                     </div>
                 </div>
             
@@ -145,7 +149,7 @@
 
         
         <script src="/js/script.js" async defer></script>
-        <!-- <script src="/js/progressbar.js" async defer></script> -->
+        <script src="/js/python/progressbar.js" async defer></script>
         
         <!-- <script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js" crossorigin="anonymous"></script> -->
 
@@ -174,14 +178,12 @@
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.4.1/backbone-min.js"></script>
 
-        <script type="text/babel" src="/js/projects-nav.js"></script>
-        <script type="text/babel" src="/js/quote-machine.js"></script>
-        <script type="text/babel" src="/js/markdown-previewer.js"></script>
-        <!-- <script type="text/babel" src="/js/drum-machine.js"></script> -->
+        <script type="text/babel" src="/js/python/python-projects-nav.js"></script>
         <!-- <script type="text/babel" src="/js/clock.js"></script> -->
-        <!-- <script type="text/babel" src="/js/python.js"></script> -->
-        <!-- <script type="text/babel" src="/js/calculator.js"></script> -->
-        <script type="text/babel" src="/js/chatbot.js"></script>
+
+        <!-- individual python scripts -->
+        <script type="text/babel" src="/js/python/hello_world.js"></script>
+   
 
         <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
      

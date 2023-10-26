@@ -1,3 +1,5 @@
+<script src="https://cdn.jsdelivr.net/pyodide/v0.20.0/full/pyodide.js" async defer></script>
+        
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
@@ -5,7 +7,7 @@
 
         
         <script src="{% include mainurl.html %}/js/script.js" async defer></script>
-        <script src="{% include mainurl.html %}/js/python/progressbar.js" async defer></script>
+        
         
         <!-- <script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js" crossorigin="anonymous"></script> -->
 
@@ -24,6 +26,8 @@
         <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"> </script>
         <!-- import react-dom.js -->
       
+<script src="{% include mainurl.html %}/js/python/progressbar.js" async defer></script>
+
         <script type="text/babel" src="{% include mainurl.html %}/js/projects.js"></script>
         <!-- import your JS and add - type="text/babel" - otherwise babel wont parse it -->
 
@@ -38,7 +42,8 @@
         <!-- <script type="text/babel" src="{% include mainurl.html %}/js/clock.js"></script> -->
 
         <!-- individual python scripts -->
-        <script type="text/babel" src="{% include mainurl.html %}/js/python/hello_world.js"></script>
+        <script type="text/babel" src="{% include mainurl.html %}/js/python/hello-world.js"></script>
+        <script type="text/babel" src="{% include mainurl.html %}/js/python/math.js"></script>
    
 
         <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
@@ -61,4 +66,6 @@
               </ul> -->
             </footer>
           </div>
+
+
 

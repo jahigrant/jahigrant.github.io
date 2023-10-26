@@ -14,9 +14,6 @@
 
         <link rel="pingback" href="https: //domainname.com/xmlrpc.php" >
         <title>Python Projects</title>
-        <!-- style and script resources -->
-        <link rel="stylesheet" href="" media="all">
-        <script src=""></script>
         <!--meta properties -->
         <meta name="description" content=" Your site description." >
         <!--detailed robots meta https://developers.google.com/search/reference/robots_meta_tag -->
@@ -69,12 +66,11 @@
         <!-- <script defer src="https://pyscript.net/latest/pyscript.js"></script> -->
 
         <script src="https://cdnjs.deepai.org/deepai.min.js"></script>
-
-
  
     </head>
 
     <body>
+        
         <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
@@ -142,14 +138,16 @@
             
             </div>
 
-                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/pyodide/v0.20.0/full/pyodide.js" async defer></script>
+        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 
         
         <script src="/js/script.js" async defer></script>
-        <script src="/js/python/progressbar.js" async defer></script>
+        
         
         <!-- <script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js" crossorigin="anonymous"></script> -->
 
@@ -168,6 +166,8 @@
         <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"> </script>
         <!-- import react-dom.js -->
       
+<script src="/js/python/progressbar.js" async defer></script>
+
         <script type="text/babel" src="/js/projects.js"></script>
         <!-- import your JS and add - type="text/babel" - otherwise babel wont parse it -->
 
@@ -182,7 +182,8 @@
         <!-- <script type="text/babel" src="/js/clock.js"></script> -->
 
         <!-- individual python scripts -->
-        <script type="text/babel" src="/js/python/hello_world.js"></script>
+        <script type="text/babel" src="/js/python/hello-world.js"></script>
+        <script type="text/babel" src="/js/python/math.js"></script>
    
 
         <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
@@ -205,6 +206,8 @@
               </ul> -->
             </footer>
           </div>
+
+
 
 
         

@@ -997,3 +997,9 @@ figure {
   -webkit-text-size-adjust: 100%;
   font-size: 5vw;
 }
+
+
+
+.py-repl-run-button {
+  opacity: 1!important;
+}

@@ -1,44 +1,31 @@
+const hello_file_location = "../python/helloworld.py";
+const code_name = "hello-world";
+
 function helloworld() {
 
     window.addEventListener("hashchange", pyFetchConfig);
     window.addEventListener("DOMContentLoaded", pyFetchConfig);
     function pyFetchConfig() {
-        if (location.hash == "hello-world.html") {
-            var math_config = document.getElementById("hello-world-config");
-            $("#hello-world-config").html(`
+        if (location.hash == this.code_name+".html") {
+            var math_config = document.getElementById(this.code_name+"-config");
+            $("#"+this.code_name+"-config").html(`
                 <py-config>
                     [splashscreen]
                         enabled = true
                     [[fetch]]
-                    files = ["../python/hello_world.py"]
+                    files = ["`+hello_file_location+`"]
                 </py-config>
             `);
         }
     }
 
     const element = (
-        <div className="fade show">
-            <h6 id="hello-world-script" className="fs-4">Hello World Code</h6>
+        <div className="fade show m-3">
+            <h6 id="hello-world-script" className="fs-4 ps-0">Hello World Code</h6>
 
             <div id="hello-world-config"></div>
 
-            <div id="code-in-page"></div>
-
-            <div className="row pb-0 mb-0 fs-4 fade show">
-                <code>
-                    def hello_world_script():
-                </code>
-            </div>    
-            <div className="row pb-0 mb-0 fs-4 fade show ms-4">
-                <code>
-                    print("Hello World")
-                </code>
-            </div>
-            <div className="row pt-0 mt-0 pb-2 mb-2 fs-4 fade show ms-4">
-                <code>
-                    print('=========================')
-                </code>
-            </div>
+            <div id="hello-world-code-in-page" className="fs-4 pb-4"></div>
 
             <div className="btn-group pb-4" role="group" aria-label="hello world script">
                 <button type="button"  className="btn btn-primary rounded-0 fs-4" py-click="hello_world_script()" id="hello-world-manual">
@@ -64,23 +51,45 @@ function helloworld() {
 
 }
 
-
 helloworld();
 
 $(document).ready(() => {
-async function getText(file) {
-    let newObject = await fetch(file);
-    let printText = await newObject.text();
-    console.log("object object object object object object object object ", newObject);
-    if ( newObject.ok !== true ) {
-        console.log("not newObject not newObject not newObject ", newObject);
-        document.getElementById("hello_world_script").innerHTML = "Unknown error";
-    } else {
-        console.log("newObject newObject newObject ", newObject);
-        document.getElementById("hello_world_script").innerHTML = printText;
+
+    async function getText(file) {
+        let newObject = await fetch(file);
+        let printText = await newObject.text();
+        if ( newObject.ok !== true ) {
+            document.getElementById("hello_world_script").innerHTML = "Unknown error";
+        } else {
+            document.getElementById("hello_world_script").innerHTML = printText;
+        }
     }
-}
-getText("../python/helloworld.py");
+    getText(hello_file_location);
+
+    fetch(hello_file_location)
+    .then(response => response.text())
+    .then(ab => {
+
+        const msg = _.toString(ab);
+        const lines = msg.split('\n');
+        const edit_arr_begin = _.tail(lines);
+        const edit_arr_end = _.dropRight(edit_arr_begin);
+
+        const getCodeDiv = document.getElementById("hello-world-code-in-page");
+
+        for (let i = 0; i < edit_arr_end.length; i++) {
+            const element = edit_arr_end[i];
+            
+            if (element.startsWith("def ")) {
+                getCodeDiv.innerHTML += '<code class="ps-0">' + element + '</code><br>';
+            } else {
+                getCodeDiv.innerHTML += '<code class="ps-4">' + element + '</code><br>';
+            }
+            console.log(lines);
+        }
+
+    })
+    .catch(err => console.log(err));
 
     var btn = document.getElementById("hello-world-manual");
     btn.addEventListener("click", function() {

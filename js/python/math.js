@@ -1,10 +1,13 @@
+const math_file_location = "../python/math.py";
+const code_name = "math";
+
 function math() {
 
     window.addEventListener("hashchange", pyFetchConfig);
     window.addEventListener("DOMContentLoaded", pyFetchConfig);
     function pyFetchConfig() {
-        if (location.hash == "math.html") {
-            var math_config = document.getElementById("math-config");
+        if (location.hash == this.code_name+".html") {
+            var math_config = document.getElementById(this.code_name+"-config");
             $("#math-config").html(`
                 <py-config>
                     [splashscreen]
@@ -17,7 +20,7 @@ function math() {
                     ]
 
                     [[fetch]]
-                    files = ["../python/math.py"]
+                    files = ["`+math_file_location+`"]
                 </py-config>
             `);
         }
@@ -29,21 +32,7 @@ function math() {
 
             <div id="math-config"></div>
 
-            <div className="row pb-0 mb-0 fs-4 fade show">
-                <code>
-                    def math_script():
-                </code>
-            </div>
-            <div className="row pb-0 mb-0 fs-4 fade show ms-4">
-                <code>
-                    print(int(50) * int(50) % int(45) * 5000)
-                </code>
-            </div>
-            <div className="row pb-0 mb-0 pb-2 mb-2 fs-4 fade show ms-4">
-                <code>
-                    print('=========================')
-                </code>
-            </div>
+            <div id="math-code-in-page" className="fs-4 pb-4"></div>
 
             <div className="btn-group pb-4" role="group" aria-label="math script">
                 <button type="button"  className="btn btn-primary rounded-0 fs-4" py-click="math_script()" id="math-manual">
@@ -69,25 +58,45 @@ function math() {
 
 }
 
-
-
-
 math();
 
 $(document).ready(() => {
 
-async function getText(file) {
-    let newObject = await fetch(file);
-    let printText = await newObject.text();
-    if ( newObject.ok !== true ) {
-        console.log("not newObject not newObject not newObject ", newObject);
-        document.getElementById("math_script").innerHTML = "Unknown error";
-    } else {
-        console.log("newObject newObject newObject ", newObject);
-        document.getElementById("math_script").innerHTML = printText;
+    async function getText(file) {
+        let newObject = await fetch(file);
+        let printText = await newObject.text();
+        if ( newObject.ok !== true ) {
+            document.getElementById("math_script").innerHTML = "Unknown error";
+        } else {
+            document.getElementById("math_script").innerHTML = printText;
+        }
     }
-}
-getText("../python/math.py");
+    getText(math_file_location);
+
+    fetch(math_file_location)
+    .then(response => response.text())
+    .then(ab => {
+
+        const msg = _.toString(ab);
+        const lines = msg.split('\n');
+        const edit_arr_begin = _.tail(lines);
+        const edit_arr_end = _.dropRight(edit_arr_begin);
+
+        const getCodeDiv = document.getElementById("math-code-in-page");
+
+        for (let i = 0; i < edit_arr_end.length; i++) {
+            const element = edit_arr_end[i];
+            
+            if (element.startsWith("def ")) {
+                getCodeDiv.innerHTML += '<code class="ps-0">' + element + '</code><br>';
+            } else {
+                getCodeDiv.innerHTML += '<code class="ps-4">' + element + '</code><br>';
+            }
+            console.log(lines);
+        }
+
+    })
+    .catch(err => console.log(err));
 
     var btn = document.getElementById("math-manual");
     btn.addEventListener("click", function() {

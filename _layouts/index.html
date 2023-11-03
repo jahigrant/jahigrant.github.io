@@ -8,11 +8,11 @@
         <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
-    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column" id="home-page-art">
+    <div class="cover-container d-flex w-100 h-100 p-0 mx-auto flex-column" id="home-page-art">
 
         {% include header.html %}
 
-            <main class="row pt-4 pb-4">
+            <main class="row p-0 m-0 pt-4 pb-4">
                 
                 <script>
                     // let intervalID;
@@ -122,12 +122,12 @@
                     <div class="pt-5 mb-5">
                         <h1 class="display-3 fw-bolder" style="display:initial;">Port​fo​lio</h1>
                         <figure>
-                            <h3 class="display-6 lh-1 fw-bolder fs-4">Port·​fo·​lio</h3>
-                            <figcaption class="blockquote-footer fw-bolder fs-5">
+                            <h3 class="display-6 lh-1 fw-bolder fs-3">Port·​fo·​lio</h3>
+                            <figcaption class="blockquote-footer fw-bolder fs-4">
                                 pɔːtˈfəʊ.li.əʊ
                             </figcaption>
                             <blockquote class="blockquote">
-                            <p class="col-6 fs-6 fw-lighter lh-1 fst-italic">
+                            <p class="col-6 fs-4 fw-lighter lh-1 fst-italic">
                                     A collection of drawings, documents, etc. that represent a person's, especially an artist's, work:
                                 </p>
                             </blockquote>
@@ -139,7 +139,10 @@
                 </div>
                 
             </main>
-            {% include footer.html %}
+            <div class="row p-0 m-0">
+                {% include footer.html %}
+            </div>
+            
         </div>
 
         <script>

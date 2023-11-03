@@ -473,15 +473,15 @@ imgLoading.innerHTML = loading_dots;
 
                         authorImg.innerHTML = ""
                         
-                        authorImg.innerHTML += `<div id="image-overlay" class="image-wrap overlay fade show" style="background-image: url(` + UrlFormat + `);width:`+w*2+`px;height:`+h*2+`px;" alt="` + imgAltText + `"></div>`
+                        authorImg.innerHTML += `<div id="image-overlay" class="image-wrap overlay show" style="background-image: url(` + UrlFormat + `);width:`+w*2+`px;height:`+h*2+`px;" alt="` + imgAltText + `"></div>`
 
-                        authorImg.innerHTML += `<div id="author-img" class="image-wrap fade show" style="background-image: url(` + UrlFormat + `);width:`+w*2+`px;height:`+h*2+`px;" alt="` + imgAltText + `"></div>`
+                        authorImg.innerHTML += `<div id="author-img" class="image-wrap show" style="background-image: url(` + UrlFormat + `);width:`+w*2+`px;height:`+h*2+`px;" alt="` + imgAltText + `"></div>`
                     } 
                     
                     if (UrlFormat == "https://www.artic.edu/iiif/2/null/full/843,/0/default.jpg" || !imgAltText){
                         
-                        authorImg.innerHTML += `<div id="image-overlay" class="image-wrap overlay card-img h-100 fade show rounded-0" style="background-image: url("https://www.artic.edu/iiif/2/40b5d8dc-45a8-6629-5ace-32c86c0905e1/full/843,/0/default.jpg");width:`+w*2+`px;height:`+h*2+`px;" alt="` + imgCopyFormat + `"></div>`
-                        authorImg.innerHTML += `<div id="author-img" class="image-wrap card-img h-100 fade show rounded-0" style="background-image: url("https://www.artic.edu/iiif/2/40b5d8dc-45a8-6629-5ace-32c86c0905e1/full/843,/0/default.jpg");width:`+w*2+`px;height:`+h*2+`px;" alt="` + imgCopyFormat + `"></div>`
+                        authorImg.innerHTML += `<div id="image-overlay" class="image-wrap overlay card-img h-100 show rounded-0" style="background-image: url("https://www.artic.edu/iiif/2/40b5d8dc-45a8-6629-5ace-32c86c0905e1/full/843,/0/default.jpg");width:`+w*2+`px;height:`+h*2+`px;" alt="` + imgCopyFormat + `"></div>`
+                        authorImg.innerHTML += `<div id="author-img" class="image-wrap card-img h-100 show rounded-0" style="background-image: url("https://www.artic.edu/iiif/2/40b5d8dc-45a8-6629-5ace-32c86c0905e1/full/843,/0/default.jpg");width:`+w*2+`px;height:`+h*2+`px;" alt="` + imgCopyFormat + `"></div>`
                         
                     }
 
@@ -548,7 +548,7 @@ imgLoading.innerHTML = loading_dots;
 
                     <div className="card-img shadow-lg rounded-0 vh-50 fade show">
                         <figure className="figure m-0 p-0 w-100 ratio ratio-1x1">
-                            <div id="auth-image" className="fade show"></div>
+                            <div id="auth-image" className="show"></div>
                         </figure>
                         <div className="inner-card card-img-overlay rounded-0" id="quote-text-area">
                         </div>
@@ -647,6 +647,9 @@ var counting = setInterval(function(){
     } else {
         clearInterval(counting)
         $('.inner-card').css("display", 'inherit');
+        $("#auth-image").css({
+            animation: "15s ease 0s 1 normal none running fadeIn"
+        });
     }
 })
   

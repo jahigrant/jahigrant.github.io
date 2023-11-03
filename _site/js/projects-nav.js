@@ -155,6 +155,15 @@ const navItems = [
   function projectsNav() {
     const element = (
       <div>
+
+<div id="profile-header" className="p-0 mt-5 text-start">
+        <h1>
+          <span id="page-title"></span>
+          <span id="sub-page-title"></span>
+        </h1>
+      </div>
+
+      <div id="page-description" className=""></div>
         
         <ul className="nav nav-pills" id="tabs-nav">
           <li className="nav-item ms-0">

@@ -89,8 +89,8 @@ body {
     opacity: 1;
   }
   
-  .fade { animation: fadeIn 5s; }
-  
+  .fade { animation: fadeIn 2s; }
+  .fade-out { animation: fadeOut 2s; }
   /*the fade animations*/
   
   @keyframes fadeOut {
@@ -560,11 +560,11 @@ border:#0ed600;
 
 #text, #author, #quotemark, #image-copyright, #buttons {
   opacity:0;
-  animation: fadeIn 6s; 
-  -webkit-animation: fadeIn ease 6s;
-  -moz-animation: fadeIn ease 6s;
-  -o-animation: fadeIn ease 6s;
-  -ms-animation: fadeIn ease 6s;
+  animation: fadeIn 2s; 
+  -webkit-animation: fadeIn ease 2s;
+  -moz-animation: fadeIn ease 2s;
+  -o-animation: fadeIn ease 2ms;
+  -ms-animation: fadeIn ease 2s;
 }
 #text.fade.show, #author.fade.show, #quotemark.fade.show, #image-copyright.fade.show, #buttons.fade.show  {
   opacity:1;
@@ -581,11 +581,11 @@ border:#0ed600;
   /* margin-top: -30px; */
   /* object-fit: cover!important; */
   /* object-position: 0px 0px!important; */
-  animation: fadeIn 6s; 
-  -webkit-animation: fadeIn ease 6s;
-  -moz-animation: fadeIn ease 6s;
-  -o-animation: fadeIn ease 6s;
-  -ms-animation: fadeIn ease 6s;
+  animation: fadeIn 2s; 
+  -webkit-animation: fadeIn ease 2s;
+  -moz-animation: fadeIn ease 2s;
+  -o-animation: fadeIn ease 2s;
+  -ms-animation: fadeIn ease 2s;
 
   /* height: 100%!important;  */
   /* display: block!important;  */
@@ -641,11 +641,14 @@ border:#0ed600;
 }
 
 .py-terminal {
-  min-height: 10em;
+  min-height: auto!important;
   background-color: rgba(0, 0, 0, 0)!important;
-  color: inherit!important;
+  color: #3aff68!important;
   padding: 0.5rem;
   overflow: auto;
+  font-family: "Courier";
+  padding-left: 1rem !important;
+  text-wrap: wrap!important;
 }
 
 figure {
@@ -876,8 +879,8 @@ figure {
 
 #image-overlay,
 #author-img {
-  -moz-animation: fadeIn 5s!important;
-  animation: fadeIn 5s!important;
+  -moz-animation: fadeIn 2s!important;
+  animation: fadeIn 2s!important;
   transition: ease-in!important;
   -moz-transition: ease-in!important;
 }
@@ -1002,4 +1005,51 @@ figure {
 
 .py-repl-run-button {
   opacity: 1!important;
+}
+
+.coding::after{
+  content: "\a";
+  white-space: pre;
+}
+.coding{
+  font-family: "Courier New", monospace!important;
+  color: #00fffd;
+  line-height: normal;
+}
+.function{
+  color: #ff82ef;
+}
+.function-fmt{
+  color: #1ded06;
+}
+.function-quote{
+  color: #e5bd08;
+}
+.function-symbol{
+  color: #ff9558;
+}
+.function-number{
+  color: #3aff68;
+}
+
+.btn-none:focus {
+  outline: none!important;
+  box-shadow: none!important;
+}
+
+.nav-link {
+  color: #787878!important;
+}
+
+.nav-link.active{
+  color: #fff!important;
+  background-color: #6c757d!important;
+  border-color: #6c757d!important;
+}
+
+.btn-link {
+  color: #a4a4a4!important
+}
+.btn-link:hover {
+  color: #707070!important;
 }

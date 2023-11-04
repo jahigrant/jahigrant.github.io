@@ -21,6 +21,68 @@
             </div>
 
         {% include python_projects_footer.html %}
-        
+
+        <!-- <script>
+            // let intervalID;
+            let x, y;
+            let dim = 120.0;  
+            
+            function setup() {
+                let elt = document.getElementsByClassName('project-gradient');
+                for (let k = 0; k < elt.length; k++) {
+                    background(255);
+                    const element = elt[k];
+                    const width = element.offsetWidth
+                    const height = element.offsetHeight
+                    console.log(width, height)
+                    elt.forEach(item => {
+                        const canvas = createCanvas(width+5, height+5, WEBGL);
+                        canvas.parent(item);   
+                        canvas.addClass('canvas-'+[k]);
+                        canvas.style("width", width);
+                        canvas.style("height", height);
+                        canvas.style("position", "absolute");
+                        canvas.style("top", "0");
+                        canvas.style("left", "0");
+                        canvas.style("z-index", "-1");
+                    });
+                }
+                noLoop();
+                describe('a white box rotating in 3D space');
+            }
+            function draw() {
+                let frameCount = 100;
+                const create_box_width = Math.round(w/14);
+                for (i = -20; i <= 20; ++i) {
+                    for (j = -20; j <= 20; ++j) {
+                        let s = i * 100;
+                        let m = j * 100;
+                        push();
+                        translate(m, s / dim);
+                        rotateX(frameCount * 2);
+                        rotateY(frameCount * 2);
+                        rotate(20);
+                        fill(
+                            random(Math.floor((Math.random() * 5))),
+                            random(Math.floor((Math.random() * 255))),
+                            random(Math.floor((Math.random() * 5))),
+                            random(Math.floor((Math.random() * 255)))
+                        )
+                        box(Math.floor((Math.random() * 1000) + 1));
+                        pop();
+                    }
+                }
+            }
+            const canvasInterval = setTimeout(canvasTimer, 6000);
+            function canvasTimer() {
+                redraw();
+            }
+            function canvasStopFunction() {
+                clearTimeout(canvasInterval);
+            }
+
+
+            
+        </script> -->
     </body>
 </html>

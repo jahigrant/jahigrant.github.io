@@ -105,6 +105,78 @@ function bg_gradients() {
   });
 }
 
+function pyNavTabs() {
+  $(document).ready(() => {
+    const get_nav_tabs = document.getElementById("tabs-nav");
+    const python_frontpage = document.getElementById("python-frontpage");
+
+    for (let j = 0; j < tabItems.length; j++) {
+      const element = tabItems[j];
+      console.log("navatabaaaaassss ", element);
+
+      let url = location.href.replace(/\/$/, "");
+      const hash = url.split("/");
+      let hashArray = _.reverse(hash);
+      let hashedArray = _.head(hashArray)
+      console.log("hashssssssssjhhhhhhhhhshh ", hashedArray);
+
+      if (hashedArray == "python-projects" || hashedArray == "index.html") {
+        get_nav_tabs.innerHTML += `
+          <li class="nav-item ms-0 bg-light mx-1 mb-1">
+            <a href="#`+ element.slug +`" data-bs-toggle="list" class="nav-link rounded-0 text-center" id="`+ element.slug +`-link" onClick={pythonNavigation} title="`+ element.title +`">
+            `+ element.title + "<br>" + code_icon +`
+            </a>
+          </li>
+        `
+        if (tabItems[j] !== tabItems[0]) {
+          python_frontpage.innerHTML += `
+            <div class="col p-0">
+              <div class="project-gradient card p-4 rounded-0">
+                <div class="card-body p-2 text-center">
+                  <div class="d-flex justify-content-center" style="display: inline;">`+ python_icon +`</div>
+                  <div id="`+ element.slug +`-content-preview" class="text-light fs-4 lh-sm" style="-webkit-text-stroke:0.2px black;text-wrap: nowrap;">
+                    `+ element.title +`
+                  </div>
+                </div>
+              </div>
+            </div>
+        `;
+        }
+
+      } else {
+        if (
+          hashedArray == "hello-world.html" || 
+          hashedArray == "math.html" ||
+          hashedArray == "list.html" ||
+          hashedArray == "date-time.html" 
+          ) {
+          get_nav_tabs.innerHTML += `
+            <li class="nav-item ms-0 bg-light mx-1 mb-1">
+              <a href="#`+ element.slug +`" data-bs-toggle="list" class="nav-link rounded-0 text-center" id="`+ element.slug +`-link" onClick={pythonNavigation} title="`+ element.title +`">
+              `+ element.title + "<br>" + code_icon +`
+              </a>
+            </li>
+          `
+        } else {
+        //   python_frontpage.innerHTML += `
+        //     <div class="col p-0">
+        //       <div class="project-gradient card p-4">
+        //         <div class="card-body p-2 text-center">
+        //           <div class="d-flex justify-content-center" style="display: inline;">`+ python_icon +`</div>
+        //           <a href="#`+ element.slug +`" id="`+ element.slug +`-link" class="stretched-link text-decoration-none text-light fs-4 lh-sm" onClick={pythonNavigation} title="`+ element.title +`" data-bs-toggle="list" style="-webkit-text-stroke:0.2px black;">
+        //             `+ element.title +`
+        //           </a>
+        //         </div>
+        //       </div>
+        //     </div>
+        // `;
+        }
+      }
+
+    }
+
+  });
+}
 
 function pythonNavigation() {
   $(document).ready(() => {
@@ -165,7 +237,7 @@ function pythonNavigation() {
         const titleSplit = hashSplit[0].replace("-", " ");
         const titleClean = titleCase(titleSplit);
         const title_cleaned = titleClean.toString().replace(",", " ");
-        document.getElementById("page-title").innerHTML = title_cleaned;
+        document.getElementById("page-title").innerHTML = title_cleaned + ": ";
         document.title = title_cleaned;
 
         const res = tabItems.find(x => x.title === tabItems[0].title);
@@ -203,6 +275,7 @@ function pythonNavigation() {
         console.log(get_page_title);
         console.log(res)
         if (get_page_title !== 'Index') {
+          document.getElementById("page-title").innerHTML = base_name + ": ";
           document.getElementById(res.slug+"-script-title").innerHTML = res.title;
           document.getElementById("page-description").innerHTML = res.description;
         } else {
@@ -246,84 +319,7 @@ function pythonNavigation() {
 }
 
 
-function pyNavTabs() {
-  $(document).ready(() => {
-    const get_nav_tabs = document.getElementById("tabs-nav");
-    const python_frontpage = document.getElementById("python-frontpage");
 
-    for (let j = 0; j < tabItems.length; j++) {
-      const element = tabItems[j];
-      console.log("navatabaaaaassss ", element);
-
-      let url = location.href.replace(/\/$/, "");
-      const hash = url.split("/");
-      let hashArray = _.reverse(hash);
-      let hashedArray = _.head(hashArray)
-      console.log("hashssssssssjhhhhhhhhhshh ", hashedArray);
-
-      if (hashedArray == "python-projects" || hashedArray == "index.html") {
-        get_nav_tabs.innerHTML += `
-          <li class="nav-item ms-0 bg-light mx-1">
-            <a href="#`+ element.slug +`" data-bs-toggle="list" class="nav-link rounded-0 text-center" id="`+ element.slug +`-link" onClick={pythonNavigation} title="`+ element.title +`">
-            `+ element.title + "<br>" + code_icon +`
-            </a>
-          </li>
-        `
-        if (tabItems[j] !== tabItems[0]) {
-          python_frontpage.innerHTML += `
-            <div class="col p-0">
-              <div class="project-gradient card p-4">
-                <div class="card-body p-2 text-center">
-                  <div class="d-flex justify-content-center" style="display: inline;">`+ python_icon +`</div>
-                  <a href="#`+ element.slug +`" class="stretched-link text-decoration-none text-light fs-4 lh-sm" onClick={pythonNavigation} title="`+ element.title +`" data-bs-toggle="list" style="-webkit-text-stroke:0.2px black;">
-                    `+ element.title +`
-                  </a>
-                </div>
-              </div>
-            </div>
-        `;
-        }
-
-      } else {
-        if (
-          hashedArray == "hello-world.html" || 
-          hashedArray == "math.html" ||
-          hashedArray == "list.html" ||
-          hashedArray == "date-time.html" 
-          ) {
-          get_nav_tabs.innerHTML += `
-            <li class="nav-item ms-0 bg-light mx-1">
-              <a href="#`+ element.slug +`" data-bs-toggle="list" class="nav-link rounded-0 text-center" id="`+ element.slug +`-link" onClick={pythonNavigation} title="`+ element.title +`">
-              `+ element.title + "<br>" + code_icon +`
-              </a>
-            </li>
-          `
-        } else {
-          python_frontpage.innerHTML += `
-            <div class="col p-0">
-              <div class="project-gradient card p-4">
-                <div class="card-body p-2 text-center">
-                  <div class="d-flex justify-content-center" style="display: inline;">`+ python_icon +`</div>
-                  <a href="#`+ element.slug +`" class="stretched-link text-decoration-none text-light fs-4 lh-sm" onClick={pythonNavigation} title="`+ element.title +`" data-bs-toggle="list" style="-webkit-text-stroke:0.2px black;">
-                    `+ element.title +`
-                  </a>
-                </div>
-              </div>
-            </div>
-        `;
-        }
-      }
-
-    }
-
-
-
-
-
-
-
-  });
-}
 
 function doPython() {
   return document.getElementById("index").innerHTML = `
@@ -382,8 +378,8 @@ function pythonProjectsNav() {
           <div className="tab-content project-content p-0" id="tab-content">
 
             <div className="tab-pane fade show active" id="index" role="tabpanel" aria-labelledby="python-tab">
-              <div className="container p-2">
-                <div id="python-frontpage" className="row row-cols-2 row-cols-lg-3 g-3 g-lg-3"></div>
+              <div className="container p-0">
+                <div id="python-frontpage" className="row row-cols-2 row-cols-lg-3 g-0 g-lg-0"></div>
               </div>
             </div>
             

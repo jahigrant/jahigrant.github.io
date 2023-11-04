@@ -549,6 +549,9 @@ border:#0ed600;
   background: #0dc1ff;
 }
 
+#tabs-nav li{
+  margin-left: 0rem!important
+}
 
 
 #tabs-nav > li.nav-item.bg-light {
@@ -1052,4 +1055,35 @@ figure {
 }
 .btn-link:hover {
   color: #707070!important;
+}
+
+#home-page:after,
+#contact-page-container,
+#about-page-cont,
+#home-page-art {
+  min-height: 100%;
+  /* equal to footer height */
+  margin-bottom: 10px; 
+}
+
+#home-page:after,
+#contact-page-container:after,
+#about-page-cont:after,
+#home-page-art:after {
+  content: "";
+  display: block;
+}
+
+footer, 
+#home-page:after,
+#contact-page-container:after,
+#about-page-cont:after,
+#home-page-art:after {
+  height: 8px; 
+}
+
+
+.project-gradient{
+  background: transparent;
+  overflow: hidden;
 }

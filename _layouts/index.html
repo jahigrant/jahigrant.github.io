@@ -1,6 +1,6 @@
 {% include index_head.html %}
 
-<body class="d-flex h-100">
+<body >
 
 
 
@@ -8,7 +8,7 @@
         <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
-    <div class="cover-container d-flex w-100 h-100 p-0 mx-auto flex-column" id="home-page-art">
+    <div class="" id="home-page-art">
 
         {% include header.html %}
 
@@ -17,22 +17,27 @@
                 <script>
                     // let intervalID;
                     let x, y;
+
+                    var w = document.documentElement.clientWidth;
+                    var h = document.documentElement.clientHeight;
                     
                     function setup() {
                         let elt = document.getElementById('home-page-art');
-                        const canvas = createCanvas(windowWidth, windowHeight)
+                        const canvas = createCanvas(w, h)
                         canvas.addClass('fade-in-canvas')
                         canvas.parent(elt)
+
                         canvas.style("display", "block")
                         canvas.style("position", "fixed")
                         canvas.style("top", "0")
                         canvas.style("left", "0")
                         canvas.style("z-index", "-1")
                         canvas.style("opacity", "0.6")
-                        x = windowWidth;
-                        y = windowHeight;
+                        x = w;
+                        y = h;
                         rectMode(CENTER);
-                        frameRate(1);
+
+                        frameRate(500*52);
                     }
  
                     function draw() {
@@ -40,6 +45,9 @@
                         const artDate = `© 2023`
                         const artistName = `Jahi Grant`
                         const canvas = document.getElementById("defaultCanvas0");
+
+
+
                         const ctx = canvas.getContext("2d");
                         ctx.fillStyle = "black";
                         ctx.font = "14px arial";
@@ -65,7 +73,9 @@
                             "Year: " + artDate, 
                             20, 
                             canvas.height-70
-                        );            
+                        );     
+                        
+                        
                         let canvasMetadata = artworkName + " By " + artistName;
                         document.getElementById("defaultCanvas0").title = canvasMetadata;
                         document.getElementById("defaultCanvas0").setAttribute('alt', canvasMetadata);
@@ -77,7 +87,7 @@
                             const randomNumberSQGo = random(1);
                             ctx.fillStyle = "grey";
                             ctx.fillRect(random(x), random(y), randomNumberSQGo, randomNumberSQGo);
-
+                            const box_random = Array.from({length: 1}, () => Math.floor(Math.random() * 100));
                                 rotate(0);
                                 fill(
                                     random(255),
@@ -88,7 +98,7 @@
                                 square(
                                     random(x),
                                     random(y),
-                                    random(i-j-100)
+                                    random(i-j-box_random)
                                 )
 
 
@@ -98,19 +108,32 @@
                             pop();
                         }}
 
-             
-
-
-
-
-
                     }
-                    let intervalID = setInterval(setup, 100);
-                    function stop() {
-                        clearInterval(intervalID);
-                    }
-                    stop();
+
+                    // 
+
+
+
                     
+                    // stop();
+
+                    const screenTimeout = setTimeout(canvasStopFunction, 20000);
+
+                    function canvasTimer() {
+                        
+                    }
+
+                    function canvasStopFunction() {
+                        redraw();
+                        noLoop();
+                        clearTimeout(screenTimeout);
+                    }
+
+
+                    // function stop() {
+                    //     clearInterval(canvasStopFunction);
+                    // }
+                                        
                     // window.addEventListener('resize', () => {
                     //     clearInterval(intervalID);
                     //     // setup()
@@ -139,12 +162,12 @@
                 </div>
                 
             </main>
-            <div class="row p-0 m-0">
-                {% include footer.html %}
-            </div>
+            
             
         </div>
 
+                {% include footer.html %}
+          
         <script>
             $(window).bind('resize', function(e){
                 console.log('window resized..');

@@ -1035,6 +1035,8 @@ figure {
   color: #3aff68;
 }
 
+#tweet-quote,
+#new-quote,
 .btn-none:focus {
   outline: none!important;
   box-shadow: none!important;
@@ -1048,6 +1050,7 @@ figure {
   color: #fff!important;
   background-color: #6c757d!important;
   border-color: #6c757d!important;
+  padding-bottom: 0.5rem!important;
 }
 
 .btn-link {
@@ -1086,4 +1089,69 @@ footer,
 .project-gradient{
   background: transparent;
   overflow: hidden;
+}
+
+
+.badge {
+  background-color: #ebebeb;
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  font-size: .75em;
+  line-height: 1;
+  color: #8f8f8f;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border: 0;
+  border-radius: 0.25rem;
+  font-weight: lighter!important;
+  margin-right: 0.5rem!important;
+}
+
+#chat,
+#chat-container{
+  background-color:#ebebeb;
+}
+
+#chat-container input:focus {
+  outline: none;
+  box-shadow: 0 0 0 0rem rgba(0,0,0,.0);
+  border: 1px solid #ced4da;
+}
+
+#chat-container #submit-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 0rem rgba(0,0,0,.0);
+  border: 1px solid #ced4da;
+}
+
+
+.navbar-toggler-icon {
+  display: inline-block;
+  width: 1.5em;
+  height: 1.5em;
+  vertical-align: middle;
+  background-image: var(--bs-navbar-toggler-icon-bg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100%;
+}
+.navbar-toggler {
+  border: 0px;
+}
+.navbar-toggler:focus {
+  text-decoration: none;
+  outline: 0;
+  box-shadow: 0 0 0 0;
+}
+
+#header-brand-image{
+  width: 2.5rem;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+}
+
+.offcanvas.offcanvas-start.show{
+  visibility: visible!important;
 }

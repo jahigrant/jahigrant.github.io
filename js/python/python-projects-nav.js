@@ -273,7 +273,8 @@ function pythonNavigation() {
         console.log(current_title[0]);
         const res = tabItems.find(x => x.title ===  current_title[0]);
         console.log(get_page_title);
-        console.log(res)
+        console.log(res);
+
         if (get_page_title !== 'Index') {
           document.getElementById("page-title").innerHTML = base_name + ": ";
           document.getElementById(res.slug+"-script-title").innerHTML = res.title;

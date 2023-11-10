@@ -5,239 +5,21 @@
         <![endif]-->
         
         {% include header.html %}
-        <div id="about-page-cont">
-        <main class="d-flex w-100 h-100 p-3 mx-auto flex-column container-fluid m-0 mt-5">
-            
-            <div class="row pt-4 pb-4">
-            
-                <div class="col-4 p-0 d-none d-md-block">
-                    {% include sidebar.html %}
-                </div>
-
-                
-                <div data-bs-spy="scroll" data-bs-target="#navbar-about" data-bs-root-margin="0px 0px -40%" data-bs-smooth-scroll="true" class="scrollspy bg-light p-3 rounded-2 col-12 col-md-8" tabindex="0">
-                    
-                    <div id="profile-header" class="p-3">
-                        <h1>{{ page.title }}</h1>
-                    </div>
-
-                    <div id="profile" class="p-5 pt-5 mb-5 me-md-5 bg-body shadow-lg rounded">
-                        
-                        <div class="card mb-3 mt-0 p-0 border-0" >
-                            <div class="row">
-
-                                <div class="clearfix">
-
-                                    <a class="float-end mb-3 ms-3 col-4" data-bs-toggle="modal" data-bs-target="#profilePic">
-                                        {% include simages/me.html %}
-                                    </a>    
-
-                                   <div class="modal rounded-0 fade" id="profilePic" tabindex="-1" aria-labelledby="profilePicLabel" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header" style="z-index: 1;border-bottom: 0px;" data-bs-theme="dark">
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="background-color: aliceblue;"></button>
-                                                </div>
-                                                <div class="modal-body p-0 m-0 row align-items-center" style="margin-top: -50px !important;z-index: 0;width: 115%;
-                                                margin-left: -10% !important;">
-                                                    {% include simages/me.html %}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    {% for info in site.data.infos.portfolio_info %}
-                                        <p class="card-text fs-3 lh-sm">
-                                            {{ info.profile_p_01 }}
-                                        </p>
-                                        <p class="card-text fs-5 lh-sm">
-                                            {{ info.profile_p_02 }}
-                                        </p>
-                                    {% endfor %}
-
- 
-                                
-                                </div>
-                            </div>
-                        </div>
-                    
-                        <!-- {% for url in site.data.infos.portfolio_info %}
-                            <p>
-                                {{ url.hyperion_link_text }}
-                                <a class="text-capitalize" target="_blank" href="{{ url.hyperion_portfolio }}">
-                                    {{ url.hyperion_name }}
-                                </a>
-                            </p>
-
-                        {% endfor %}  -->
-
-                    </div>
-
-                    <div id="graphic-design" class="p-5 pt-5 mb-5 me-md-5 bg-body shadow-lg rounded">
-                        <h3 class="pt-5">
-                            Graphic Design
-                        </h3>
-                        <div class="row row-cols-1 row-cols-md-6 g-2" id="image-modals"></div>
-                    </div>
-
-                    <div id="skills" class="p-5 pt-5 mb-5 me-md-5 bg-body shadow-lg rounded">
-                        <h3 class="pt-5">
-                            Language Skill Levels
-                        </h3>
-
-                        <div class="row">
-                            {% for skill in site.data.skills.skills_info %}
-                                <div class="col-sm-3 col-6">
-                                    <div class="card text-dark bg-white mb-3 border-0">
-                                        <img src="{{ skill.img_url }}" class="card-img profile-imgs" alt="{{ skill.name }} image">
-                                        <div class="card-img-overlay p-2">
-                                            <a class="text-decoration-none text-dark" href="{{ skill.url }}" role="button" target="_blank">
-                                                <span class="badge bg-primary rounded-0">
-                                                    {{ skill.name }} 
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-link-45deg" viewBox="0 0 16 16">
-                                                        <path d="M4.715 6.542 3.343 7.914a3 3 0 1 0 4.243 4.243l1.828-1.829A3 3 0 0 0 8.586 5.5L8 6.086a1.002 1.002 0 0 0-.154.199 2 2 0 0 1 .861 3.337L6.88 11.45a2 2 0 1 1-2.83-2.83l.793-.792a4.018 4.018 0 0 1-.128-1.287z"/>
-                                                        <path d="M6.586 4.672A3 3 0 0 0 7.414 9.5l.775-.776a2 2 0 0 1-.896-3.346L9.12 3.55a2 2 0 1 1 2.83 2.83l-.793.792c.112.42.155.855.128 1.287l1.372-1.372a3 3 0 1 0-4.243-4.243L6.586 4.672z"/>
-                                                    </svg>
-                                                </span>
-                                            </a>
-                                        </div>
-
-                                    <div class="card-footer bg-white border-0 p-0">
-                                        <span class="p-0" style="font-size: 0.8rem!important;">Skill level</span>
-                                            <div class="progress rounded-0">
-                                                <div class="progress-bar bg-primary" role="progressbar"
-                                                style="width: {{ skill.level }}%" aria-valuenow="{{ skill.level }}" aria-valuemin="0" aria-valuemax="100">
-                                                </div>
-                                            </div>
-                                            
-                                        </div>
-                                    </div>
-                                </div>
-                            {% endfor %}
-                        </div>
-                    </div>
-
-                    <div id="software" class="p-5 pt-5 mb-5 me-md-5 bg-body shadow-lg rounded">
-                        <h3 class="pt-5">
-                            Software Skill Levels
-                        </h3>
-                        <div class="row">
-                            {% for software in site.data.skills.softwares_info %}
-                                    <div class="col-sm-3 col-6">
-                                        <div class="card text-dark bg-white mb-3 border-0">
-                                            <img src="{{ software.img_url }}" class="card-img profile-imgs" alt="{{ software.name }} image">
-                                            <div class="card-img-overlay p-2">
-                                                <a class="text-decoration-none text-dark" href="{{ software.url }}" role="button" target="_blank">
-                                                    <span class="badge bg-primary rounded-0">
-                                                        {{ software.name }} 
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-link-45deg" viewBox="0 0 16 16">
-                                                            <path d="M4.715 6.542 3.343 7.914a3 3 0 1 0 4.243 4.243l1.828-1.829A3 3 0 0 0 8.586 5.5L8 6.086a1.002 1.002 0 0 0-.154.199 2 2 0 0 1 .861 3.337L6.88 11.45a2 2 0 1 1-2.83-2.83l.793-.792a4.018 4.018 0 0 1-.128-1.287z"/>
-                                                            <path d="M6.586 4.672A3 3 0 0 0 7.414 9.5l.775-.776a2 2 0 0 1-.896-3.346L9.12 3.55a2 2 0 1 1 2.83 2.83l-.793.792c.112.42.155.855.128 1.287l1.372-1.372a3 3 0 1 0-4.243-4.243L6.586 4.672z"/>
-                                                        </svg>
-                                                    </span>
-                                                </a>
-                                            </div>
-
-                                        <div class="card-footer bg-white border-0 p-0">
-                                            <span class="p-0" style="font-size: 0.8rem!important;">Skill level</span>
-                                                <div class="progress rounded-0">
-                                                    <div class="progress-bar bg-primary" role="progressbar"
-                                                    style="width: {{ software.level }}%" aria-valuenow="{{ software.level }}" aria-valuemin="0" aria-valuemax="100">
-                                                    </div>
-                                                </div>
-                                                
-                                            </div>
-                                        </div>
-                                    </div>       
-        
-
-                            {% endfor %}
-                        </div>
-                    </div>
 
 
-                    <div id="certificates" class="p-5 pt-5 mb-5 me-md-5 bg-body shadow-lg rounded">
-                        <h3 class="pt-5">
-                            Certificates
-                        </h3>
-                        <div class="row g-5">
+        <div id="page-main" class="col-12 col-md-10 col-lg-8 h-100 mb-5 p-md-2 p-3-md mx-auto flex-column mb-5-md mt-5-md pb-5-md pt-5-md mt-4 overflow-hidden">
 
-                            {% for certificate in site.data.certificates.certificates_info %}
-                                <div class="card border-0 p-0 col-12 col-sm-12 col-md-12 col-lg-12 col-xl-6 col-xxl-6">
-                                    <div class="card-body bg-success p-5 m-3">
-
-                                        <p class="text-white fw-light mb-0">This certifies that:<br></p>
-                                        <h3 class="card-title text-white"><span class="badge bg-secondary text-wrap text-start rounded-0" style="background-color: #006400!important;">{{ certificate.awarded_to }}</span></h3>
-                                        <p class="text-white fw-light lh-1">has successfully completed, via freeCodeCamp, the below named certificate</p>
-
-                                        <img class="mb-3 px-4" src="{{ certificate.logo_url }}" style="width: 100%;display: block;background-color: #006400!important;" alt="">
-
-                                        <h3 class="card-title text-white"><span class="badge bg-secondary text-wrap text-start rounded-0" style="background-color: #006400!important;">{{ certificate.name }}*</span></h3>
-
-                                        <p class="mb-3">
-                                            <small class="text-white fw-light">Date issued: {{ certificate.issue_date }}</small>
-                                        </p>
-
-                                        <img src="{{ certificate.signature_url }}" style="width: 60%;display: block;filter: invert(1);">
-                                        <p class="text-white mt-2 mb-0 lh-1">Quincy Larson</p>
-                                        <p class="fw-lighter text-white fst-italic lh-1">Executive Director<br>freeCodeCamp.org</p>
-                                        
-                                        <p class="card-text text-white fw-light lh-1"><small>*Developer Certification, representing approximately 300 hours of coursework.</small></p>
-                                        <a href="{{ certificate.cert_link }}" class="card-link text-white text-decoration-none" target="_blank" title="Link to original certificate">
-                                            Original certificate
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-link-45deg" viewBox="0 0 16 16">
-                                                <path d="M4.715 6.542 3.343 7.914a3 3 0 1 0 4.243 4.243l1.828-1.829A3 3 0 0 0 8.586 5.5L8 6.086a1.002 1.002 0 0 0-.154.199 2 2 0 0 1 .861 3.337L6.88 11.45a2 2 0 1 1-2.83-2.83l.793-.792a4.018 4.018 0 0 1-.128-1.287z"></path>
-                                                <path d="M6.586 4.672A3 3 0 0 0 7.414 9.5l.775-.776a2 2 0 0 1-.896-3.346L9.12 3.55a2 2 0 1 1 2.83 2.83l-.793.792c.112.42.155.855.128 1.287l1.372-1.372a3 3 0 1 0-4.243-4.243L6.586 4.672z"></path>
-                                            </svg>
-                                        </a>
-                                    </div>
-                                </div>
-                            {% endfor %}
-                        </div>
-                    </div>
-
-                    <div id="qualifications" class="p-5 pt-5 mb-5 me-md-5 bg-body shadow-lg rounded">
-                        <h3 class="pt-5">
-                            Qualifications
-                        </h3>
-                        <div class="row g-5">
-
-                            {% for qualification in site.data.qualifications.qualification_info %}
-                                <div class="card border-0 p-0 col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
-                                    <div class="card-body bg-primary p-5 m-3">
-
-                                        <p class="text-white fw-light mb-0">This certifies that:<br></p>
-                                        <h3 class="card-title text-white"><span class="badge bg-secondary text-wrap text-start rounded-0" style="background-color: #01033c!important;">{{ qualification.awarded_to }}</span></h3>
-                                        <p class="text-white fw-light lh-1">has successfully obtained, via University of Greenwich, the below named qualification</p>
-
-                                        <img class="pb-3" src="{{ qualification.logo_url }}" style="width: 60%;display: block;" alt="">
-
-                                        <h3 class="card-title text-white"><span class="badge bg-secondary text-wrap text-start rounded-0" style="background-color: #01033c!important;">{{ qualification.name }}*</span></h3>
-
-                                        <p class="mb-3">
-                                            <small class="text-white fw-light">Date issued: {{ qualification.issue_date }}</small>
-                                        </p>
-                                        
-                                        <p class="card-text text-white fw-light fs-6 lh-1"><small>*Awarded CertHE.</small></p>
-                                        <a href="{{ qualification.outline_link }}" class="card-link text-white text-decoration-none fs-6" target="_blank" title="Link to original certificate">
-                                            Qualification outline
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-link-45deg" viewBox="0 0 16 16">
-                                                <path d="M4.715 6.542 3.343 7.914a3 3 0 1 0 4.243 4.243l1.828-1.829A3 3 0 0 0 8.586 5.5L8 6.086a1.002 1.002 0 0 0-.154.199 2 2 0 0 1 .861 3.337L6.88 11.45a2 2 0 1 1-2.83-2.83l.793-.792a4.018 4.018 0 0 1-.128-1.287z"></path>
-                                                <path d="M6.586 4.672A3 3 0 0 0 7.414 9.5l.775-.776a2 2 0 0 1-.896-3.346L9.12 3.55a2 2 0 1 1 2.83 2.83l-.793.792c.112.42.155.855.128 1.287l1.372-1.372a3 3 0 1 0-4.243-4.243L6.586 4.672z"></path>
-                                            </svg>
-                                        </a>
-                                    </div>
-                                </div>
-                            {% endfor %}
-                        </div>
-                    </div>
-
-
+            <div id="about-page" class="container">
+                <div class="" id="about-collapse-menu">
+                    <div id="about_nav" class="px-1 px-md-5"></div>
                 </div>
             </div>
-    
-        </main>
-</div>
+        
+        </div>
+
+
+
+
 
 
         
@@ -246,7 +28,9 @@
 
         {% include footer.html %}
 
-<script>
+
+
+<!-- <script>
             var a = document.querySelectorAll(".sidebar-menu a");
             for (var i = 0, length = a.length; i < length; i++) {
               a[i].onclick = function() {
@@ -319,8 +103,7 @@
                 }
   
  
-</script>
-
+</script> -->
 
     </body>
 </html>

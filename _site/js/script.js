@@ -41,12 +41,15 @@ const header_menu_nav = [
 
 
 for (let j = 0; j < header_menu_nav.length; j++) {
+
     const element = header_menu_nav[j];
 
-    const menu_icon_format = element.sub_title;
-    const each_nav_link = document.querySelector("#"+element.id+"-nav-link");
-    each_nav_link.innerHTML = menu_icon_format;
-
-    console.log(element);
+    if (document.querySelector("#"+element.id+"-nav-link")) {
+        const menu_icon_format = element.sub_title;
+        const each_nav_link = document.querySelector("#"+element.id+"-nav-link");
+        each_nav_link.innerHTML = menu_icon_format;
+        console.log(element); 
+    }
+    
 
 }

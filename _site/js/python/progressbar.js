@@ -8,12 +8,6 @@ xhr.responseType = 'text';
 xhr.onprogress = function(event) {
 
 
-    $( "body" ).JQLoader({
-        action: "open",
-        background: "#444",
-        color: "#fff",
-        mask:true
-    });
 };
 
 
@@ -24,9 +18,6 @@ xhr.onload = function() {
         script.textContent = xhr.responseText;
         document.head.appendChild(script);
         
-
-     
-
 
     } else {
         // Handle error loading script
@@ -50,36 +41,6 @@ console.info = function (message) {
     console.log = originalConsoleLog;
 
 
-    var i = 0;
-  
-    if (i == 0) {
-      i = 1;
-      var elem = document.getElementById("loadingBar");
-      var width = 20;
-      var id = setInterval(frame, 20);
-      function frame() {
-        if (width >= 100) {
-          clearInterval(id);
-          i = 0;
-
-            console.log('DOMContentLoaded event fully loaded uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu');  
-            // handle the DOMContentLoaded event  // your code here
-
-            $("body").JQLoader({
-                  action:"close"
-            });  
-        } else {
-          width++;
-          elem.style.width = width + "%";
-          elem.innerHTML = width + "%";
-        }
-      }
-    }
-
-
-
-                
-      
   }
 };
 

@@ -247,7 +247,7 @@ let url = location.href.replace(/\/$/, "");
             do_page_title.innerHTML = base_name;
             do_sub_page_title.innerHTML = ""
             do_page_description.innerHTML = root[0].description;
-            do_comp_title.innerHTML = "";
+            // do_comp_title.innerHTML = "";
           }
         }
 

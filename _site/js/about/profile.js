@@ -272,6 +272,8 @@ console.log("PAGE DATA: ", page_data);
     const email_address = document.getElementById("email-address");
     const social_items = document.getElementById("socials");
 
+    const contact_button = document.getElementById("contact-button");
+
     avatar.innerHTML = get_avatar.innerHTML;
     avatar.title = page_data[0].author;
     author_name.innerHTML = page_data[0].author;
@@ -313,6 +315,7 @@ console.log("PAGE DATA: ", page_data);
     });
 
 
+    contact_button.href = "../contact.html"
 
 }
 
@@ -321,17 +324,17 @@ function profilePage() {
         <div>
 
 
-<div className="container">
+<div className="container p-0">
     <div className="main-body">
         <nav className="main-breadcrumb" aria-label="breadcrumb">
             <ol className="breadcrumb">
-                <li className="breadcrumb-item fs-4"><a href="#">About</a></li>
+                <li className="breadcrumb-item fs-4"><a href="index.html" >About</a></li>
                 <li className="breadcrumb-item active fs-4" aria-current="page">Profile</li>
             </ol>
         </nav>
         <div className="row gutters-sm">
-            <div className="col-md-4 mb-3 ps-0">
-                <div className="card">
+            <div className="col-md-4 mb-3">
+                <div className="card rounded-0">
                     <div className="card-body">
                         <div className="d-flex flex-column align-items-center text-center">
                             <div id="avatar" className="rounded-circle" style={{width:"150px", overflow:"hidden"}} title=""></div>
@@ -339,7 +342,7 @@ function profilePage() {
                                 <h4 id="author-name" className="fs-4"></h4>
                                 <div id="work-skills" className="text-secondary mb-1 align-items-center text-center"></div>
                                 <div className="text-muted font-size-sm pb-2"><address id="location"></address></div>
-                                <button className="btn btn-secondary fs-4 fw-lighter">Contact Me</button>
+                                <a id="contact-button" href="" className="btn btn-secondary fs-4 fw-lighter">Contact Me</a>
                             </div>
                         </div>
                     </div>
@@ -347,7 +350,7 @@ function profilePage() {
                 
             </div>
             <div className="col-md-8">
-                <div className="card mb-3">
+                <div className="card rounded-0 mb-3">
                     <div className="card-body">
                         <div className="row">
                             <div className="col-sm-3">
@@ -365,7 +368,7 @@ function profilePage() {
 
                 <div className="row gutters-sm">
                     <div className="col-sm-6 mb-3">
-                        <div className="card h-100">
+                        <div className="card rounded-0 h-100">
                             <div className="card-body">
                                 <h6 className="d-flex align-items-center mb-3"><i className="material-icons text-info mr-2">assignment</i>Project Status</h6><small>Web Design</small>
                                 <div className="progress mb-3" style={{height: "5px"}}>

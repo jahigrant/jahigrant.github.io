@@ -16,6 +16,8 @@
         </div>
 
         <script>
+
+
             var url = window.location.href;
             var url_split = url.split("/");
             var secondLevelLocation = url_split.reverse();
@@ -23,6 +25,24 @@
 
 
             $(document).ready(function(){
+
+
+function UrlExists(url) {
+    var http = new XMLHttpRequest();
+    http.open('HEAD', url, false);
+    http.send();
+    if (http.status != 404){
+
+    } else {
+        console.log("error 404");
+    }
+}
+UrlExists(url)
+
+
+
+
+
 var get_link = document.getElementById("unknown-url").innerHTML;  
 var get_href = document.getElementById("unknown-url").href;  
 document.getElementById("unknown-url").href = get_href + get_link; 
@@ -68,7 +88,7 @@ let dim = dims;
 
 let framess = Array.from({length: 1}, () => Math.floor(Math.random() * 100.0)); 
         let frameCount = framess;
-        const create_box_width = Math.round(w/14);
+        const create_box_width = Math.round(width/14);
         for (i = -20; i <= 20; ++i) {
             for (j = -20; j <= 20; ++j) {
                 let s = i * framess;

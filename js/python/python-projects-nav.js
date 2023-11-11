@@ -376,7 +376,7 @@ function pythonProjectsNav() {
       <div className="p-0 m-0 mt-2 bg-body border-0 border-muted">
         <div className="p-0">
 
-          <div className="tab-content project-content p-0" id="tab-content">
+          <div className="tab-content project-content p-0 bg-transparent" id="tab-content">
 
             <div className="tab-pane fade show active" id="index" role="tabpanel" aria-labelledby="python-tab">
               <div className="container p-0">

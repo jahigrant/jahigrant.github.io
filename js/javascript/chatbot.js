@@ -115,7 +115,7 @@ function chatbot_welcome() {
             <div class="bot_msg rounded-4 bg-success text-light p-3 px-4 mt-2" style="border-bottom-left-radius: 0!important;border-radius: 30px;">
                 <div class="container p-0 m-0">
                     <p class="lh-sm fw-lighter fs-6 p-0 m-0 text-lowercase">`+res_d.toLocaleTimeString('en-GB', { hour12: true })+`</p>
-                    <p class="text-break lh-sm fw-lighter mb-0 fs-5">
+                    <p class="text-break lh-sm fw-lighter mb-0 fs-5" style="text-align: start;">
                         `+ _.upperFirst(dbbotResponses.initial) +`
                     </p>
                 </div>
@@ -136,11 +136,12 @@ function escapeHtmlChars(unsafe) {
 
 function random_facts() {
 
-        let quoteApi = fetch('https://opentdb.com/api.php?amount=1')
+        let quoteApi = fetch('https://jservice.io/api/random')
         .then(response => response.json())
         .then(data => {
-            const replace_quotes_in_question = data.results[0].question.replace(/&quot;/gim, '"');
-            const replace_quotes_in_answer = data.results[0].correct_answer.replace(/&quot;/gim, '"');
+            console.log(data);
+            const replace_quotes_in_question = data[0].question.replace(/&quot;/gim, '"');
+            const replace_quotes_in_answer = data[0].answer.replace(/&quot;/gim, '"');
 
             const element = document.getElementById("waiting_msg");
 
@@ -154,8 +155,8 @@ user_chat.innerHTML += `
 <div class="user_msg rounded-4 bg-primary text-light p-3 px-4 mt-2" style="border-bottom-right-radius: 0!important;border-radius: 30px;">
 <div class="container p-0 m-0">
     <p class="lh-sm fw-lighter fs-6 p-0 m-0 text-lowercase">`+res_d.toLocaleTimeString('en-GB', { hour12: true })+`</p>
-    <p class="text-break lh-sm fw-lighter mb-0 fs-5">
-        `+ escapeHtmlChars(data.results[0].question) +`
+    <p class="text-break lh-sm fw-lighter mb-0 fs-5" style="text-align: start;">
+        `+ escapeHtmlChars(data[0].question) +`
     </p>
 </div>
 </div>
@@ -175,8 +176,8 @@ user_chat.innerHTML += `
                 <div class="bot_msg rounded-4 bg-success text-light p-3 px-4 mt-2" style="border-bottom-left-radius: 0!important;border-radius: 30px;">
                     <div class="container p-0 m-0">
                         <p class="lh-sm fw-lighter fs-6 p-0 m-0 text-lowercase">`+res_d.toLocaleTimeString('en-GB', { hour12: true })+`</p>
-                        <p class="text-break lh-sm fw-lighter mb-0 fs-5">
-                            `+ escapeHtmlChars(data.results[0].correct_answer) +`
+                        <p class="text-break lh-sm fw-lighter mb-0 fs-5" style="text-align: start;">
+                            `+ escapeHtmlChars(data[0].answer) +`
                         </p>
                     </div>
                 </div>
@@ -186,9 +187,9 @@ user_chat.innerHTML += `
             }
             
 
-            console.log("Full Object: ", data.results);
-            console.log("Question: ", escapeHtmlChars(data.results[0].question));
-            console.log("Answer: ", escapeHtmlChars(data.results[0].correct_answer));
+            console.log("Full Object: ", data[0]);
+            console.log("Question: ", escapeHtmlChars(data[0].question));
+            console.log("Answer: ", escapeHtmlChars(data[0].answer));
 
 
         });
@@ -231,7 +232,7 @@ function getVal() {
             <div class="user_msg rounded-4 bg-primary text-light p-3 px-4 mt-2" style="border-bottom-right-radius: 0!important;border-radius: 30px;">
                 <div class="container p-0 m-0">
                     <p class="lh-sm fw-lighter fs-6 p-0 m-0 text-lowercase">`+d.toLocaleTimeString('en-GB', { hour12: true })+`</p>
-                    <p class="text-break lh-sm fw-lighter mb-0 fs-5">
+                    <p class="text-break lh-sm fw-lighter mb-0 fs-5" style="text-align: start;">
                         `+ _.upperFirst(val) +`
                     </p>
                 </div>
@@ -255,7 +256,7 @@ function getVal() {
                 <div class="bot_msg rounded-4 bg-success text-light p-3 px-4 mt-2" style="border-bottom-left-radius: 0!important;border-radius: 30px;">
                     <div class="container p-0 m-0">
                         <p class="lh-sm fw-lighter fs-6 p-0 m-0 text-lowercase">`+res_d.toLocaleTimeString('en-GB', { hour12: true })+`</p>
-                        <p class="text-break lh-sm fw-lighter mb-0 fs-5">
+                        <p class="text-break lh-sm fw-lighter mb-0 fs-5" style="text-align: start;">
                             `+ _.upperFirst(botResponse) +`
                         </p>
                     </div>

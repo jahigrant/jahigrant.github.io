@@ -11,12 +11,12 @@ navigation_data:
  - title: Python Projects
    url: /python-projects/
    id: python
- - title: Contact Me
-   url: /contact.html
-   id: contact
- - title: Blog
-   url: /blog.html
-   id: blog  
+#  - title: Contact Me
+  #  url: /contact.html
+  #  id: contact
+#  - title: Blog
+#    url: /blog.html
+#    id: blog  
 errorpage_data:
  - title: 404 Error
    url: /*

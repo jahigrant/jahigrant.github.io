@@ -5,7 +5,7 @@ const root = [
     slug: "index",
     title: base_name,
     short_title: "About",
-    description: "A Front End Developer, whom wears other hats, who documents what has come before.",
+    description: "Front End Developer, wearing many hats, this documentation of what I do.",
     icon: `<i class="fa-solid fa-house fa-xl"></i>`,
     category: [
       "javascript"
@@ -40,7 +40,7 @@ const tabItems = [
     slug: "skills",
     title: "Skills Held",
     sub_title: "Skills",
-    description: "My skills",
+    description: "My coding skills vary widely, I am proficient with a range of programming concepts and practices. I have worked on projects involving different programming languages and frameworks.",
     icon: `<i class="fa-sharp fa-solid fa-code fa-xl"></i>`,
     category: [
       "skills"
@@ -80,10 +80,12 @@ let url = location.href.replace(/\/$/, "");
       const hash_array = _.reverse(hashSplit);
       console.log("Hash Array: ", hash_array[0]);
 
-
+      const hash_array_no_html = _.replace(hash_array[0], ".html", "");
+      console.log("Hash Array: ", hash_array_no_html);
 
   function about_navigation() {
     $(document).ready(() => {
+      const get_index_tab_content = document.getElementById("index");
 
       const get_nav_tabs = document.getElementById("tabs-nav");
       const do_page_title = document.getElementById("page-title");
@@ -132,7 +134,7 @@ let url = location.href.replace(/\/$/, "");
               <span class="pb-2" id="tab-text">`+ element.sub_title +`</span>
               </a>
             </li>
-          `          
+          `         
         } else {
           const root_id = root[0].root;
           let edit_root_st = _.replace(root_id, "/", "");
@@ -144,6 +146,12 @@ let url = location.href.replace(/\/$/, "");
               </a>
             </li>
           `      
+          console.log(hash_array_no_html);
+          if (hash_array_no_html == root[0].slug || hash_array_no_html == _.lowerCase(base_name)) {
+            get_index_tab_content.classList.add("active", "show");
+          } else {
+            get_index_tab_content.classList.remove("active", "show");
+          }
         }
 
 
@@ -213,6 +221,9 @@ let url = location.href.replace(/\/$/, "");
           do_page_title.innerHTML = base_name;
           do_page_description.innerHTML = root[0].description;
         }
+
+
+
       }
 
       $('a[data-bs-toggle="list"]').on("click", function() {
@@ -249,6 +260,14 @@ let url = location.href.replace(/\/$/, "");
             do_page_description.innerHTML = root[0].description;
             // do_comp_title.innerHTML = "";
           }
+        }
+
+        console.log(hashSplit[1])
+
+        if (hashSplit[1] === root[0].slug) {
+          get_index_tab_content.classList.add("active", "show");
+        } else {
+          get_index_tab_content.classList.remove("active", "show");
         }
 
       });
@@ -330,8 +349,6 @@ let url = location.href.replace(/\/$/, "");
         <p id="page-description" className="fs-3 lead"></p>
         
         {/* <ul id="nav-tabs"></ul> */}
-        
-        
 
         {/* <h6 id="script-title" className="fs-4 ps-0"></h6> */}
 

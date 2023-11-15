@@ -281,8 +281,8 @@ console.log("PAGE DATA: ", page_data);
     page_data[0].work_skill.forEach(element => {
         const processString = uppercaseString(element);
         work_skills.innerHTML += `
-        <span class="badge badge-secondary text-capitalize m-1 fs-5" style="white-space:normal;">
-            `+ processString +`
+        <span class="text-capitalize m-1 lh-1" style="">
+            `+ processString +` 
         </span>`;  
     });
     
@@ -302,7 +302,7 @@ console.log("PAGE DATA: ", page_data);
     page_data[0].contact_details[0].socials.forEach(element => {
         social_items.innerHTML += `
         <div className="row" style="display:flex">
-            <div className="col-sm-3" style="width:25%;">
+            <div className="col-sm-3" style="width:30%;">
                 <div className="mb-0 fs-4" style="font-size: 2.5em;">
                     `+ element.icon +`
                 </div>
@@ -311,7 +311,7 @@ console.log("PAGE DATA: ", page_data);
                 <a className="fs-4" href="`+ element.link +`" target="_blank" style="font-size:calc(1.275rem + .3vw)!important;">@`+ element.username +`</a>
             </div>
         </div>
-        <hr>`;
+        <hr style="border-color:#d4d4d4">`;
     });
 
 
@@ -334,7 +334,7 @@ function profilePage() {
         </nav>
         <div className="row gutters-sm">
             <div className="col-md-4 mb-3">
-                <div className="card rounded-0">
+                <div className="card rounded-0 shadow" style={{borderColor:"#d4d4d4"}}>
                     <div className="card-body">
                         <div className="d-flex flex-column align-items-center text-center">
                             <div id="avatar" className="rounded-circle" style={{width:"150px", overflow:"hidden"}} title=""></div>
@@ -350,68 +350,25 @@ function profilePage() {
                 
             </div>
             <div className="col-md-8">
-                <div className="card rounded-0 mb-3">
+                <div className="card rounded-0 mb-3 shadow" style={{borderColor:"#d4d4d4"}}>
                     <div className="card-body">
                         <div className="row">
-                            <div className="col-sm-3">
-                                <h6 className="mb-0 fs-4">Email</h6>
+                            <div className="col-sm-3" style={{width:"30%"}}>
+                                <div id="email-icon" className="mb-0 fs-4">
+                                    <i className="fa-sharp fa-solid fa-envelope-open-text fa-xl"></i>
+                                </div>
                             </div>
-                            <div className="col-sm-9 text-secondary fs-4">
+                            <div className="col-sm-9 text-secondary fs-4 ps-2" style={{width:"70%"}}>
                                 <a id="email-address" href=""></a>
                             </div>
                         </div>
-                        <hr />
+                        <hr style={{borderColor:"#d4d4d4", opacity:"1"}}/>
                         <div id="socials">
                         </div>
                     </div>
                 </div>
 
-                <div className="row gutters-sm">
-                    <div className="col-sm-6 mb-3">
-                        <div className="card rounded-0 h-100">
-                            <div className="card-body">
-                                <h6 className="d-flex align-items-center mb-3"><i className="material-icons text-info mr-2">assignment</i>Project Status</h6><small>Web Design</small>
-                                <div className="progress mb-3" style={{height: "5px"}}>
-                                    <div className="progress-bar bg-primary" role="progressbar" style={{width: "80%"}} aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div><small>Website Markup</small>
-                                <div className="progress mb-3" style={{height: "5px"}}>
-                                    <div className="progress-bar bg-primary" role="progressbar" style={{width: "72%"}} aria-valuenow="72" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div><small>One Page</small>
-                                <div className="progress mb-3" style={{height: "5px"}}>
-                                    <div className="progress-bar bg-primary" role="progressbar" style={{width: "89%"}} aria-valuenow="89" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div><small>Mobile Template</small>
-                                <div className="progress mb-3" style={{height: "5px"}}>
-                                    <div className="progress-bar bg-primary" role="progressbar" style={{width: "55%"}} aria-valuenow="55" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div><small>Backend API</small>
-                                <div className="progress mb-3" style={{height: "5px"}}>
-                                    <div className="progress-bar bg-primary" role="progressbar" style={{width: "65%"}} aria-valuenow="66" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="col-sm-6 mb-3">
-                        <div className="card h-100">
-                            <div className="card-body">
-                                <h6 className="d-flex align-items-center mb-3"><i className="material-icons text-info mr-2">assignment</i>Project Status</h6><small>Web Design</small>
-                                <div className="progress mb-3" style={{height: "5px"}}>
-                                    <div className="progress-bar bg-primary" role="progressbar" style={{width: "80%"}} aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div><small>Website Markup</small>
-                                <div className="progress mb-3" style={{height: "5px"}}>
-                                    <div className="progress-bar bg-primary" role="progressbar" style={{width: "72%"}} aria-valuenow="72" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div><small>One Page</small>
-                                <div className="progress mb-3" style={{height: "5px"}}>
-                                    <div className="progress-bar bg-primary" role="progressbar" style={{width: "89%"}} aria-valuenow="89" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div><small>Mobile Template</small>
-                                <div className="progress mb-3" style={{height: "5px"}}>
-                                    <div className="progress-bar bg-primary" role="progressbar" style={{width: "55%"}} aria-valuenow="55" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div><small>Backend API</small>
-                                <div className="progress mb-3" style={{height: "5px"}}>
-                                    <div className="progress-bar bg-primary" role="progressbar" style={{width: "66%"}} aria-valuenow="66" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                
             </div>
         </div>
     </div>

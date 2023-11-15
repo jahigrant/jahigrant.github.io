@@ -6,7 +6,7 @@ const root = [
     title: base_name,
     short_title: "Projects",
     description: "Here are some examples of Javascript code snippets covering various concepts and use cases",
-    icon: `<i class="fa-solid fa-house fa-xl"></i>`,
+    icon: `<i class="fa-sharp fa-solid fa-code fa-xl"></i>`,
     category: [
       "javascript",
       "projects"
@@ -31,7 +31,7 @@ const tabItems = [
     title: "Quote Machine",
     sub_title: "Quotes",
     description: "A quote sytem using JSON for text quotes and consumes an external API for related images",
-    icon: `<i class="fa-solid fa-quote-left fa-xl"></i>`,
+    icon: `<i class="fa-sharp fa-solid fa-code fa-xl"></i>`,
     category: [
       "javascript",
       "API",
@@ -44,7 +44,7 @@ const tabItems = [
     title: "Markdown Previewer",
     sub_title: "Markdown",
     description: "A markdown script",
-    icon: `<i class="fa-brands fa-markdown fa-xl"></i>`,
+    icon: `<i class="fa-sharp fa-solid fa-code fa-xl"></i>`,
     category: [
       "javascript",
       "markdown",
@@ -57,13 +57,28 @@ const tabItems = [
     title: "Chatbot",
     sub_title: "Chatbot",
     description: "A basic chatbot",
-    icon: `<i class="fa-solid fa-headset fa-xl"></i>`,
+    icon: `<i class="fa-sharp fa-solid fa-code fa-xl"></i>`,
     category: [
       "javascript",
       "html",
     ]
+  },
+  {
+    url: "/javascript-projects/clock.html",
+    slug: "clock",
+    title: "Clock",
+    sub_title: "Clock",
+    description: "A basic clock",
+    icon: `<i class="fa-sharp fa-solid fa-code fa-xl"></i>`,
+    category: [
+      "javascript",
+      "html",
+      "p5"
+    ]
   }
 ]; 
+
+const js_icon = `../logos/javascript-logo-svgrepo-com.svg`
 
 function bg_gradients() {
   $(document).ready(() => {
@@ -93,7 +108,6 @@ let url = location.href.replace(/\/$/, "");
       const get_nav_tabs = document.getElementById("tabs-nav");
       const do_page_title = document.getElementById("page-title");
       const do_sub_page_title = document.getElementById("sub-page-title");
-      const do_comp_title = document.getElementById("script-title");
       const do_page_description = document.getElementById("page-description");
       const do_frontpage = document.getElementById("javascript-frontpage");
       const do_categories = document.getElementById("categories");
@@ -143,7 +157,7 @@ let url = location.href.replace(/\/$/, "");
             <div class="col p-0">
               <div class="project-gradient card p-4 rounded-0">
                 <div class="card-body p-2 text-center">
-                  <div class="d-flex justify-content-center" style="display:inline;color:#fff;padding-top: 20px;padding-bottom:20px;">`+ element.icon +`</div>
+                  <div class="d-flex justify-content-center" style="display:inline;"><img src="`+ js_icon +`" width="24"/></div>
                   <div id="`+ element.slug +`-content-preview" class="text-light fs-4 lh-sm" style="-webkit-text-stroke:0.2px black;text-wrap: nowrap;">
                     `+ element.sub_title +`
                   </div>
@@ -186,7 +200,6 @@ let url = location.href.replace(/\/$/, "");
         if ( clean_hash_html === result_slugs[i] ){
           do_page_title.innerHTML = base_name + ": ";
           do_sub_page_title.innerHTML = result_titles[i];
-          do_comp_title.innerHTML = result_titles[i];
           do_page_description.innerHTML = result_descriptions[i];
           result_categories[i].forEach(element => {
             do_categories.innerHTML += `<button type="button" class="badge text-bg-primary" id="`+element+`-category-field">`+ element +`</button>`
@@ -219,7 +232,6 @@ let url = location.href.replace(/\/$/, "");
           if ( hashSplit[1] === result_slugs[i] ){
             do_page_title.innerHTML = base_name + ": ";
             do_sub_page_title.innerHTML = result_titles[i];
-            do_comp_title.innerHTML = result_titles[i];
             do_page_description.innerHTML = result_descriptions[i];
             result_categories[i].forEach(element => {
               do_categories.innerHTML += `<button type="button" class="badge text-bg-primary" id="`+element+`-category-field">`+ element +`</button>`
@@ -229,7 +241,6 @@ let url = location.href.replace(/\/$/, "");
             do_page_title.innerHTML = base_name;
             do_sub_page_title.innerHTML = ""
             do_page_description.innerHTML = root[0].description;
-            do_comp_title.innerHTML = "";
           }
         }
 
@@ -295,7 +306,12 @@ let url = location.href.replace(/\/$/, "");
       </div>`;
   }
 
-
+  function doClock() {
+    return document.getElementById("clock").innerHTML = `
+      <div className="text-center">
+        <div id="clock_component" className="p-0">Clock</div>
+      </div>`;
+  }
   
 
   function javascriptProjectsNav() {
@@ -315,8 +331,6 @@ let url = location.href.replace(/\/$/, "");
         
         <ul className="nav nav-pills" id="tabs-nav"></ul>
 
-        <h6 id="script-title" className="fs-4 ps-0"></h6>
-
         <div id="categories" className="pb-3"></div>
 
         <div className="card p-0 m-0 bg-body border-0">
@@ -327,10 +341,10 @@ let url = location.href.replace(/\/$/, "");
                   <div id="javascript-frontpage" className="row row-cols-2 row-cols-lg-3 g-0 g-lg-0"></div>
                 </div>
               </div>
-
               <div className="tab-pane fade" id="quote-machine" role="tabpanel" aria-labelledby="quote-machine-tab"></div>
-                <div className="tab-pane fade" id="markdown-previewer" role="tabpanel" aria-labelledby="markdown-previewer-tab"></div>
-                <div className="tab-pane fade" id="chatbot" role="tabpanel" aria-labelledby="chatbot-tab"></div>
+              <div className="tab-pane fade" id="markdown-previewer" role="tabpanel" aria-labelledby="markdown-previewer-tab"></div>
+              <div className="tab-pane fade" id="chatbot" role="tabpanel" aria-labelledby="chatbot-tab"></div>
+              <div className="tab-pane fade" id="clock" role="tabpanel" aria-labelledby="clock-tab"></div>
               </div>
             </div>
         </div>
@@ -348,5 +362,6 @@ javascriptProjectsNav();
 doQuote();
 doMarkdown();
 doChatbot();
+doClock();
 javascript_navigation();
 bg_gradients();

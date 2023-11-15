@@ -1155,3 +1155,144 @@ footer,
 .offcanvas.offcanvas-start.show{
   visibility: visible!important;
 }
+
+#email-icon{
+  font-size:2.5em !important;
+}
+
+.box {
+
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  padding:3rem;
+}
+.box>* {
+  flex: 1 1 5px;
+}
+
+@font-face {
+  font-family: 'digital';
+  src: url('/Digital7Italic-BW658.ttf');
+}
+
+
+
+
+
+.analog-clock {
+  border: 10px solid var(--color-red-inverse);
+  margin: 0 auto;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+}
+.analog-clock-face {
+  height: 100%;
+  transform: translateY(50%);
+}
+.analog-clock-face::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  position: absolute;
+  background: white;
+  left: 50%;
+  z-index: 10;
+  transform: translate(-50%, -50%);
+  border: 2px solid var(--color-red-inverse);
+  border-radius: 50%;
+}
+
+/* *** DOTS *** */
+
+.dots:nth-of-type(1) {
+  transform: rotate(0deg);
+}
+.dots:nth-of-type(2) {
+  transform: rotate(90deg);
+}
+.dots:nth-of-type(3) {
+  transform: rotate(30deg);
+}
+.dots:nth-of-type(4) {
+  transform: rotate(60deg);
+}
+.dots:nth-of-type(5) {
+  transform: rotate(120deg);
+}
+.dots:nth-of-type(6) {
+  transform: rotate(150deg);
+}
+.dots::before, .dots::after {
+  content: '';
+  position: absolute;
+  background: var(--color-orange-inverse);
+  width: 7px;
+  height: 2px;
+  border-radius: 30px;
+  top: -3px;
+}
+.dots::after {
+  left: 7px;
+}
+.dots::before {
+  right: 7px;
+}
+.dots:nth-of-type(1)::before,
+.dots:nth-of-type(1)::after,
+.dots:nth-of-type(2)::before,
+.dots:nth-of-type(2)::after {
+  background: var(--color-orange);
+  width: 10px;
+  height: 4px;
+}
+
+/* *** HAND *** */
+
+.hand {
+  background: var(--color-black-light);
+  transform-origin: 100%;
+  border-radius: 10px;
+  position: absolute;
+  right: 50%;
+}
+.hand.hour-hand {
+  width: 25%;
+  height: 5px;
+  background: var(--color-black);
+  z-index: 1;
+}
+.hand.min-hand {
+  width: 37%;
+  height: 4px;
+}
+.hand.sec-hand {
+  background: var(--color-red-inverse);
+  width: 39%;
+  height: 2px;
+}
+
+/* ==================
+ *  Digital Clock
+ * ================== */
+
+.digital-clock {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  font-size: 50px;
+}
+.digit {
+  margin: 0 5px;
+  height: 80px;
+  width: 75px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-yellow-inverse);
+  box-shadow: 1px 3px 5px var(--color-gray);
+  border-radius: 5px;
+  color: var(--color-digit);
+}

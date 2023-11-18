@@ -75,6 +75,19 @@ const tabItems = [
       "html",
       "p5"
     ]
+  },
+  {
+    url: "/javascript-projects/random-piano-generator.html",
+    slug: "random-piano-generator",
+    title: "Random Piano Generator",
+    sub_title: "Random Piano Generator",
+    description: "A basic random piano generator",
+    icon: `<i class="fa-sharp fa-solid fa-code fa-xl"></i>`,
+    category: [
+      "javascript",
+      "html",
+      "p5"
+    ]
   }
 ]; 
 
@@ -312,6 +325,13 @@ let url = location.href.replace(/\/$/, "");
         <div id="clock_component" className="p-0">Clock</div>
       </div>`;
   }
+
+  function doRandomPianoGenerator() {
+    return document.getElementById("random-piano-generator").innerHTML = `
+      <div className="text-center">
+        <div id="random_piano_generator_component" className="p-0">Piano</div>
+      </div>`;
+  }
   
 
   function javascriptProjectsNav() {
@@ -345,6 +365,7 @@ let url = location.href.replace(/\/$/, "");
               <div className="tab-pane fade" id="markdown-previewer" role="tabpanel" aria-labelledby="markdown-previewer-tab"></div>
               <div className="tab-pane fade" id="chatbot" role="tabpanel" aria-labelledby="chatbot-tab"></div>
               <div className="tab-pane fade" id="clock" role="tabpanel" aria-labelledby="clock-tab"></div>
+              <div className="tab-pane fade" id="random-piano-generator" role="tabpanel" aria-labelledby="random-piano-generator-tab"></div>
               </div>
             </div>
         </div>
@@ -363,5 +384,6 @@ doQuote();
 doMarkdown();
 doChatbot();
 doClock();
+doRandomPianoGenerator();
 javascript_navigation();
 bg_gradients();

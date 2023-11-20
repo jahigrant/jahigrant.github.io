@@ -1176,3 +1176,15 @@ footer,
   font-family: 'digital';
   src: url('/Digital7Italic-BW658.ttf');
 }
+#piano-notes h1{
+  padding-left: 0.8rem;
+  padding-left: 0.8rem;
+  font-size: 1rem;
+  display: inline-block;
+}
+#piano-notes h1:first-of-type{
+  font-size: calc(1.375rem + 1.5vw);
+  border: 2px solid green;
+  padding: 0.8rem;
+  display: block;
+}

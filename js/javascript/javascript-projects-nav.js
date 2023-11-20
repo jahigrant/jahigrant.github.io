@@ -80,7 +80,7 @@ const tabItems = [
     url: "/javascript-projects/random-piano-generator.html",
     slug: "random-piano-generator",
     title: "Random Piano Generator",
-    sub_title: "Random Piano Generator",
+    sub_title: "Piano",
     description: "A basic random piano generator",
     icon: `<i class="fa-sharp fa-solid fa-code fa-xl"></i>`,
     category: [

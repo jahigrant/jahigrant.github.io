@@ -175,7 +175,9 @@ $(document).ready(() => {
                         const url_format = image_url + "/" + image_data_id + url_append_data
                         const UrlsFormat = url_format.replaceAll("\'", "");
                         const UrlFormat = UrlsFormat.replaceAll('"', "");
+
                         const imgAltText = dataset.data[datasetNumChoice].thumbnail.alt_text;
+                        
                         console.log("dataset " + UrlFormat )
                         console.log("dataset " + getTheImageAPi )
                         console.log("dataset " + JSON.stringify(imgdata) )

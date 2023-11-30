@@ -88,6 +88,19 @@ const tabItems = [
       "html",
       "p5"
     ]
+  },
+  {
+    url: "/javascript-projects/game.html",
+    slug: "game",
+    title: "Game",
+    sub_title: "Game",
+    description: "A basic 2d platformer game",
+    icon: `<i class="fa-sharp fa-solid fa-gamepad fa-xl"></i>`,
+    category: [
+      "javascript",
+      "html",
+      "p5"
+    ]
   }
 ]; 
 
@@ -332,6 +345,13 @@ let url = location.href.replace(/\/$/, "");
         <div id="random_piano_generator_component" className="p-0">Piano</div>
       </div>`;
   }
+
+  function doGame() {
+    return document.getElementById("game").innerHTML = `
+      <div className="text-center">
+        <div id="game_component" className="p-0">Game</div>
+      </div>`;
+  }
   
 
   function javascriptProjectsNav() {
@@ -366,6 +386,7 @@ let url = location.href.replace(/\/$/, "");
               <div className="tab-pane fade" id="chatbot" role="tabpanel" aria-labelledby="chatbot-tab"></div>
               <div className="tab-pane fade" id="clock" role="tabpanel" aria-labelledby="clock-tab"></div>
               <div className="tab-pane fade" id="random-piano-generator" role="tabpanel" aria-labelledby="random-piano-generator-tab"></div>
+              <div className="tab-pane fade" id="game" role="tabpanel" aria-labelledby="game-tab"></div>
               </div>
             </div>
         </div>
@@ -385,5 +406,8 @@ doMarkdown();
 doChatbot();
 doClock();
 doRandomPianoGenerator();
+doGame();
 javascript_navigation();
 bg_gradients();
+
+

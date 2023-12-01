@@ -10,11 +10,11 @@ function drawGameChar() {
 
 
       //parachute
-      let c = color('pink');
+      let c = color('light gray');
       fill(c);
       rect(gameChar_x-20, gameChar_y - 100, 40, 20, 40, 40, 0);
 //strings
-let p = color('magenta');
+let p = color('light gray');
 fill(p);  
 quad(
     gameChar_x + 20,
@@ -77,11 +77,11 @@ quad(
       // add your jumping-right code
 
       //parachute
-      let c = color('pink');
+      let c = color('light gray');
       fill(c);
       rect(gameChar_x-20, gameChar_y - 100, 40, 20, 40, 40, 0);
 //strings
-let p = color('magenta');
+let p = color('light gray');
 fill(p);
 quad(
     gameChar_x - 20,
@@ -243,11 +243,11 @@ quad(
       // add your jumping facing forwards code
 
       //parachute
-      let c = color('pink');
+      let c = color('light gray');
       fill(c);
       rect(gameChar_x-20, gameChar_y - 100, 40, 20, 40, 40, 0);
 //strings
-let p = color('magenta');
+let p = color('light gray');
 fill(p);
 quad(
     gameChar_x - 20,

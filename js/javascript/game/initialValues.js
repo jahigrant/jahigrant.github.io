@@ -54,22 +54,22 @@ var flagpoleReachedSound;
 // Preloading fonts and sounds
 // ---------------------------
 
-function preload() {
+async function preload() {
 
   soundFormats("mp3", "wav");
 
   //all sounds are initialised here with adjusted volumes
-  backgroundSound = loadSound("../../../assets/game_sound/BackgroundMusic.mp3");
+  backgroundSound = await loadSound("../../../assets/game_sound/BackgroundMusic.mp3");
   backgroundSound.setVolume(0.05);
-  coinSound = loadSound("../../../assets/game_sound/Coins.mp3");
+  coinSound = await loadSound("../../../assets/game_sound/Coins.mp3");
   coinSound.setVolume(0.2);
-  plummetingSound = loadSound("../../../assets/game_sound/Falling.mp3");
+  plummetingSound = await loadSound("../../../assets/game_sound/Falling.mp3");
   plummetingSound.setVolume(0.15);
-  jumpingSound = loadSound("../../../assets/game_sound/Jumping.wav");
+  jumpingSound = await loadSound("../../../assets/game_sound/Jumping.wav");
   jumpingSound.setVolume(0.1);
-  opponentContactSound = loadSound("../../../assets/game_sound/OpponentContact.wav");
+  opponentContactSound = await loadSound("../../../assets/game_sound/OpponentContact.wav");
   opponentContactSound.setVolume(0.1);
-  flagpoleReachedSound = loadSound("../../../assets/game_sound/FlagpoleReached.wav");
+  flagpoleReachedSound = await loadSound("../../../assets/game_sound/FlagpoleReached.wav");
   flagpoleReachedSound.setVolume(0.2);
 }
 
@@ -98,7 +98,7 @@ function startGame() {
   var backgroundSoundCount = 0;
 
   //game score when starting the game
-  game_score = 1000;
+  game_score = 0;
 
   //all of the arrays, objects and constructors
   trees = [

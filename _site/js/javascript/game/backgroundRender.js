@@ -5,6 +5,8 @@
 //   and platforms extensions
 // ------------------------------------------------
 
+let size = 5;
+
 //sky drawing function
 function drawBackgroundSky(grad1, grad2) {
     grad1 = color(50, 161, 168);
@@ -205,20 +207,25 @@ function drawBackgroundSky(grad1, grad2) {
   
   //function to draw player's lives
   function drawLives() {
+    let p = color('red');
+fill(p);  
     for (var i = 0; i < lives; i++) {
-      fill(194, 23, 23);
-      ellipse(36 + 32 * i, 62, 15);
-      ellipse(23 + 32 * i, 62, 15);
-      triangle(16 + 32 * i, 65, 43 + 32 * i, 65, 30 + 32 * i, 82);
+
+        fill(p);
+        rect(36 + 32 * i, 66, 15);
+        rect(24 + 32 * i, 62, 15);
+        rect(28 + 30 * i, 72, 15, 22);
+
+        rect(36*size,0,size,size);
+        rect(23*size,0,size,size);
+        rect(24*size,size,size,size);
+        rect(26*size,size,size,2*size);
+        rect(25*size,3*size,size,size);
+        rect(24*size,4*size,size,size);
+        rect(23*size,3*size,size,size);
+        rect(22*size,size,size,2*size)
   
-      //white thingys
-      fill(255);
-      ellipse(37 + 32 * i, 61, 8);
-      ellipse(23 + 32 * i, 61, 8);
-  
-      fill(194, 23, 23);
-      ellipse(35 + 32 * i, 63, 10);
-      ellipse(21 + 32 * i, 63, 10);
+
     }
   }
   

@@ -40,23 +40,21 @@ let div_width = document.getElementById('profile-header').offsetWidth;
 var w = document.documentElement.clientWidth;
 var h = document.documentElement.clientHeight;
 
+// first sketch
+var sketch1 = function (p) {
 
-function setup() {
-    let elt = document.getElementById('clock-face');
-    let fontBold = loadFont('../../css/Digital7Italic-BW658.ttf');
-    const canvas = createCanvas(div_width, h/7.5);
-    canvas.addClass('fade-in-canvas');
-    canvas.parent(elt);
-    textFont(fontBold);
-    // canvas.style("display", "block")
-    // canvas.style("position", "fixed")
-    // canvas.style("top", "0")
-    // canvas.style("left", "0")
-    // canvas.style("z-index", "-1")
-    // canvas.style("opacity", "0.6")
-}
   
-function draw() {
+    p.setup = function () {
+let elt = document.getElementById('clock-face');
+    let fontBold = p.loadFont('../../css/Digital7Italic-BW658.ttf');
+      const sketch1 = p.createCanvas(div_width, h/7.5);
+      sketch1.addClass('fade-in-canvas');
+      sketch1.parent(elt);
+      p.textFont(fontBold);
+      
+    };
+  
+    p.draw = function () {
     var currentYear = year();
     var currentMonth = month();
     var currentDay = day();
@@ -65,14 +63,17 @@ function draw() {
     var currentSecond = second();
     var currentDate = getDayWithSuffix(nf(currentDay, 2)) + ' ' + getMonthName(nf(currentMonth, 2)) + ' ' + currentYear;
     var currentTime = currentHour + ':' + nf(currentMinute, 2) + ':' + nf(currentSecond, 2) + " GMT";
-    background('#fff');
-    fill('#00b3ff');
-    noStroke();
-    textSize(40);
-    textWrap(WORD);
-    text(currentDate, 0, 45);
-    text(currentTime, 0, 85);
-}  
+    p.background('#fff');
+    p.fill('#00b3ff');
+    p.noStroke();
+    p.textSize(40);
+    p.textWrap(WORD);
+    p.text(currentDate, 0, 45);
+    p.text(currentTime, 0, 85);      
+        
+    };
+  };
+  new p5(sketch1);
 
 function clock() {
     const element = (

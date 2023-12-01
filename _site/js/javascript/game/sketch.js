@@ -23,12 +23,13 @@ function setup() {
     var w = document.documentElement.clientWidth;
     var h = document.documentElement.clientHeight;
 
-    let elt = document.getElementById('game-gui');
+    let game_elt = document.getElementById('game-gui');
     const game_canvas = createCanvas(w, h/2);
     game_canvas.addClass('fade-in-canvas');
-    game_canvas.parent(elt);
+    game_canvas.parent(game_elt);
 
-   
+    var BebasNeue = loadFont("../../../css/BebasNeue-Regular.ttf");
+    textFont(BebasNeue);
 
     floorPos_y = (height * 3) / 4;
   
@@ -49,7 +50,8 @@ function setup() {
   // -------------------------------------------------------------------
   function draw() {
 
-    const BebasNeue = loadFont("../../../css/BebasNeue-Regular.ttf");
+    
+    
 
     let backgroundSoundCount = 0;
 
@@ -161,7 +163,7 @@ function setup() {
     textSize(20);
     drawScore();
     fill(255);
-    textFont(BebasNeue);
+ 
     text(game_score, 52, 32);
   
     //game over text
@@ -169,7 +171,7 @@ function setup() {
       fill(255);
       noStroke();
       textSize(30);
-      textFont(BebasNeue);
+
       text(
         "Game over. Press space to restart.",
         width / 2 - 200,
@@ -183,7 +185,7 @@ function setup() {
       fill(255);
       noStroke();
       textSize(30);
-      textFont(BebasNeue);
+    
       text(
         "You've won! Press space if you want to play again",
         width / 2 - 300,

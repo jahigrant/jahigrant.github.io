@@ -55,19 +55,19 @@ let elt = document.getElementById('clock-face');
     };
   
     p.draw = function () {
-    var currentYear = year();
-    var currentMonth = month();
-    var currentDay = day();
-    var currentHour = hour();
-    var currentMinute = minute();
-    var currentSecond = second();
-    var currentDate = getDayWithSuffix(nf(currentDay, 2)) + ' ' + getMonthName(nf(currentMonth, 2)) + ' ' + currentYear;
-    var currentTime = currentHour + ':' + nf(currentMinute, 2) + ':' + nf(currentSecond, 2) + " GMT";
+    var currentYear = p.year();
+    var currentMonth = p.month();
+    var currentDay = p.day();
+    var currentHour = p.hour();
+    var currentMinute = p.minute();
+    var currentSecond = p.second();
+    var currentDate = getDayWithSuffix(p.nf(currentDay, 2)) + ' ' + getMonthName(p.nf(currentMonth, 2)) + ' ' + currentYear;
+    var currentTime = currentHour + ':' + p.nf(currentMinute, 2) + ':' + p.nf(currentSecond, 2) + " GMT";
     p.background('#fff');
     p.fill('#00b3ff');
     p.noStroke();
     p.textSize(40);
-    p.textWrap(WORD);
+    p.textWrap(p.WORD);
     p.text(currentDate, 0, 45);
     p.text(currentTime, 0, 85);      
         

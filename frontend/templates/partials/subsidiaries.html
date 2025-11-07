@@ -1,0 +1,46 @@
+{% if company.subsidiaries %}
+
+
+<div class="container px-4 py-5" id="featured-3"> 
+    <h2 class="pb-2 border-bottom">Columns with icons</h2> 
+    
+    <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
+
+        {% for sub in company.subsidiaries %}
+
+            <div class="feature col"> 
+                <div class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3" style="width: 2em;height: 2em;"> 
+                    <i class="bi bi-collection"></i>
+                </div> 
+
+                <h3 class="fs-2 text-body-emphasis">{{ sub.name }}</h3> 
+                <p>{{ sub.description }}</p> 
+
+                
+                <a href="#" class="icon-link">
+                    Call to action <i class="bi bi-chevron-right"></i> 
+                </a> 
+
+            </div>
+        
+        {% endfor %}
+
+    </div> 
+
+</div>
+
+
+<h4>Subsidiaries:</h4>
+<ul>
+    {% for sub in company.subsidiaries %}
+        <li>
+            <strong>{{ sub.name }}</strong>: {{ sub.description }}<br>
+            <strong>Founder</strong>: {{ sub.founder }}<br>
+            <strong>Founded</strong>: {{ sub.founded }}<br>
+            <strong>Address</strong>: {{ sub.address }}<br>
+            <strong>Phone</strong>: {{ sub.phone }}<br>
+            <strong>URL</strong>: <a href="{{ sub.url }}">{{ sub.url }}</a><br>
+        </li>
+    {% endfor %}
+</ul>
+{% endif %}

@@ -1,0 +1,86 @@
+<nav class="navbar navbar-expand-lg fixed-top " id="header-navbar" aria-label="Main Navigation">
+    <div class="container-fluid">
+
+        
+        <a class="ps-4 text-decoration-none" href="{% url 'home' %}">
+            <img 
+            id="header-logo"
+                src="/static/img/logo_brand_long_light.png" 
+                alt="{{ site_name }} Logo" 
+                title="{{ site_name }}"
+                width="32"
+            >
+            <span id="header-logo-text" class="fw-semibold fs-5 text-light">{{ site_name }}</span>
+            
+        </a>
+        <ul class="navbar-nav">
+            <li>
+                <div class="btn-group" role="group" aria-label="Button group">
+
+                    {% if request.user.is_authenticated %}
+                        <a href="{% url 'home' %}" id="logout-icon-navbar" class="btn btn-link" title="Logout">
+                            <i class="bi bi-unlock-fill"></i>
+                        </a>
+                    {% else %}
+                        <button href="{% url 'home' %}" id="login-icon-navbar" class="btn btn-link" title="Login" data-bs-toggle="modal" data-bs-target="#loginModal">
+                            <i class="bi bi-lock-fill"></i>
+                        </button>
+                    {% endif %}
+
+                    <button id="menu-icon-navbar" type="button" class="btn btn-link" data-bs-toggle="offcanvas" data-bs-target="#offcanvasMenu" aria-controls="offcanvasMenu" title="Site Navigation">
+                            <i class="bi bi-list"></i>
+                    </button>
+
+                    <button id="wallet-icon-navbar" type="button" class="btn btn-link" title="Connect Wallet">
+                        <i class="bi bi-wallet2"></i>
+                    </button>
+
+                    <div class="theme-toggle-container p-0 m-0">
+                        <button id="theme-toggle" class="btn btn-link">
+                            <i class="bi bi-brightness-high text-light"></i>
+                        </button>
+                    </div>
+
+                </div>
+            </li>
+
+        </ul>
+    </div>
+</nav>
+
+<div class="modal fade" id="loginModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-fullscreen-sm-down">
+      <div class="modal-content rounded-0">
+
+        <form method="post" action="{% url 'home' %}">
+            {% csrf_token %}
+
+            <div class="modal-body">
+                <div class="container py-2">
+
+                    <h2 class="pb-4">Login</h2>
+                    
+                        <div class="form-floating mb-3">
+                            <input type="text" name="username" class="form-control rounded-0" id="id_username" placeholder="Username" required>
+                            <label for="id_username">Username</label>
+                        </div>
+                    
+                        <div class="form-floating mb-3">
+                            <input type="password" name="password" class="form-control rounded-0" id="id_password" placeholder="Password" required>
+                            <label for="id_password">Password</label> 
+                        </div>
+                                        
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end"> 
+                            <button type="button" class="btn btn-outline-secondary btn-lg px-4 rounded-0 fw-lighter"  data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-primary btn-lg px-4 me-md-2 rounded-0 fw-lighter">Login</button> 
+                        </div>
+                </div>
+            </div>
+
+
+
+        </form>
+
+      </div>
+    </div>
+  </div>

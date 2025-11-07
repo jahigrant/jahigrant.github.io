@@ -1,0 +1,100 @@
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css");
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Outfit:wght@100..900&display=swap');
+
+
+/* In your custom.css file */
+.image-zoom-viewport {
+  position: relative;
+  overflow: hidden;
+  /* The ratio ratio-1x1 class from Bootstrap handles the aspect ratio */
+}
+
+.image-zoom-viewport img.zoomed-image {
+  width: 200%;
+  height: 200%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  object-fit: cover;
+}
+
+.border-dark-gray {
+    border: 1px solid #1e1e1e !important;
+}
+
+.bg-dark-gray {
+    background-color: #31363c !important;
+}
+.bg-main-blue {
+    background-color: #063266 !important;
+    border: 1px solid #1e1e1e !important;
+}
+ 
+a .bg-main-blue:hover {
+    background-color: #144e94 !important;
+}
+
+[data-bs-theme="light"] .bg-main-blue h5,
+[data-bs-theme="light"] .bg-main-blue p {
+    color: #aaaaaa !important;
+}
+
+[data-bs-theme="light"] .border-main-blue {
+    border: 1px solid #080a13 !important;
+}
+
+[data-bs-theme="light"] .border-dark-gray {
+    border: 1px solid #bdbcbc !important;
+}
+
+.form-floating > label {
+  top: -25px !important;
+  left: 4px !important;
+  font-size: 16px !important;
+}
+
+.a-enter-vr {
+  display: none;
+}
+
+
+
+#loader-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 4px;
+  background: transparent;
+  z-index: 9999;
+}
+#loader-progress {
+  width: 0;
+  height: 100%;
+  background: #fc8b22;
+  transition: width 0.4s;
+}
+
+
+#footer-nav-link-1,
+#footer-nav-link-2,
+#footer-nav-link-3,
+#footer-nav-link-4 {
+  text-decoration: none;
+}
+#footer-nav-link-1:hover,
+#footer-nav-link-2:hover,
+#footer-nav-link-3:hover,
+#footer-nav-link-4:hover,
+#footer-nav-link-1:focus,
+#footer-nav-link-2:focus,
+#footer-nav-link-3:focus,
+#footer-nav-link-4:focus {
+  text-decoration: underline;
+}
+
+
+button.btn {
+  border-radius: 0!important;
+}

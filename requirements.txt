@@ -1,0 +1,15 @@
+django>=4.2,<5.0
+django-widget-tweaks
+Pillow
+django-extensions
+djangorestframework
+django-crispy-forms
+django-debug-toolbar
+django-markdownx
+django-htmx
+django-viewcomponent
+django-countries
+pycountry
+pycities
+emoji-country-flag
+countryflag

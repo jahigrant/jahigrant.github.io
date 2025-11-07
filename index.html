@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Jahi — Portfolio of projects and contact information." />
+    <meta name="author" content="Jahi" />
+    <meta name="theme-color" content="#0b74de" />
+
+    <!-- Open Graph / Social -->
+    <meta property="og:title" content="Jahi — Portfolio" />
+    <meta property="og:description" content="Projects, about and contact." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="/" />
+    <meta property="og:image" content="assets/og-image.png" />
+
+    <title>Jahi — Portfolio</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="styles.css" />
+
+    <!-- Optional: prefer-reduced-motion for accessibility -->
+    <style>
+        @media (prefers-reduced-motion: reduce) {
+            * { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
+        }
+        /* Minimal sensible defaults */
+        :root { font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; color-scheme: light; }
+        html,body { height:100%; margin:0; }
+        main { padding:2rem; max-width:1000px; margin-inline:auto; }
+        header, footer { padding:1rem 2rem; background:#f8fafc; }
+    </style>
+</head>
+<body>
+    <header>
+        <nav aria-label="Primary">
+            <a href="/" aria-current="page">Home</a> |
+            <a href="#projects">Projects</a> |
+            <a href="#about">About</a> |
+            <a href="#contact">Contact</a>
+        </nav>
+    </header>
+
+    <main>
+        <section id="hero" aria-labelledby="hero-title">
+            <h1 id="hero-title">Hi — I'm Jahi</h1>
+            <p>Welcome to my portfolio. I build web apps, experiments, and open-source projects.</p>
+            <p><a href="#projects">See my work</a></p>
+        </section>
+
+        <section id="projects" aria-labelledby="projects-title">
+            <h2 id="projects-title">Selected Projects</h2>
+            <ul>
+                <li><strong>Project One</strong> — Short description. <a href="#">View</a></li>
+                <li><strong>Project Two</strong> — Short description. <a href="#">View</a></li>
+            </ul>
+        </section>
+
+        <section id="about" aria-labelledby="about-title">
+            <h2 id="about-title">About</h2>
+            <p>Brief bio, skills, and interests.</p>
+        </section>
+
+        <section id="contact" aria-labelledby="contact-title">
+            <h2 id="contact-title">Contact</h2>
+            <p>Email: <a href="mailto:you@example.com">you@example.com</a></p>
+        </section>
+    </main>
+
+    <footer>
+        <small>&copy; <span id="year"></span> Jahi. Built with HTML5.</small>
+    </footer>
+
+    <script type="module">
+        // Simple client script: inject current year
+        document.getElementById('year').textContent = new Date().getFullYear();
+        // Future: import('./main.js');
+    </script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+py_navigation_data:
+ - title: Hello World
+   slug: hello-world
+   url: /python-projects/hello-world.html
+ - title: Math
+   slug: math
+   url: /python-projects/math.html
+ - title: List
+   slug: list
+   url: /python-projects/list.html
+ - title: Date & Time
+   slug: date-time
+   url: /python-projects/date-time.html

@@ -1,0 +1,7 @@
+# theme: jekyll-theme-minimal
+name: Jahi Grant
+title: Portfolio
+description: JavaScript, Python, HTML, CSS and other coding in the day of the life of a frontend developer
+site_path: https://jahigrant.github.io/
+include: ['_about_pages']
+relative_permalinks: false

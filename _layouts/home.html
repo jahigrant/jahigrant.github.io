@@ -1,0 +1,150 @@
+{% include head.html %}
+
+<body>
+    <!--[if lt IE 7]>
+        <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+    
+    <div id="home-page">
+
+        {% include header.html %}
+
+            <main class="pt-0 pb-4">
+
+                <div class="col-12">
+
+                    <div class="pt-0 mb-5">
+
+                        <h1 class="display-1">Welcome to {{ site.name }}'s {{ site.title }}</h1>    
+                        
+
+<a-scene 
+    vr-mode-ui="enterVRButton: false; enterARButton: false"
+    style="width: 100%; height: 100%;"
+    shadow="type: pcfsoft"
+>
+
+    <a-box id="spinning-box-1" position="0 10 0" rotation="0 0 45" color="#F02B2D" width="10" height="10" depth="10"></a-box>
+
+    <a-box id="spinning-box-2" position="0 11 0" rotation="90 0 90" color="#C93535" width="10" height="10"  depth="10"></a-box>
+
+    <a-box id="spinning-box-3" position="0 12 0" rotation="45 90 0" color="#D25858" width="10" height="10" depth="10"></a-box>
+
+    <a-box id="spinning-box-4" position="0 13 0" rotation="0 -90 0" color="#AC2223" width="10" height="10" depth="10"></a-box>
+
+    <a-box id="spinning-box-5" position="0 14 0" rotation="-90 0 -90" color="#F02B2D" width="10" height="10"  depth="10"></a-box>
+
+    <a-box id="spinning-box-6" position="0 15 0" rotation="-90 0 -45" color="#D25858" width="10" height="10" depth="10"></a-box>
+
+    <a-sky color="#009FF6"></a-sky>
+
+    <a-entity light="type: ambient; color: #FFF"></a-entity>
+    <a-entity light="type: directional; castShadow: true; intensity: 0.9; color: #000" position="-1 1 1"></a-entity>
+
+    <a-plane 
+        position="0 0 -4"
+        rotation="-90 0 0"
+        width="500" height="50"
+        color="#034107" repeat="54 54"
+        shadow="receive: true">
+    </a-plane>
+    
+    <a-entity id="rig" position="0 0 30" rotation="0 0 0">
+        <a-entity 
+            id="isoCamera" 
+            camera 
+            position="0 10 0"
+            rotation="0 100 0"
+            fov="40"
+            far="10000"
+            look-controls="enabled: true"
+            wasd-controls="acceleration: 25"
+            limited-look-controls="
+                minPitch: -10; 
+                maxPitch: 10; 
+                minYaw: -10;
+                maxYaw: 10"
+            shadow="
+                cast: true; 
+                receive: true;"
+        >
+        </a-entity>
+    </a-entity>
+
+</a-scene>
+
+    <script>
+      const box1 = document.getElementById('spinning-box-1');
+      const box2 = document.getElementById('spinning-box-2');
+      const box3 = document.getElementById('spinning-box-3');
+      const box4 = document.getElementById('spinning-box-4');
+      const box5 = document.getElementById('spinning-box-5');
+      const box6 = document.getElementById('spinning-box-6');
+      let angle = 0;
+
+      function spinBox() {
+        angle += 0.05; // Change this to adjust spinning speed
+        box1.setAttribute('rotation', { x: -45, y: 0, z: angle });
+        box2.setAttribute('rotation', { x: 90, y: angle, z: 45 });
+        box3.setAttribute('rotation', { x: angle, y: 90, z: 90 });
+        box4.setAttribute('rotation', { x: 45, y: 0, z: -angle });
+        box5.setAttribute('rotation', { x: -90, y: -angle, z: -45 });
+        box6.setAttribute('rotation', { x: -angle, y: 0, z: -90 });
+        requestAnimationFrame(spinBox);
+      }
+
+      spinBox();
+
+        AFRAME.registerComponent('limited-look-controls', {
+          schema: {
+            minPitch: {default: -10}, // degrees
+            maxPitch: {default: 10},
+            minYaw: {default: -10},
+            maxYaw: {default: 10}
+          },
+          tick: function () {
+            var rotation = this.el.getAttribute('rotation');
+            // Clamp pitch (x) and yaw (y)
+            rotation.x = Math.max(this.data.minPitch, Math.min(this.data.maxPitch, rotation.x));
+            rotation.y = Math.max(this.data.minYaw, Math.min(this.data.maxYaw, rotation.y));
+            this.el.setAttribute('rotation', rotation);
+          }
+        });
+    </script>
+                        
+                        <!-- <img id="home-page-01" src="{% include mainurl.html %}/animated/boxed.svg" alt=""> -->
+
+                        {{ content }}
+                    
+                    </div>
+                </div>
+                
+            </main>
+
+        </div>
+        {% include footer.html %}
+
+        <script>  
+            // $(document).ready(() => {
+
+            //     var w = window.innerWidth;
+            //     var h = window.innerHeight;
+            //     const home_svg_img_01 = document.getElementById("home-page-01").style.width = w; 
+            //     const create_width = Math.round(w/4);
+            //     const write_width = "width:"+create_width+"px;"; 
+            //     document.getElementById("home-page-01").setAttribute("style", write_width);
+                
+            //     $(window).bind('resize', function(e){
+            //         var w = window.innerWidth;
+            //         var h = window.innerHeight;
+            //         const home_svg_img_01 = document.getElementById("home-page-01").style.width = w; 
+            //         const create_width = Math.round(w/4);
+            //         const write_width = "width:"+create_width+"px;"; 
+            //         document.getElementById("home-page-01").setAttribute("style", write_width);
+            //     });
+
+            // });
+        </script>
+
+    </body>
+</html>

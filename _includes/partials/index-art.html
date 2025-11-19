@@ -1,0 +1,104 @@
+<script>
+                    // let intervalID;
+                    let x, y;
+
+                    var w = document.documentElement.clientWidth;
+                    var h = document.documentElement.clientHeight;
+                    
+                    function setup() {
+                        let elt = document.getElementById('home-page-art');
+                        const canvas = createCanvas(w, h)
+                        canvas.addClass('fade-in-canvas')
+                        canvas.parent(elt)
+
+                        canvas.style("display", "block")
+                        canvas.style("position", "fixed")
+                        canvas.style("top", "0")
+                        canvas.style("left", "0")
+                        canvas.style("z-index", "-1")
+                        canvas.style("opacity", "0.6")
+                        x = w;
+                        y = h;
+                        rectMode(CENTER);
+
+                        frameRate(500*52);
+                    }
+ 
+                    function draw() {
+
+                        const canvas = document.getElementById("defaultCanvas0");
+
+
+
+                        const ctx = canvas.getContext("2d");
+     
+                        ctx.textRendering = "geometricPrecision";
+            
+                        ctx.imageSmoothingEnabled = false;
+                        ctx.imageSmoothingQuality = "low";
+                        ctx.lineWidth = 0.5;
+                        ctx.translate(0, 10);
+   
+                        
+
+
+                        for (let i = 0; i<radians(100); i=radians(100)) {
+                            for (let j = 0; j<radians(100); j=radians(100)) {
+                            push();
+
+                            const randomNumberSQGo = random(1);
+                            ctx.fillStyle = "grey";
+                            ctx.fillRect(random(x), random(y), randomNumberSQGo, randomNumberSQGo);
+                            const box_random = Array.from({length: 1}, () => Math.floor(Math.random() * 100));
+                                rotate(0);
+                                fill(
+                                    random(255),
+                                    random(255),
+                                    random(255),
+                                    random(255)
+                                )
+                                square(
+                                    random(x),
+                                    random(y),
+                                    random(i-j-box_random)
+                                )
+
+
+
+
+
+                            pop();
+                        }}
+
+                    }
+
+                    // 
+
+
+
+                    
+                    // stop();
+
+                    const screenTimeout = setTimeout(canvasStopFunction, 20000);
+
+                    function canvasTimer() {
+                        
+                    }
+
+                    function canvasStopFunction() {
+                        redraw();
+                        noLoop();
+                        clearTimeout(screenTimeout);
+                    }
+
+
+                    // function stop() {
+                    //     clearInterval(canvasStopFunction);
+                    // }
+                                        
+                    // window.addEventListener('resize', () => {
+                    //     clearInterval(intervalID);
+                    //     // setup()
+                    // });
+                    
+                </script>

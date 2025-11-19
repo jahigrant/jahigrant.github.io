@@ -1647,3 +1647,20 @@ fill: #fff;
 }
 
 
+
+
+#footer-svg-logo svg{
+  width:60px;
+  height:auto;
+  display:block;
+}
+
+
+#page-content {
+  flex: 1 0 auto;
+}
+
+html,
+body {
+  height: 100%;
+}

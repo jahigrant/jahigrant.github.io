@@ -14,7 +14,7 @@
         <ul class="navbar-nav">
             {% for navitem in site.data.navigation.navigation_data %}
                 <li class="nav-item">
-                    <a id="{{ navitem.id }}-nav-link" class="nav-link nav-link text-light text-uppercase fs-5 fw-lighter" aria-current="page" href="{{ navitem.url }}" title="{{ navitem.title }}">{{ navitem.title }}</a>
+                    <a id="{{ navitem.id }}-nav-link" class="nav-link nav-link text-light text-uppercase fs-2 fw-lighter" aria-current="page" href="{{ navitem.url }}" title="{{ navitem.title }}">{{ navitem.title }}</a>
                 </li>
             {% endfor %}
         </ul>

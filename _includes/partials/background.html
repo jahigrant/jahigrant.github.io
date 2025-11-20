@@ -1,0 +1,138 @@
+
+<a-scene 
+    vr-mode-ui="enterVRButton: false; enterARButton: false"
+    style="width: 100%; height: 100%;"
+    shadow="type: pcfsoft"
+>
+
+    <a-box id="spinning-box-1" position="0 10 0" rotation="0 0 45" color="#F02B2D" width="0.5" height="0.5" depth="0.5"></a-box>
+
+    <a-box id="spinning-box-2" position="0 11 0" rotation="90 0 90" color="#C93535" width="0.5" height="0.5"  depth="0.5"></a-box>
+
+    <a-box id="spinning-box-3" position="0 12 0" rotation="45 90 0" color="#D25858" width="0.5" height="0.5" depth="0.5"></a-box>
+
+    <a-box id="spinning-box-4" position="0 13 0" rotation="0 -90 0" color="#AC2223" width="0.5" height="0.5" depth="0.5"></a-box>
+
+    <a-box id="spinning-box-5" position="0 14 0" rotation="-90 0 -90" color="#F02B2D" width="0.5" height="0.5"  depth="0.5"></a-box>
+
+    <a-box id="spinning-box-6" position="0 15 0" rotation="-90 0 -45" color="#D25858" width="0.5" height="0.5" depth="0.5"></a-box>
+
+    <a-sky color="#009FF6"></a-sky>
+
+    <a-entity light="type: ambient; color: #FFF"></a-entity>
+    <a-entity light="type: directional; castShadow: true; intensity: 0.9; color: #000" position="-1 1 1"></a-entity>
+
+    <a-plane 
+        position="0 0 -4"
+        rotation="-90 0 0"
+        width="120" height="120"
+        color="#034107"
+        shadow="receive: true">
+    </a-plane>
+    
+    <a-entity id="rig" position="0 0 10" rotation="0 0 0">
+        <a-entity 
+            id="isoCamera" 
+            camera 
+            position="0 10 0"
+            rotation="0 100 0"
+            fov="40"
+            far="10000"
+            look-controls="enabled: true"
+            wasd-controls="acceleration: 25"
+            limited-look-controls="
+                minPitch: -10; 
+                maxPitch: 10; 
+                minYaw: -10;
+                maxYaw: 10"
+            shadow="
+                cast: true; 
+                receive: true;"
+        >
+        </a-entity>
+    </a-entity>
+
+</a-scene>
+
+    <script>
+      const box1 = document.getElementById('spinning-box-1');
+      const box2 = document.getElementById('spinning-box-2');
+      const box3 = document.getElementById('spinning-box-3');
+      const box4 = document.getElementById('spinning-box-4');
+      const box5 = document.getElementById('spinning-box-5');
+      const box6 = document.getElementById('spinning-box-6');
+
+      const boxes = [
+        { el: box1, y: 10 },
+        { el: box2, y: 11 },
+        { el: box3, y: 12 },
+        { el: box4, y: 13 },
+        { el: box5, y: 14 },
+        { el: box6, y: 15 }
+      ];
+
+      let angle = 0;
+
+      // Random hex color generator
+      function randomHexColor() {
+        return '#' + Math.floor(Math.random() * 0xFFFFFF).toString(16).padStart(6, '0');
+      }
+
+      // Apply random colors to all boxes
+      function applyRandomColors() {
+        boxes.forEach(b => b.el && b.el.setAttribute('color', randomHexColor()));
+      }
+
+      function rand(min, max) { return Math.random() * (max - min) + min; }
+
+      function randomizeBoxPosition(b) {
+        if (!box1) return;
+        const x = rand(-5, 5);   // adjust range as needed
+        const z = rand(-5, 5);
+        const y = rand(5, 10);            // keep level with other boxes
+        // Smoothly animate to new position
+        b.el.setAttribute('animation__move', `property: position; to: ${x} ${y} ${z}; dur: 3000; easing: easeInOutSine`);
+      }
+
+      function randomizeAllPositions() {
+        boxes.forEach(randomizeBoxPosition);
+      }
+
+      applyRandomColors();
+      randomizeAllPositions();
+      // Initial colors/position + postions refresh every 2s
+      setInterval(randomizeAllPositions, 2000);
+
+      function spinBox() {
+        const x = rand(-1, 1);   // adjust range as needed
+        const z = rand(-1, 1);
+        const y = rand(6, 9);   
+        angle += 0.005; // Change this to adjust spinning speed
+        box1.setAttribute('rotation', { x: x, y: y, z: angle });
+        box2.setAttribute('rotation', { x: x, y: angle, z: z });
+        box3.setAttribute('rotation', { x: angle, y: y, z: z });
+        box4.setAttribute('rotation', { x: x, y: y, z: -angle });
+        box5.setAttribute('rotation', { x: x, y: -angle, z: z });
+        box6.setAttribute('rotation', { x: x, y: y, z: z });
+        requestAnimationFrame(spinBox);
+      }
+
+      spinBox();
+
+        AFRAME.registerComponent('limited-look-controls', {
+          schema: {
+            minPitch: {default: -10}, // degrees
+            maxPitch: {default: 10},
+            minYaw: {default: -10},
+            maxYaw: {default: 10}
+          },
+          tick: function () {
+            var rotation = this.el.getAttribute('rotation');
+            // Clamp pitch (x) and yaw (y)
+            rotation.x = Math.max(this.data.minPitch, Math.min(this.data.maxPitch, rotation.x));
+            rotation.y = Math.max(this.data.minYaw, Math.min(this.data.maxYaw, rotation.y));
+            this.el.setAttribute('rotation', rotation);
+          }
+        });
+    </script>
+                  

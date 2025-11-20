@@ -1,15 +1,19 @@
 <div class="my-5"> 
-    <div class="p-5 text-center bg-dark rounded-0"> 
-        <svg class="bi mt-4 mb-3" style="color: var(--bs-indigo);" width="100" height="100" aria-hidden="true"><use xlink:href="#bootstrap"></use></svg> 
-        <h1 class="text-light">{{ site.name }} {{ site.title }}</h1> 
-        <p class="col-lg-8 mx-auto fs-5 text-light">{{ site.description }}</p> 
-        <div class="d-inline-flex gap-2 mb-5"> 
-            <button class="d-inline-flex align-items-center btn btn-primary btn-lg px-4 rounded-1" type="button">
-                Call
-            </button> 
-            <button class="btn btn-outline-secondary btn-lg px-4 rounded-1" type="button">
-                Link
-            </button> 
-        </div> 
-    </div> 
+  <div class="p-5 text-center rounded-0 position-relative overflow-hidden">
+    <!-- Background -->
+    <div class="hero-bg position-absolute top-0 start-0 w-100 h-100  " aria-hidden="true">
+      {% include partials/city.html %}
+    </div>
+
+    <!-- Foreground content -->
+    <div class="position-relative">
+      <svg class="bi mt-4 mb-3" style="color: var(--bs-indigo);" width="100" height="100" aria-hidden="true"><use xlink:href="#bootstrap"></use></svg> 
+      <h1 class="text-light">{{ site.name }} {{ site.title }}</h1> 
+      <p class="col-lg-8 mx-auto fs-5 text-light">{{ site.description }}</p> 
+      <div class="d-inline-flex gap-2 mb-5"> 
+        <button class="d-inline-flex align-items-center btn btn-primary btn-lg px-4 rounded-1" type="button">Call</button> 
+        <button class="btn btn-outline-secondary btn-lg px-4 rounded-1" type="button">Link</button> 
+      </div>
+    </div>
+  </div> 
 </div>

@@ -28,8 +28,6 @@
 
                         const canvas = document.getElementById("defaultCanvas0");
 
-
-
                         const ctx = canvas.getContext("2d");
      
                         ctx.textRendering = "geometricPrecision";
@@ -39,9 +37,6 @@
                         ctx.lineWidth = 0.5;
                         ctx.translate(0, 10);
    
-                        
-
-
                         for (let i = 0; i<radians(100); i=radians(100)) {
                             for (let j = 0; j<radians(100); j=radians(100)) {
                             push();
@@ -63,26 +58,14 @@
                                     random(i-j-box_random)
                                 )
 
-
-
-
-
                             pop();
                         }}
 
                     }
 
-                    // 
-
-
-
-                    
-                    // stop();
-
                     const screenTimeout = setTimeout(canvasStopFunction, 20000);
 
                     function canvasTimer() {
-                        
                     }
 
                     function canvasStopFunction() {
@@ -90,15 +73,5 @@
                         noLoop();
                         clearTimeout(screenTimeout);
                     }
-
-
-                    // function stop() {
-                    //     clearInterval(canvasStopFunction);
-                    // }
-                                        
-                    // window.addEventListener('resize', () => {
-                    //     clearInterval(intervalID);
-                    //     // setup()
-                    // });
                     
                 </script>

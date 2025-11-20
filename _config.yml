@@ -1,12 +1,19 @@
 # theme: jekyll-theme-minimal
 name: Jahi Grant
-
+first_name: Jahi
+last_name: Grant
 title: Portfolio
-strapline: A selection of of skills + abilities
+strapline_text: A selection of 
+strapline:
+  - skills
+  - abilities
+  - musings
 description: JavaScript, Python, HTML, CSS and other coding in the day of the life of a frontend developer
 site_path: https://jahigrant.github.io/
 include: ['_about_pages']
 relative_permalinks: false
 copyright:
-  start_year: 2020
+  start_year: 2000
   timezone: GMT
+  city: London
+  country: UK

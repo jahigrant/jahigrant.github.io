@@ -230,14 +230,15 @@
         shadow="receive: true">
     </a-plane>
 
-    <a-box id="ground-1" position="0 0 0" rotation="0 0 0" color="#FFFFFF" width="15" height="0.5" depth="20" shadow="receive: true"></a-box>
+    <a-box id="ground-1" position="0 0 0" rotation="0 0 0" color="#FFFFFF" width="10" height="0.5" depth="15" shadow="receive: true"></a-box>
     
-    <a-entity id="rig" position="0 0 10" rotation="0 0 0">
+    <a-entity id="rig" position="0 0 -10" rotation="0 0 0">
         <a-entity 
             id="isoCamera" 
             camera 
-            position="0 10 0"
-            rotation="0 50 0"
+                        
+    position="0 5 15"
+    rotation="0 100 0"
             fov="40"
             far="10000"
             look-controls="enabled: true"
@@ -249,7 +250,7 @@
                 maxYaw: 10"
             shadow="
                 cast: true; 
-                receive: true;"
+                receive: false;"
         >
         </a-entity>
     </a-entity>
@@ -275,6 +276,9 @@
     function randomInRange(min, max) {
         return Math.random() * (max - min) + min;
     }
+
+    const groundEl = document.getElementById('ground-1');
+    groundEl.setAttribute('color', randomGrayColor());
 
     const CLOUD_COUNT = 25;
 
@@ -357,7 +361,7 @@
         building.setAttribute('height', h);
         building.setAttribute('depth', d);
         building.setAttribute('color', color);
-        building.setAttribute('shadow', 'cast: false; receive: true');
+        building.setAttribute('shadow', 'cast: true; receive: true');
         return building;
     }
 
@@ -419,7 +423,7 @@
             this.angle = 0; // radians
         },
         tick(time, dt) {
-            const deltaSec = dt / 49999; // correct
+            const deltaSec = dt / 100000; // correct
             this.angle += this.data.speed * 2 * Math.PI * deltaSec;
             const x = this.data.center.x + this.data.radius * Math.cos(this.angle);
             const z = this.data.center.z + this.data.radius * Math.sin(this.angle);
@@ -540,6 +544,44 @@
         this.el.setAttribute('rotation', rotation);
         }
     });
+
+    AFRAME.registerComponent('orthographic-camera', {
+        schema: { size: {default: 4096}, near: {default: 0.1}, far: {default: 1000} },
+        init() {
+            this.camera = new THREE.OrthographicCamera();
+            this.el.setObject3D('camera', this.camera);
+            this._onResize = this.updateProjection.bind(this);
+            window.addEventListener('resize', this._onResize);
+            this.updateProjection();
+        },
+        updateProjection() {
+            const size = this.data.size;
+            const sceneEl = this.el.sceneEl;
+            const canvas = sceneEl && sceneEl.canvas;
+            const w = (canvas && canvas.clientWidth) || window.innerWidth || 1;
+            const h = (canvas && canvas.clientHeight) || window.innerHeight || 1;
+            const aspect = w / h;
+
+            this.camera.left = -size * aspect * 2;
+            this.camera.right =  size * aspect * 2;
+            this.camera.top =   size * 2;
+            this.camera.bottom = -size * 2;
+            this.camera.near = this.data.near;
+            this.camera.far = this.data.far;
+            this.camera.updateProjectionMatrix();
+        },
+        remove() {
+            window.removeEventListener('resize', this._onResize);
+            this.el.removeObject3D('camera');
+        }
+    });
+
+    const camEl = document.getElementById('isoCamera');
+window.addEventListener('wheel', (e) => {
+  const cfg = camEl.getAttribute('orthographic-camera');
+  const next = Math.max(4, Math.min(200, cfg.size * (e.deltaY > 0 ? 1.1 : 0.9)));
+  camEl.setAttribute('orthographic-camera', { ...cfg, size: next });
+}, { passive: true });
 
 </script>
                   

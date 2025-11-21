@@ -131,7 +131,7 @@
         box.setAttribute('material',
           `shader: standard; src:#LpaperTex; color:#FFFFFF; emissive:#FFFFFF; emissiveIntensity:0.3; opacity:0.85; transparent:true; roughness:1; metalness:0; offset:${offsetX} ${offsetY}; repeat:2 2`);
         box.setAttribute('shadow', 'cast:false; receive:false');
-box.setAttribute('random-deform', 'amp:0.02');
+box.setAttribute('random-deform', 'amp:0.03');
         cloudRoot.appendChild(box);
       }
       return cloudRoot;
@@ -149,63 +149,11 @@ box.setAttribute('random-deform', 'amp:0.02');
 
 
 
-function spawnBirdFlock(opts = {}) {
-  const {
-    centerX = -5,
-    centerY = 8,
-    centerZ = -2,
-    count   = Math.floor(Math.random()*3)+7, // 7–9 birds
-    spacing = 0.55,
-    depthSpacing = 0.45,
-    heading = 25,        // yaw degrees (direction of travel)
-    speed   = 1.2        // flock drift speed
-  } = opts;
-
-  const flock = document.createElement('a-entity');
-  flock.id = 'bird-flock';
-  flock.setAttribute('position', `${centerX} ${centerY} ${centerZ}`);
-  flock.setAttribute('flock-drift', `speed:${speed}; minX:-10; maxX:10; heading:${heading}`);
-
-  // Leader (index 0)
-  const leader = createBird({
-    x: 0, y: 0, z: 0,
-    color: randomGrayColor()
-  });
-  leader.setAttribute('rotation', `0 ${heading} 0`);
-  flock.appendChild(leader);
-
-  // Remaining birds split into two arms
-  let armIndex = 0;
-  for (let i = 1; i < count; i++) {
-    const left = i % 2 === 1; // alternate left/right
-    if (!left) armIndex++;    // advance depth every right bird pair
-    const step = armIndex + 1;
-    const xOffset = (left ? -1 : 1) * step * spacing;
-    const zOffset = -step * depthSpacing;
-    const yOffset = (Math.random()-0.5)*0.25; // slight vertical variance
-
-    const bird = createBird({
-      x: xOffset,
-      y: yOffset,
-      z: zOffset,
-      color: randomGrayColor()
-    });
-    bird.setAttribute('rotation', `0 ${heading} 0`);
-    // Remove its individual bird-fly motion (V stays tight)
-    bird.removeAttribute('bird-fly');
-    flock.appendChild(bird);
-  }
-
-  scene.appendChild(flock);
-}
-
-
-
 
    function createBird(opts = {}) {
   const {
     x = randomInRange(-5, 5),
-    y = randomInRange(7, 11),
+    y = randomInRange(4, 8),
     z = randomInRange(-7, 0),
     color = randomGrayColor(),
     speed = randomInRange(0.8, 1.8) // units/sec
@@ -262,6 +210,61 @@ function spawnBirdFlock(opts = {}) {
         scene.appendChild(createBird());
         }
     }
+
+
+function spawnBirdFlock(opts = {}) {
+  const cam = document.getElementById('isoCamera');
+  if (!cam) return;
+
+  const camObj = cam.object3D;
+  const camPos = new THREE.Vector3();
+  camObj.getWorldPosition(camPos);
+
+  const fwd = new THREE.Vector3(0, 0, -1).applyQuaternion(camObj.quaternion).normalize();
+  const lateral = new THREE.Vector3().crossVectors(fwd, new THREE.Vector3(0, 1, 0)).normalize();
+
+  const lateralOffset = (Math.random() - 0.5) * 8;
+  const distance = 10;
+  const center = camPos.clone()
+    .add(fwd.clone().multiplyScalar(distance))
+    .add(lateral.clone().multiplyScalar(lateralOffset));
+  const radius = randomInRange(3.5, 6.5);
+  const angSpeed = randomInRange(0.05, 0.15); // rev/sec
+
+  const {
+    count   = Math.floor(Math.random() * 3) + 7, // 7–9
+    spacing = 0.55,
+    depthSpacing = 0.45
+  } = opts;
+
+  const flock = document.createElement('a-entity');
+  flock.classList.add('bird-flock');
+  flock.setAttribute('position', `${center.x + radius} ${center.y + 2} ${center.z}`); // start on orbit
+  flock.setAttribute('flock-orbit', `center: ${center.x} ${center.y + 2} ${center.z}; radius: ${radius}; angularSpeed: ${angSpeed}; bobAmp: 0.08; bobFreq: 0.6; lifetime: 20`);
+
+  // Leader
+  const leader = createBird({ x:0, y:0, z:0, color: randomGrayColor() });
+  leader.removeAttribute('bird-fly');
+  flock.appendChild(leader);
+
+  // Arms of the V
+  let armIndex = 0;
+  for (let i = 1; i < count; i++) {
+    const left = i % 2 === 1;
+    if (!left) armIndex++;
+    const step = armIndex + 1;
+    const xOffset = (left ? -1 : 1) * step * spacing;
+    const zOffset = -step * depthSpacing;
+    const yOffset = (Math.random() - 0.5) * 0.25;
+
+    const bird = createBird({ x:xOffset, y:yOffset, z:zOffset, color: randomGrayColor() });
+    bird.removeAttribute('bird-fly');
+    flock.appendChild(bird);
+  }
+  scene.appendChild(flock);
+}
+
+
 
     // Create one box programmatically
     function createBuilding(opts = {}) {
@@ -344,7 +347,6 @@ function spawnBirdFlock(opts = {}) {
         spawnAllBuildings(); // create the boxes
         spawnClouds(); // add clouds
         spawnBirds(); // add birds
-        spawnBirdFlock(); // NEW
     }); 
 
     // Orbit component
@@ -487,36 +489,57 @@ function spawnBirdFlock(opts = {}) {
         }
     });
 
-    AFRAME.registerComponent('flock-drift', {
-        schema: {
-            speed: {default: 1},
-            minX:  {default: -10},
-            maxX:  {default: 10},
-            heading:{default: 25} // degrees
-        },
-        init() {
-            this._time = 0;
-        },
-        tick(time, dt) {
-            const delta = dt / 1000;
-            if (delta <= 0) return;
-            this._time += delta;
+   AFRAME.registerComponent('flock-orbit', {
+  schema: {
+    center:      {type: 'vec3', default: {x:0,y:8,z:0}},
+    radius:      {default: 5},
+    angularSpeed:{default: 0.1}, // rev/sec
+    phase:       {default: 0},   // radians
+    bobAmp:      {default: 0.1},
+    bobFreq:     {default: 0.6},
+    lifetime:    {default: 20},  // seconds
+    fadeOut:     {default: 2}
+  },
+  init() {
+    this.theta = this.data.phase;
+    this.start = performance.now();
+  },
+  tick(time, dt) {
+    const s = dt / 1000;
+    if (s <= 0) return;
 
-            const p = this.el.object3D.position;
+    this.theta += this.data.angularSpeed * 2 * Math.PI * s;
 
-            // Move forward along heading
-            const rad = this.data.heading * Math.PI/180;
-            p.x += Math.sin(rad) * this.data.speed * delta;
-            p.z += Math.cos(rad) * this.data.speed * delta;
+    const cx = this.data.center.x;
+    const cy = this.data.center.y;
+    const cz = this.data.center.z;
 
-            // Gentle vertical bob
-            p.y += Math.sin(this._time * 2) * 0.01;
+    const x = cx + this.data.radius * Math.cos(this.theta);
+    const z = cz + this.data.radius * Math.sin(this.theta);
+    const y = cy + Math.sin(time * 0.002 * (this.data.bobFreq / 0.6)) * this.data.bobAmp;
 
-            // Wrap horizontally
-            if (p.x > this.data.maxX) p.x = this.data.minX;
-            if (p.x < this.data.minX) p.x = this.data.maxX;
-        }
-    });
+    const obj = this.el.object3D;
+    obj.position.set(x, y, z);
+
+    // Face direction of travel (tangent)
+    const yaw = Math.atan2(-Math.sin(this.theta), -Math.cos(this.theta)); // heading along tangent
+    obj.rotation.set(0, yaw, 0);
+
+    // Lifetime + fade
+    const elapsed = (performance.now() - this.start) / 1000;
+    if (elapsed > this.data.lifetime) {
+      const alpha = 1 - Math.min(1, (elapsed - this.data.lifetime) / this.data.fadeOut);
+      this.el.querySelectorAll('a-box').forEach(b => {
+        const m = b.getAttribute('material') || 'opacity:1';
+        const next = m.match(/opacity:/) ? m.replace(/opacity:\s*[\d.]+/, `opacity:${(0.2 + 0.8 * alpha).toFixed(2)}`) : `${m}; opacity:${(0.2 + 0.8 * alpha).toFixed(2)}`;
+        b.setAttribute('material', next);
+      });
+      if (alpha <= 0) this.el.parentNode && this.el.parentNode.removeChild(this.el);
+    }
+  }
+});
+
+
 
     AFRAME.registerComponent('limited-look-controls', {
         schema: {
@@ -564,6 +587,7 @@ function spawnBirdFlock(opts = {}) {
             this.el.removeObject3D('camera');
         }
     });
+
 
 
 </script>

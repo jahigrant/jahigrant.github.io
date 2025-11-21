@@ -1663,6 +1663,7 @@ fill: #fff;
 html,
 body {
   height: 100%;
+  overflow-y: scroll;
 }
 
 

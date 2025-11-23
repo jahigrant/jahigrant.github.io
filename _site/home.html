@@ -194,33 +194,37 @@
 
 
 
-        <div id="page-content" class="pt-5">
-            <div class="container-fluid">
+        <div id="page-content" class="pt-2 overflow-hidden">
+            <div class="container-fluid p-0">
                 <div class="row">
                     <div class="col-12">
                         <div id="home-page">
                             <main class="pt-0 pb-4 w-100">
                                 <div class="container-fluid">
                                     <div class="row">   
-                                        <div class="col-12">
+                                        <div class="col-12 p-0">
                                             <div class="pt-0 mb-5">
                                                 <div class="my-5"> 
   <div class="p-5 text-center rounded-0 position-relative overflow-hidden">
     <!-- Background -->
-    <div class="hero-bg position-absolute top-0 start-0 w-100 h-100  " aria-hidden="true">
+    <div class="hero-bg position-absolute top-0 start-0 w-100 h-100" aria-hidden="true">
       
 <a-scene 
     vr-mode-ui="enterVRButton: false; enterARButton: false;"
     style="width: 100%; height: 100%;"
     shadow="type: pcfsoft;"
     renderer="antialias: true;" effects="bloom"
+    embedded
     device-orientation-permission-ui="enabled: false"
+    style="width: 100%; height: 100%;"
 >
 
     <a-assets>
         <!-- Replace this path with your texture file -->
         <img id="paperTex" src="/assets/textures/paper.png" crossorigin="anonymous">
         <img id="LpaperTex" src="/assets/textures/LINED_PAPER.jpg" crossorigin="anonymous">
+        <img id="GpaperTex" src="/assets/textures/graph_paper.jpg" crossorigin="anonymous">
+        
     </a-assets>
 
 
@@ -239,13 +243,12 @@
 
     <a-box id="ground-1" position="0 0 0" rotation="0 0 0" color="#FFFFFF" width="10" height="0.5" depth="15" shadow="receive: true"></a-box>
     
-    <a-entity id="rig" position="0 0 -10" rotation="0 0 0">
+    <a-entity id="rig" position="0 0 -13" rotation="10 0 0">
         <a-entity 
             id="isoCamera" 
-            camera 
-                        
-    position="0 5 15"
-    rotation="0 100 0"
+            camera            
+            position="0 5 15"
+            rotation="0 0 0"
             fov="40"
             far="10000"
             look-controls="enabled: true"
@@ -339,9 +342,9 @@
         const offsetX = randomOffset();
         const offsetY = randomOffset();
         box.setAttribute('material',
-          `shader: standard; src:#LpaperTex; color:#FFFFFF; emissive:#FFFFFF; emissiveIntensity:0.3; opacity:0.85; transparent:true; roughness:1; metalness:0; offset:${offsetX} ${offsetY}; repeat:2 2`);
+          `shader: standard; src:#LpaperTex; color:#FFFFFF; emissive:#FFFFFF; emissiveIntensity:0.3; opacity:0.65; transparent:true; roughness:1; metalness:0; offset:${offsetX} ${offsetY}; repeat:2 2`);
         box.setAttribute('shadow', 'cast:false; receive:false');
-box.setAttribute('random-deform', 'amp:0.03');
+        box.setAttribute('random-deform', 'amp:0.03');
         cloudRoot.appendChild(box);
       }
       return cloudRoot;
@@ -356,63 +359,60 @@ box.setAttribute('random-deform', 'amp:0.03');
         }));
       }
     }
+   
+    function createBird(opts = {}) {
+        const {
+            x = randomInRange(-5, 5),
+            y = randomInRange(4, 8),
+            z = randomInRange(-7, 0),
+            color = randomGrayColor(),
+            speed = randomInRange(0.8, 1.8) // units/sec
+        } = opts;
 
+        // Root entity (so the bird-fly behavior moves the whole V)
+        const bird = document.createElement('a-entity');
+        bird.classList.add('bird');
+        bird.setAttribute('position', `${x} ${y} ${z}`);
+        bird.setAttribute('bird-fly', `speed:${speed}; amp:${randomInRange(0.4,0.9)}; freq:${randomInRange(0.2,0.6)}; minX:-5; maxX:5; minZ:-7; maxZ:0; yMin:7; yMax:11`);
 
+        // Wing dimensions (thin boxes)
+        const wingThicknessX = 0.01; // X (thin)
+        const wingHeightY    = 0.02; // Y (thin)
+        const wingLengthZ    = 0.12; // Z (length)
 
+        // Left wing (yaw +25°)
+        const left = document.createElement('a-box');
+        left.setAttribute('width', wingThicknessX);
+        left.setAttribute('height', wingHeightY);
+        left.setAttribute('depth', wingLengthZ);
+        left.setAttribute('position', `-0.03 0 0`);
+        left.setAttribute('rotation', `0 25 0`);
+        left.setAttribute('material', `color:${color}; roughness:1; metalness:0`);
+        left.setAttribute('shadow', 'cast:false; receive:false');
 
-   function createBird(opts = {}) {
-  const {
-    x = randomInRange(-5, 5),
-    y = randomInRange(4, 8),
-    z = randomInRange(-7, 0),
-    color = randomGrayColor(),
-    speed = randomInRange(0.8, 1.8) // units/sec
-  } = opts;
+        // Right wing (yaw -25°)
+        const right = document.createElement('a-box');
+        right.setAttribute('width', wingThicknessX);
+        right.setAttribute('height', wingHeightY);
+        right.setAttribute('depth', wingLengthZ);
+        right.setAttribute('position', `0.03 0 0`);
+        right.setAttribute('rotation', `0 -25 0`);
+        right.setAttribute('material', `color:${color}; roughness:1; metalness:0`);
+        right.setAttribute('shadow', 'cast:false; receive:false');
 
-  // Root entity (so the bird-fly behavior moves the whole V)
-  const bird = document.createElement('a-entity');
-  bird.classList.add('bird');
-  bird.setAttribute('position', `${x} ${y} ${z}`);
-  bird.setAttribute('bird-fly', `speed:${speed}; amp:${randomInRange(0.4,0.9)}; freq:${randomInRange(0.2,0.6)}; minX:-5; maxX:5; minZ:-7; maxZ:0; yMin:7; yMax:11`);
+        // Optional tiny body/joint
+        const body = document.createElement('a-box');
+        body.setAttribute('width', 0.012);
+        body.setAttribute('height', 0.012);
+        body.setAttribute('depth', 0.02);
+        body.setAttribute('material', `color:${color}; roughness:1; metalness:0; opacity:0.9; transparent:true`);
+        body.setAttribute('shadow', 'cast:false; receive:false');
 
-  // Wing dimensions (thin boxes)
-  const wingThicknessX = 0.01; // X (thin)
-  const wingHeightY    = 0.02; // Y (thin)
-  const wingLengthZ    = 0.12; // Z (length)
-
-  // Left wing (yaw +25°)
-  const left = document.createElement('a-box');
-  left.setAttribute('width', wingThicknessX);
-  left.setAttribute('height', wingHeightY);
-  left.setAttribute('depth', wingLengthZ);
-  left.setAttribute('position', `-0.03 0 0`);
-  left.setAttribute('rotation', `0 25 0`);
-  left.setAttribute('material', `color:${color}; roughness:1; metalness:0`);
-  left.setAttribute('shadow', 'cast:false; receive:false');
-
-  // Right wing (yaw -25°)
-  const right = document.createElement('a-box');
-  right.setAttribute('width', wingThicknessX);
-  right.setAttribute('height', wingHeightY);
-  right.setAttribute('depth', wingLengthZ);
-  right.setAttribute('position', `0.03 0 0`);
-  right.setAttribute('rotation', `0 -25 0`);
-  right.setAttribute('material', `color:${color}; roughness:1; metalness:0`);
-  right.setAttribute('shadow', 'cast:false; receive:false');
-
-  // Optional tiny body/joint
-  const body = document.createElement('a-box');
-  body.setAttribute('width', 0.012);
-  body.setAttribute('height', 0.012);
-  body.setAttribute('depth', 0.02);
-  body.setAttribute('material', `color:${color}; roughness:1; metalness:0; opacity:0.9; transparent:true`);
-  body.setAttribute('shadow', 'cast:false; receive:false');
-
-  bird.appendChild(left);
-  bird.appendChild(right);
-  bird.appendChild(body);
-  return bird;
-}
+        bird.appendChild(left);
+        bird.appendChild(right);
+        bird.appendChild(body);
+        return bird;
+    }
 
     function spawnBirds() {
         const count = Math.floor(Math.random() * 4) + 8; // 3..5 birds
@@ -422,57 +422,57 @@ box.setAttribute('random-deform', 'amp:0.03');
     }
 
 
-function spawnBirdFlock(opts = {}) {
-  const cam = document.getElementById('isoCamera');
-  if (!cam) return;
+    function spawnBirdFlock(opts = {}) {
+        const cam = document.getElementById('isoCamera');
+        if (!cam) return;
 
-  const camObj = cam.object3D;
-  const camPos = new THREE.Vector3();
-  camObj.getWorldPosition(camPos);
+        const camObj = cam.object3D;
+        const camPos = new THREE.Vector3();
+        camObj.getWorldPosition(camPos);
 
-  const fwd = new THREE.Vector3(0, 0, -1).applyQuaternion(camObj.quaternion).normalize();
-  const lateral = new THREE.Vector3().crossVectors(fwd, new THREE.Vector3(0, 1, 0)).normalize();
+        const fwd = new THREE.Vector3(0, 0, -1).applyQuaternion(camObj.quaternion).normalize();
+        const lateral = new THREE.Vector3().crossVectors(fwd, new THREE.Vector3(0, 1, 0)).normalize();
 
-  const lateralOffset = (Math.random() - 0.5) * 8;
-  const distance = 10;
-  const center = camPos.clone()
-    .add(fwd.clone().multiplyScalar(distance))
-    .add(lateral.clone().multiplyScalar(lateralOffset));
-  const radius = randomInRange(3.5, 6.5);
-  const angSpeed = randomInRange(0.05, 0.15); // rev/sec
+        const lateralOffset = (Math.random() - 0.5) * 8;
+        const distance = 10;
+        const center = camPos.clone()
+            .add(fwd.clone().multiplyScalar(distance))
+            .add(lateral.clone().multiplyScalar(lateralOffset));
+        const radius = randomInRange(3.5, 6.5);
+        const angSpeed = randomInRange(0.05, 0.15); // rev/sec
 
-  const {
-    count   = Math.floor(Math.random() * 3) + 7, // 7–9
-    spacing = 0.55,
-    depthSpacing = 0.45
-  } = opts;
+    const {
+        count   = Math.floor(Math.random() * 3) + 7, // 7–9
+        spacing = 0.55,
+        depthSpacing = 0.45
+    } = opts;
 
-  const flock = document.createElement('a-entity');
-  flock.classList.add('bird-flock');
-  flock.setAttribute('position', `${center.x + radius} ${center.y + 2} ${center.z}`); // start on orbit
-  flock.setAttribute('flock-orbit', `center: ${center.x} ${center.y + 2} ${center.z}; radius: ${radius}; angularSpeed: ${angSpeed}; bobAmp: 0.08; bobFreq: 0.6; lifetime: 20`);
+        const flock = document.createElement('a-entity');
+        flock.classList.add('bird-flock');
+        flock.setAttribute('position', `${center.x + radius} ${center.y + 2} ${center.z}`); // start on orbit
+        flock.setAttribute('flock-orbit', `center: ${center.x} ${center.y + 2} ${center.z}; radius: ${radius}; angularSpeed: ${angSpeed}; bobAmp: 0.08; bobFreq: 0.6; lifetime: 20`);
 
-  // Leader
-  const leader = createBird({ x:0, y:0, z:0, color: randomGrayColor() });
-  leader.removeAttribute('bird-fly');
-  flock.appendChild(leader);
+        // Leader
+        const leader = createBird({ x:0, y:0, z:0, color: randomGrayColor() });
+        leader.removeAttribute('bird-fly');
+        flock.appendChild(leader);
 
-  // Arms of the V
-  let armIndex = 0;
-  for (let i = 1; i < count; i++) {
-    const left = i % 2 === 1;
-    if (!left) armIndex++;
-    const step = armIndex + 1;
-    const xOffset = (left ? -1 : 1) * step * spacing;
-    const zOffset = -step * depthSpacing;
-    const yOffset = (Math.random() - 0.5) * 0.25;
+        // Arms of the V
+        let armIndex = 0;
+        for (let i = 1; i < count; i++) {
+            const left = i % 2 === 1;
+            if (!left) armIndex++;
+            const step = armIndex + 1;
+            const xOffset = (left ? -1 : 1) * step * spacing;
+            const zOffset = -step * depthSpacing;
+            const yOffset = (Math.random() - 0.5) * 0.25;
 
-    const bird = createBird({ x:xOffset, y:yOffset, z:zOffset, color: randomGrayColor() });
-    bird.removeAttribute('bird-fly');
-    flock.appendChild(bird);
-  }
-  scene.appendChild(flock);
-}
+            const bird = createBird({ x:xOffset, y:yOffset, z:zOffset, color: randomGrayColor() });
+            bird.removeAttribute('bird-fly');
+            flock.appendChild(bird);
+        }
+        scene.appendChild(flock);
+    }
 
 
 
@@ -482,33 +482,47 @@ function spawnBirdFlock(opts = {}) {
             x = 0, y = 0, z = 0,
             w = 0.5, h = randomInRange(0.5, 6), d = 0.5,
             color = randomGrayColor(),
+            deform = true,  // allow disabling deformation
+            tileScale = 10
         } = opts;
 
-        const repeatX = Math.max(1, Math.round(w * 3));
-        const repeatY = Math.max(1, Math.round(h * 2));
-        const offsetX = randomOffset();
-        const offsetY = randomOffset();
-        const rot = randomRotation();
+const repeatX = Math.max(1, Math.round((w * 1.2) / tileScale));
+  const repeatY = Math.max(1, Math.round((h * 1.2) / tileScale));
 
-        const building = document.createElement('a-box');
+
+        const building = document.createElement('a-entity');
+
+        // Use geometry with segments so vertex deformation is visible
+  building.setAttribute(
+    'geometry',
+    `primitive: box; width:${w}; height:${h}; depth:${d}; segmentsWidth:1; segmentsHeight:2; segmentsDepth:1`
+  );
+
         building.setAttribute('position', `${x} ${y} ${z}`);
-        building.setAttribute('width', w);
-        building.setAttribute('height', h);
-        building.setAttribute('depth', d);
 
-        building.setAttribute(
-            'material',
-            `shader: standard; src: #LpaperTex; color: ${color}; roughness:1; metalness:0; repeat:${repeatX} ${repeatY}; offset:${offsetX} ${offsetY}; rotation:${rot}`
-        );
-        // Improve texture sampling when available
-        building.addEventListener('materialtextureloaded', (e) => {
-            const tex = e.detail.texture;
-            if (tex) {
-                tex.anisotropy = 8; // crisper at angles
-                tex.needsUpdate = true;
-            }
-        });
+  building.setAttribute(
+    'material',
+    `shader: standard; src:#GpaperTex; roughness:0.9; metalness:0; repeat:${repeatX} ${repeatY}; emissive:${color}; emissiveIntensity:0.15`
+  );
+
+  building.addEventListener('materialtextureloaded', e => {
+    const tex = e.detail.texture;
+    if (!tex) return;
+    tex.center.set(0.5, 0.5);
+    tex.rotation = 0;
+    tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
+    tex.anisotropy = 8;
+    tex.needsUpdate = true;
+  });
+
         building.setAttribute('shadow', 'cast: true; receive: true');
+
+        // Apply deformation (amp scales with height plus randomness)
+        if (deform) {
+            const amp = (0.001 + h * 0.001 + Math.random() * 0.02).toFixed(3);
+            building.setAttribute('random-deform', `amp:${amp}`);
+        }
+
         return building;
     }
 
@@ -528,7 +542,8 @@ function spawnBirdFlock(opts = {}) {
                 createBuilding({
                 x: randomInRange(-5, 5),
                 y: randomInRange(-0.2, 0.4),
-                z: randomInRange(-7, 0)
+                z: randomInRange(-7, 0),
+                deform: Math.random() > 0.1 // 90% deformed
                 })
             );
             spawned++;
@@ -804,7 +819,6 @@ function spawnBirdFlock(opts = {}) {
                   
 
     </div>
-
     <!-- Foreground content -->
     <div class="position-relative">
       <svg class="bi mt-4 mb-3" style="color: var(--bs-indigo);" width="100" height="100" aria-hidden="true"><use xlink:href="#bootstrap"></use></svg> 
@@ -812,7 +826,7 @@ function spawnBirdFlock(opts = {}) {
       <p class="col-lg-8 mx-auto fs-5 text-light">JavaScript, Python, HTML, CSS and other coding in the day of the life of a frontend developer</p> 
       <div class="d-inline-flex gap-2 mb-5"> 
         <button class="d-inline-flex align-items-center btn btn-primary btn-lg px-4 rounded-1" type="button">Call</button> 
-        <button class="btn btn-outline-secondary btn-lg px-4 rounded-1" type="button">Link</button> 
+        <button class="btn btn-outline-secondary btn-lg px-4 rounded-1" type="button">Link</button>
       </div>
     </div>
   </div> 
@@ -851,41 +865,41 @@ function spawnBirdFlock(opts = {}) {
 
 <div class="flex-grow-1 ms-3">
 
-    <div class="text-uppercase mb-2">
-        <span class="bg-primary text-light px-1 py-1 fw-lighter fs-6 ms-0">
+    <div class="text-uppercase mb-0">
+        <span class="fw-lighter fs-6 ms-0">
             Jahi Grant    
         </span>
         
     </div>
 
-    <p class="pt-0 mb-0 lh-lg">
-        <span class="bg-success text-light px-1 py-1 fw-lighter fs-6 ms-0">
+    <p class="pt-0 mb-0">
+        <span class="fw-lighter fs-6 ms-0">
             A selection of    
         </span>
         
 
             
-                <span class="bg-warning text-dark px-1 py-1 fw-lighter fs-6 ms-2">skills</span>
+                <span class="fw-lighter fs-6 ms-2">skills</span>
             
             
             
-                <span aria-hidden="true" class="bg-danger px-1 py-1 fw-lighter  text-light">+</span>
-            
-
-        
-
-            
-                <span class="bg-warning text-dark px-1 py-1 fw-lighter fs-6">abilities</span>
-            
-            
-            
-                <span aria-hidden="true" class="bg-danger px-1 py-1 fw-lighter  text-light">+</span>
+                <span aria-hidden="true" class="fw-lighter">+</span>
             
 
         
 
             
-                <span class="bg-warning text-dark px-1 py-1 fw-lighter fs-6">musings</span>
+                <span class="fw-lighter fs-6">abilities</span>
+            
+            
+            
+                <span aria-hidden="true" class="fw-lighter">+</span>
+            
+
+        
+
+            
+                <span class="fw-lighter fs-6">musings</span>
             
             
             
@@ -906,12 +920,12 @@ function spawnBirdFlock(opts = {}) {
 <footer id="sticky-footer" class="flex-shrink-0 py-4 ps-4 mb-3">
   <div class="text-md-start text-lg-start text-xl-start text-start">
     <span class="text-dark small">
-      <span class="bg-secondary text-light px-1 py-1 fw-lighter fs-6 ms-0">
+      <span class="px-1 py-1 fw-lighter fs-6 ms-0">
   <span class="fw-lighter" style="font-size:12px!important;">
     <i class="bi bi-c-circle"></i>
   </span> 
   2000–25
-  <a class="text-light text-decoration-none" href="/">
+  <a class="text-dark text-decoration-none" href="/">
     <span>Jahi Grant</span>.
   </a> 
   All rights reserved.  

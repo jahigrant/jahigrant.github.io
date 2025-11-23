@@ -4,27 +4,27 @@
 
 <div class="flex-grow-1 ms-3">
 
-    <div class="text-uppercase mb-2">
-        <span class="bg-primary text-light px-1 py-1 fw-lighter fs-6 ms-0">
+    <div class="text-uppercase mb-0">
+        <span class="fw-lighter fs-6 ms-0">
             {{ site.name }}    
         </span>
         
     </div>
 
-    <p class="pt-0 mb-0 lh-lg">
-        <span class="bg-success text-light px-1 py-1 fw-lighter fs-6 ms-0">
+    <p class="pt-0 mb-0">
+        <span class="fw-lighter fs-6 ms-0">
             {{ site.strapline_text }}    
         </span>
         {% for strapitem in site.strapline %}
 
             {% unless forloop.first %}
-                <span class="bg-warning text-dark px-1 py-1 fw-lighter fs-6">{{ strapitem }}</span>
+                <span class="fw-lighter fs-6">{{ strapitem }}</span>
             {% else %}
-                <span class="bg-warning text-dark px-1 py-1 fw-lighter fs-6 ms-2">{{ strapitem }}</span>
+                <span class="fw-lighter fs-6 ms-2">{{ strapitem }}</span>
             {% endunless %}
             
             {% unless forloop.last %}
-                <span aria-hidden="true" class="bg-danger px-1 py-1 fw-lighter  text-light">+</span>
+                <span aria-hidden="true" class="fw-lighter">+</span>
             {% endunless %}
 
         {% endfor %}

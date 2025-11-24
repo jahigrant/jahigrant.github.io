@@ -33,12 +33,12 @@
            material="shader: standard; src: #paperTex; color: #FFFFFF; roughness: 1; metalness: 0; repeat: 4 4">
     </a-box>
     
-    <a-entity id="rig" position="0 -0.5 -13" rotation="10 0 0">
+    <a-entity id="rig" position="0 -1.5 -13" rotation="10 0 0">
         <a-entity 
             id="isoCamera" 
             camera            
             position="0 5 15"
-            rotation="0 -360 0"
+            rotation="0 -100 0"
             fov="40"
             far="10000"
             look-controls="enabled: true"
@@ -467,6 +467,7 @@
             road.setAttribute('height', g.road * 0.1);
             road.setAttribute('material', 'shader:standard; color:#333; roughness:1; metalness:0');
             road.setAttribute('shadow', 'cast:false; receive:true');
+
             roadGroup.appendChild(road);
         }
         // Same column
@@ -509,65 +510,59 @@ function randomVehicleColor() {
   return palette[Math.floor(Math.random()*palette.length)];
 }
 
+
 function createVehicle(opts = {}) {
-        const {
-            w = randomInRange(2, 6), h = randomInRange(2, 6), d = randomInRange(2, 6),
-            color = randomHexColor(),
-            deform = true  // allow disabling deformation
-        } = opts;
+    const {
+        w = randomInRange(4, 6), h = randomInRange(2, 6), d = randomInRange(11, 14),
+        color = randomHexColor(),
+        deform = true
+    } = opts;
 
-  const xs = gridXs();
-  const zs = gridZs();
-  const axis = Math.random() < 0.5 ? 'x' : 'z'; // driving axis
-  const dir = Math.random() < 0.5 ? 1 : -1;     // direction along axis
-  const laneOffset = (Math.random() - 0.5) * (GRID.road * 0.5); // small lateral offset inside road
-  let x, z;
+    const xs = gridXs();
+    const zs = gridZs();
+    if (xs.length < 2 || zs.length < 2) return null;
 
-  if (axis === 'x') {
-    // Horizontal road: pick a Z grid line; start X at min/max depending on dir
-    z = zs[Math.floor(Math.random()*zs.length)] + laneOffset;
-    x = dir > 0 ? GRID.minX : GRID.maxX;
-  } else {
-    // Vertical road: pick an X grid line; start Z at min/max depending on dir
-    x = xs[Math.floor(Math.random()*xs.length)] + laneOffset;
-    z = dir > 0 ? GRID.minZ : GRID.maxZ;
-  }
+    // Pick two distinct X/Z lines
+    const x1 = xs[Math.floor(Math.random()*xs.length)];
+    let x2 = x1; while (x2 === x1) x2 = xs[Math.floor(Math.random()*xs.length)];
+    const z1 = zs[Math.floor(Math.random()*zs.length)];
+    let z2 = z1; while (z2 === z1) z2 = zs[Math.floor(Math.random()*zs.length)];
 
-  const y = GRID.y + 0.06; // above road surface
+    const loop = {
+      xMin: Math.min(x1,x2),
+      xMax: Math.max(x1,x2),
+      zMin: Math.min(z1,z2),
+      zMax: Math.max(z1,z2)
+    };
 
-  const vehicle = document.createElement('a-entity');
-  vehicle.classList.add('vehicle');
-  vehicle.setAttribute('position', `${x} ${y} ${z}`);
-  vehicle.setAttribute('vehicle-drive',
-    `axis:${axis}; dir:${dir}; speed:${randomInRange(1.2,2.3)}; laneOffset:${laneOffset.toFixed(3)}`
-  );
+    const y = GRID.y + 0.06;
+    const vehicle = document.createElement('a-entity');
+    vehicle.classList.add('vehicle');
+    vehicle.setAttribute('position', `${loop.xMin} ${y} ${loop.zMin}`);
+    vehicle.setAttribute('vehicle-loop',
+      `xMin:${loop.xMin}; xMax:${loop.xMax}; zMin:${loop.zMin}; zMax:${loop.zMax}; speed:${randomInRange(1.2,1.8)}`
+    );
 
-  // Body (length points along driving axis)
-  const body = document.createElement('a-box');
-  const length = d;
-  const width  = w;
-  const height = h;
-  body.setAttribute('width', axis === 'x' ? length : width);
-  body.setAttribute('height', height);
-  body.setAttribute('depth', axis === 'x' ? width : length);
-  body.setAttribute('position', '0 0 0');
-  body.setAttribute('material', `color:${randomVehicleColor()}; roughness:0.8; metalness:0.1; emissive:#111; emissiveIntensity:0.2`);
-  body.setAttribute('shadow', 'cast:true; receive:true');
-  vehicle.appendChild(body);
+    // 50% of road width (cross-road dimension)
+    const crossWidth = GRID.road * 0.5;          // <= road, centered
+    const length = 0.50;                         // along travel axis (initial stage +x)
+    const height = 0.10;
 
-  // Optional top light
-  const lamp = document.createElement('a-sphere');
-  lamp.setAttribute('radius','0.04');
-  lamp.setAttribute('position','0 ' + (height/2 + 0.03) + ' 0');
-  lamp.setAttribute('material','color:#fff; emissive:#fff; emissiveIntensity:1.3; roughness:1; metalness:0');
-  vehicle.appendChild(lamp);
+    const body = document.createElement('a-box');
+    body.setAttribute('width', length);          // X dimension for stage 0 (+x)
+    body.setAttribute('height', height);
+    body.setAttribute('depth', crossWidth);      // Z cross width = 50% road
+    body.setAttribute('material', `color:${randomVehicleColor()}; roughness:0.85; metalness:0.15; emissive:#111; emissiveIntensity:0.25`);
+    body.setAttribute('shadow', 'cast:true; receive:true');
+    vehicle.appendChild(body);
 
-  return vehicle;
+    return vehicle;
 }
 
 function spawnVehicles() {
   for (let i=0;i<VEHICLE_COUNT;i++) {
-    scene.appendChild(createVehicle());
+    const v = createVehicle();
+    if (v) scene.appendChild(v);
   }
 }
 
@@ -866,227 +861,141 @@ AFRAME.registerComponent('quarter-disk', {
   remove() { this.el.removeObject3D('mesh'); }
 });
 
-const VEHICLES = [];
 
-function createVehicle() {
-  const xs = gridXs();
-  const zs = gridZs();
-  const axis = Math.random() < 0.5 ? 'x' : 'z';
-  const dir = Math.random() < 0.5 ? 1 : -1;
-  let x, z;
-  if (axis === 'x') {
-    z = zs[Math.floor(Math.random()*zs.length)];
-    x = dir > 0 ? GRID.minX : GRID.maxX;
-  } else {
-    x = xs[Math.floor(Math.random()*xs.length)];
-    z = dir > 0 ? GRID.minZ : GRID.maxZ;
-  }
-  const y = GRID.y + 0.06;
 
-  const vehicle = document.createElement('a-entity');
-  vehicle.classList.add('vehicle');
-  vehicle.setAttribute('position', `${x} ${y} ${z}`);
-  vehicle.setAttribute('vehicle-drive', `axis:${axis}; dir:${dir}; speed:${randomInRange(1.1,1.9)}; laneOffset:0`);
-
-  const body = document.createElement('a-box');
-  const length = 0.45;
-  const width  = GRID.road * 0.7;
-  const height = 0.18;
-  body.setAttribute('width', axis === 'x' ? length : width);
-  body.setAttribute('height', height);
-  body.setAttribute('depth', axis === 'x' ? width : length);
-  body.setAttribute('material', `color:${randomVehicleColor()}; roughness:0.85; metalness:0.15; emissive:#111; emissiveIntensity:0.25`);
-  body.setAttribute('shadow', 'cast:true; receive:false');
-  vehicle.appendChild(body);
-  return vehicle;
-}
-
-AFRAME.registerComponent('vehicle-drive', {
+AFRAME.registerComponent('vehicle-loop', {
   schema:{
-    axis:{default:'x'},
-    dir:{default:1},
+    xMin:{default:-5}, xMax:{default:5},
+    zMin:{default:-7}, zMax:{default:0},
     speed:{default:1.5},
-    laneOffset:{default:0}
+    turnMs:{default:300},
+    side:{default:'right'} // 'right' or 'left' (driving side)
   },
   init(){
-    this.xLines = gridXs();
-    this.zLines = gridZs();
-    this.intersectionThresh = 0.02;
-    this.minGap = 0.3;
-    this.safeGap = 1.2;
-    this.prevAxis = this.data.axis;
-    this.body = this.el.querySelector('a-box');
-    this.length = 0.05;
-    this.roadWidth = GRID.road * 0.2;
-    this.jamTime = 0;
-    this.lastPos = this.el.object3D.position.clone();
-    const p = this.el.object3D.position;
-    if (this.data.axis === 'x') p.z = this.closestLine(p.z, this.zLines);
-    else p.x = this.closestLine(p.x, this.xLines);
-    this.applyDimensions();
-    VEHICLES.push(this);
-  },
-  remove(){
-    const i = VEHICLES.indexOf(this);
-    if (i >= 0) VEHICLES.splice(i,1);
-  },
-  closestLine(v, lines){
-    let best = lines[0], dBest = Math.abs(v - best);
-    for(let i=1;i<lines.length;i++){
-      const d = Math.abs(v - lines[i]);
-      if(d < dBest){ dBest = d; best = lines[i]; }
+    this.stage = 0; // 0:+x,1:+z,2:-x,3:-z
+    this.body  = this.el.querySelector('a-box');
+    this.length = 0.08;                 // travel axis length
+    this.width  = GRID.road * 0.40;     // cross axis (must be < road)
+    this.height = 0.10;
+    // Lane offset (space from center to chosen side)
+    this.laneOffsetMag = (GRID.road - this.width) / 2 - 0.005; // small margin
+    // Randomize side if requested
+    if (this.data.side === 'random') {
+      this.data.side = Math.random()<0.5 ? 'right' : 'left';
     }
-    return best;
+    this.turning = false;
+    this.turnStart = 0;
+    this.startYaw = 0;
+    this.targetYaw = 0;
+    this.applyDims();
+    this.snapToCorner();
+    this.setHeadingInstant();
   },
-  atIntersection(p){
-    const xNear = Math.abs(p.x - this.closestLine(p.x, this.xLines)) < this.intersectionThresh;
-    const zNear = Math.abs(p.z - this.closestLine(p.z, this.zLines)) < this.intersectionThresh;
-    return xNear && zNear;
-  },
-  applyDimensions(){
-    if(!this.body) return;
-    if (this.data.axis === 'x') {
+  applyDims(){
+    if (!this.body) return;
+    const axis = (this.stage === 0 || this.stage === 2) ? 'x' : 'z';
+    if (axis === 'x'){
       this.body.setAttribute('width', this.length);
-      this.body.setAttribute('depth', this.roadWidth);
+      this.body.setAttribute('depth', this.width);
     } else {
-      this.body.setAttribute('width', this.roadWidth);
+      this.body.setAttribute('width', this.width);
       this.body.setAttribute('depth', this.length);
     }
-    this.body.setAttribute('height', 0.12);
+    this.body.setAttribute('height', this.height);
   },
-  distanceAhead(p){
-    const d = this.data;
-    let nearest = Infinity;
-    for(const v of VEHICLES){
-      if(v === this) continue;
-      const op = v.el.object3D.position;
-      const od = v.data;
-      if (od.axis !== d.axis) continue;
-      if (d.axis === 'x' && Math.abs(op.z - p.z) > 0.01) continue;
-      if (d.axis === 'z' && Math.abs(op.x - p.x) > 0.01) continue;
-      if (d.axis === 'x') {
-        const rel = (op.x - p.x) * d.dir;
-        if (rel > 0 && rel < nearest) nearest = rel;
-      } else {
-        const rel = (op.z - p.z) * d.dir;
-        if (rel > 0 && rel < nearest) nearest = rel;
-      }
-    }
-    return nearest;
+  headingDegForStage(stage){
+    return [90,-90,90,-90][stage];
   },
-  chooseTurn(p){
-    const d = this.data;
-    const wasAxis = d.axis;
-    const wasDir  = d.dir;
-    const turnLeft = Math.random() < 0.5;
-    let newAxis, newDir;
-    if (wasAxis === 'x') {
-      newAxis = 'z';
-      newDir = wasDir > 0 ? (turnLeft ? +1 : -1) : (turnLeft ? -1 : +1);
-      p.x = this.closestLine(p.x, this.xLines);
-      p.z = this.closestLine(p.z, this.zLines);
-    } else {
-      newAxis = 'x';
-      newDir = wasDir > 0 ? (turnLeft ? -1 : +1) : (turnLeft ? +1 : -1);
-      p.z = this.closestLine(p.z, this.zLines);
-      p.x = this.closestLine(p.x, this.xLines);
-    }
-    const edgeBuffer = 0.2;
-    if (newAxis === 'x') {
-      if ((newDir > 0 && p.x >= GRID.maxX - edgeBuffer) ||
-          (newDir < 0 && p.x <= GRID.minX + edgeBuffer)) newDir = -newDir;
-    } else {
-      if ((newDir > 0 && p.z >= GRID.maxZ - edgeBuffer) ||
-          (newDir < 0 && p.z <= GRID.minZ + edgeBuffer)) newDir = -newDir;
-    }
-    d.axis = newAxis;
-    d.dir  = newDir;
-    this.el.setAttribute('vehicle-drive', d);
+  setHeadingInstant(){
+    this.el.object3D.rotation.y = THREE.MathUtils.degToRad(this.headingDegForStage(this.stage));
   },
-  forceTurnIfJam(p){
-    // Force a turn at nearest intersection if jam persists
-    if (!this.atIntersection(p)) {
-      // Snap toward nearest intersection line
-      p.x = this.closestLine(p.x, this.xLines);
-      p.z = this.closestLine(p.z, this.zLines);
+  laneOffsetForStage(stage){
+    const right = this.data.side === 'right';
+    const o = this.laneOffsetMag;
+    // Coordinate: +x east, +z south.
+    // Right side relative to motion:
+    // +x: +z, +z: -x, -x: -z, -z: +x
+    switch(stage){
+      case 0: return {axis:'z', val: right ? +o : -o};
+      case 1: return {axis:'x', val: right ? -o : +o};
+      case 2: return {axis:'z', val: right ? -o : +o};
+      case 3: return {axis:'x', val: right ? +o : -o};
+      default: return {axis:'z', val:0};
     }
-    this.chooseTurn(p);
-    this.jamTime = 0;
+  },
+  snapToCorner(){
+    const p = this.el.object3D.position;
+    const lane = this.laneOffsetForStage(this.stage);
+    if (this.stage === 0){ p.x = this.data.xMin; p.z = this.data.zMin + (lane.axis==='z'?lane.val:0); }
+    if (this.stage === 1){ p.x = this.data.xMax + (lane.axis==='x'?lane.val:0); p.z = this.data.zMin; }
+    if (this.stage === 2){ p.x = this.data.xMax; p.z = this.data.zMax + (lane.axis==='z'?lane.val:0); }
+    if (this.stage === 3){ p.x = this.data.xMin + (lane.axis==='x'?lane.val:0); p.z = this.data.zMax; }
+  },
+  snapToEdge(){
+    const p = this.el.object3D.position;
+    const lane = this.laneOffsetForStage(this.stage);
+    if (this.stage === 0){ p.z = this.data.zMin + (lane.axis==='z'?lane.val:0); }
+    if (this.stage === 1){ p.x = this.data.xMax + (lane.axis==='x'?lane.val:0); }
+    if (this.stage === 2){ p.z = this.data.zMax + (lane.axis==='z'?lane.val:0); }
+    if (this.stage === 3){ p.x = this.data.xMin + (lane.axis==='x'?lane.val:0); }
+  },
+  startTurn(nextStage){
+    const prevStage = this.stage;
+    const next = nextStage % 4;
+    const prevDeg = this.headingDegForStage(prevStage);
+    this.el.object3D.rotation.y = THREE.MathUtils.degToRad(prevDeg);
+    this.startYaw = THREE.MathUtils.degToRad(prevDeg);
+    // Determine turn direction (always +1 so left turn CCW; modify if you allow right)
+    const isLeft  = next === (prevStage + 1) % 4;
+    const isRight = next === (prevStage + 3) % 4;
+    const quarter = Math.PI / 2;
+    const turnYaw = isRight ? -quarter : quarter;
+    this.stage = next;
+    this.targetYaw = this.startYaw + turnYaw;
+    this.turning = true;
+    this.turnStart = performance.now();
+  },
+  finishTurn(){
+    this.turning = false;
+    const snapDeg = this.headingDegForStage(this.stage);
+    this.el.object3D.rotation.y = THREE.MathUtils.degToRad(snapDeg);
+    this.applyDims();
+    this.snapToCorner();
   },
   tick(time, dt){
     const delta = dt / 1000;
     if (delta <= 0) return;
-    const d = this.data;
     const p = this.el.object3D.position;
-
-    // Center line lock
-    if (d.axis === 'x') p.z = this.closestLine(p.z, this.zLines);
-    else p.x = this.closestLine(p.x, this.xLines);
-
-    // Adaptive speed (never zero)
-    let effSpeed = d.speed;
-    const ahead = this.distanceAhead(p);
-    if (isFinite(ahead)) {
-      if (ahead <= this.minGap) {
-        effSpeed = d.speed * 0.05; // slow but keep moving
-      } else if (ahead < this.safeGap) {
-        const t = (ahead - this.minGap)/(this.safeGap - this.minGap);
-        effSpeed = d.speed * (0.15 + 0.35 * t);
-      }
+    if (this.turning){
+      const t = Math.min(1, (performance.now() - this.turnStart) / this.data.turnMs);
+      this.el.object3D.rotation.y = this.startYaw + (this.targetYaw - this.startYaw) * t;
+      if (t >= 1) this.finishTurn();
+      return;
     }
-
-    // Move
-    if (d.axis === 'x') p.x += d.dir * effSpeed * delta;
-    else p.z += d.dir * effSpeed * delta;
-
-    // Jam detection (no progress)
-    const moved = d.axis === 'x'
-      ? Math.abs(p.x - this.lastPos.x)
-      : Math.abs(p.z - this.lastPos.z);
-    if (moved < 0.0005) this.jamTime += delta;
-    else this.jamTime = 0;
-    this.lastPos.copy(p);
-    if (this.jamTime > 2) {
-      this.forceTurnIfJam(p);
+    this.snapToEdge(); // keep lane offset every frame
+    const step = this.data.speed * delta;
+    switch(this.stage){
+      case 0:{
+        const dist = this.data.xMax - p.x;
+        if (step < dist) p.x += step;
+        else { p.x = this.data.xMax; this.startTurn(this.stage + 1); }
+      } break;
+      case 1:{
+        const dist = this.data.zMax - p.z;
+        if (step < dist) p.z += step;
+        else { p.z = this.data.zMax; this.startTurn(this.stage + 1); }
+      } break;
+      case 2:{
+        const dist = p.x - this.data.xMin;
+        if (step < dist) p.x -= step;
+        else { p.x = this.data.xMin; this.startTurn(this.stage + 1); }
+      } break;
+      case 3:{
+        const dist = p.z - this.data.zMin;
+        if (step < dist) p.z -= step;
+        else { p.z = this.data.zMin; this.startTurn(this.stage + 1); }
+      } break;
     }
-
-    // Boundary pre-turn
-    const edgeBuffer = 0.02;
-    if (d.axis === 'x') {
-      if ((d.dir>0 && p.x >= GRID.maxX - edgeBuffer) ||
-          (d.dir<0 && p.x <= GRID.minX + edgeBuffer)) {
-        p.x = this.closestLine(p.x, this.xLines);
-        this.chooseTurn(p);
-      }
-    } else {
-      if ((d.dir>0 && p.z >= GRID.maxZ - edgeBuffer) ||
-          (d.dir<0 && p.z <= GRID.minZ + edgeBuffer)) {
-        p.z = this.closestLine(p.z, this.zLines);
-        this.chooseTurn(p);
-      }
-    }
-
-    // Intersection turn (single per arrival)
-    if (this.atIntersection(p)) {
-      if (!this._wasAtIntersection) {
-        this.chooseTurn(p);
-        this._wasAtIntersection = true;
-      }
-    } else {
-      this._wasAtIntersection = false;
-    }
-
-    // Resize on axis change
-    if (this.prevAxis !== d.axis){
-      this.prevAxis = d.axis;
-      this.applyDimensions();
-    }
-
-    // Heading
-    const headingDeg = d.axis === 'x'
-      ? (d.dir > 0 ? 0 : 180)
-      : (d.dir > 0 ? 90 : -90);
-    this.el.object3D.rotation.set(0, THREE.MathUtils.degToRad(headingDeg), 0);
   }
 });
 

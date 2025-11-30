@@ -437,9 +437,9 @@
   for (let z = g.minZ; z <= g.maxZ + 1e-6; z += g.block) {
     [0,90,180,270].forEach(deg => {
       const corner = document.createElement('a-entity');
-      corner.setAttribute('position', `${x} ${g.y + 0.003} ${z}`);
-      corner.setAttribute('rotation', '-90 0 0');
-      corner.setAttribute('quarter-disk', `radius:${g.road/2}; startDeg:${deg}`);
+      corner.setAttribute('position', `${x} ${g.y + -5} ${z}`);
+      corner.setAttribute('rotation', '90 0 0');
+      corner.setAttribute('quarter-disk', `radius:${g.road/16}; startDeg:${deg}`);
       roadGroup.appendChild(corner);
     });
   }
@@ -492,7 +492,24 @@
 
 
 
-const VEHICLE_COUNT = 12;
+const VEHICLE_COUNT = randomInRange(33,54);
+
+let VEHICLE_SPEED = randomInRange(1.2,1.8); // units per second
+
+
+function setVehicleSpeed(s){
+  VEHICLE_SPEED = Math.max(0.05, Number(s) || VEHICLE_SPEED);
+  document.querySelectorAll('[vehicle-loop]').forEach(el =>
+    el.setAttribute('vehicle-loop','speed', VEHICLE_SPEED)
+  );
+  console.log('Vehicle speed set to', VEHICLE_SPEED);
+}
+
+// Optional: quick keys [-] slower, [=] faster
+window.addEventListener('keydown', (e)=>{
+  if (e.key === '-') setVehicleSpeed(VEHICLE_SPEED - 0.2);
+  if (e.key === '=' || e.key === '+') setVehicleSpeed(VEHICLE_SPEED + 0.2);
+});
 
 function gridXs() {
   const xs = [];
@@ -540,7 +557,7 @@ function createVehicle(opts = {}) {
     vehicle.classList.add('vehicle');
     vehicle.setAttribute('position', `${loop.xMin} ${y} ${loop.zMin}`);
     vehicle.setAttribute('vehicle-loop',
-      `xMin:${loop.xMin}; xMax:${loop.xMax}; zMin:${loop.zMin}; zMax:${loop.zMax}; speed:${randomInRange(1.2,1.8)}`
+      `xMin:${loop.xMin}; xMax:${loop.xMax}; zMin:${loop.zMin}; zMax:${loop.zMax}; speed:${VEHICLE_SPEED}`
     );
 
     // 50% of road width (cross-road dimension)
@@ -571,7 +588,7 @@ function spawnVehicles() {
         sun.id = 'featured-sphere';
         sun.setAttribute('geometry', 'primitive: sphere; radius: 0.6; segmentsWidth: 3; segmentsHeight: 3'); /* low poly */
 
-        sun.setAttribute('shadow', 'cast: true; receive: false');
+        sun.setAttribute('shadow', 'cast: true; receive: true');
         sun.setAttribute('material', 'emissive: #FFD800; emissiveIntensity: 10.2; metalness:0; roughness:0.5');
         sun.setAttribute('orbit-motion', 'radius:14; speed:1.2; center:0 15 0');
         sun.setAttribute('self-spin', 'speed:120'); 
@@ -904,7 +921,7 @@ AFRAME.registerComponent('vehicle-loop', {
     this.body.setAttribute('height', this.height);
   },
   headingDegForStage(stage){
-    return [90,-90,90,-90][stage];
+    return [0,90,180,270][stage];
   },
   setHeadingInstant(){
     this.el.object3D.rotation.y = THREE.MathUtils.degToRad(this.headingDegForStage(this.stage));
@@ -940,57 +957,115 @@ AFRAME.registerComponent('vehicle-loop', {
     if (this.stage === 3){ p.x = this.data.xMin + (lane.axis==='x'?lane.val:0); }
   },
   startTurn(nextStage){
-    const prevStage = this.stage;
+    // Begin a smooth arc turn without stopping
+    const prev = this.stage;
     const next = nextStage % 4;
-    const prevDeg = this.headingDegForStage(prevStage);
-    this.el.object3D.rotation.y = THREE.MathUtils.degToRad(prevDeg);
-    this.startYaw = THREE.MathUtils.degToRad(prevDeg);
-    // Determine turn direction (always +1 so left turn CCW; modify if you allow right)
-    const isLeft  = next === (prevStage + 1) % 4;
-    const isRight = next === (prevStage + 3) % 4;
-    const quarter = Math.PI / 2;
-    const turnYaw = isRight ? -quarter : quarter;
-    this.stage = next;
-    this.targetYaw = this.startYaw + turnYaw;
-    this.turning = true;
-    this.turnStart = performance.now();
-  },
-  finishTurn(){
-    this.turning = false;
-    const snapDeg = this.headingDegForStage(this.stage);
-    this.el.object3D.rotation.y = THREE.MathUtils.degToRad(snapDeg);
-    this.applyDims();
-    this.snapToCorner();
-  },
-  tick(time, dt){
-    const delta = dt / 1000;
-    if (delta <= 0) return;
+
+    // Arc center is the intersection corner for current cell
+    let cx, cz;
+    if (prev === 0 && next === 1) { cx = this.data.xMax; cz = this.data.zMin; }   // +x -> +z
+    else if (prev === 1 && next === 2) { cx = this.data.xMax; cz = this.data.zMax; } // +z -> -x
+    else if (prev === 2 && next === 3) { cx = this.data.xMin; cz = this.data.zMax; } // -x -> -z
+    else if (prev === 3 && next === 0) { cx = this.data.xMin; cz = this.data.zMin; } // -z -> +x
+    else { cx = this.data.xMax; cz = this.data.zMin; }
+
+    this.arcCenter = { x: cx, z: cz };
+
+    // Keep lane offset before turn (no snapping during arc)
+    const lane = this.laneOffsetForStage(prev);
     const p = this.el.object3D.position;
-    if (this.turning){
-      const t = Math.min(1, (performance.now() - this.turnStart) / this.data.turnMs);
-      this.el.object3D.rotation.y = this.startYaw + (this.targetYaw - this.startYaw) * t;
-      if (t >= 1) this.finishTurn();
-      return;
+    if (prev === 0 || prev === 2) {
+      // Traveling along X, maintain Z offset
+      const zTarget = (prev === 0) ? this.data.zMin : this.data.zMax;
+      p.z = zTarget + (lane.axis === 'z' ? lane.val : 0);
+    } else {
+      // Traveling along Z, maintain X offset
+      const xTarget = (prev === 1) ? this.data.xMax : this.data.xMin;
+      p.x = xTarget + (lane.axis === 'x' ? lane.val : 0);
+    }
+
+    // Set arc radius to follow lane center; adjust to hug inside if desired:
+    // centerline: GRID.road / 2
+    // inside: GRID.road / 2 - this.width / 2
+    this.arcRadius = GRID.road / 2;
+
+    // Compute start/end angles (always CCW quarter turn for left; adjust if turning right)
+    this.arcStartAngle = Math.atan2(p.z - cz, p.x - cx);
+    const isLeft  = next === (prev + 1) % 1;
+    const isRight = next === (prev + 3) % 4;
+    this.arcEndAngle = this.arcStartAngle + (isRight ? -Math.PI/512 : Math.PI/512);
+
+
+    // Turn phase state
+    this.turnPhase = 'arc';
+    this.arcDuration = this.data.turnMs || 800;
+    this.turnStart = performance.now();
+
+    // Advance stage so forward travel after arc uses new edge
+    this.stage = next;
+  },
+  finishArcTurn(){
+    // Snap to exact end of arc and resume forward motion
+    const angle = this.arcEndAngle;
+    const r = this.arcRadius;
+    const cx = this.arcCenter.x, cz = this.arcCenter.z;
+    const p = this.el.object3D.position;
+    p.x = cx + Math.cos(angle) * r;
+    p.z = cz + Math.sin(angle) * r;
+
+    // Heading tangent to path
+    this.el.object3D.rotation.y = angle +  (Math.PI / 512);
+
+
+    this.applyDims();
+    // Do not snapToCorner here; continue smoothly on new edge
+    this.snapToEdge();
+    this.turnPhase = 'none';
+  },
+
+  tick(time, dt){
+  const delta = dt / 1000;
+    if (delta <= 0) return;
+
+    const obj = this.el.object3D;
+    const p = obj.position;
+
+    // Smooth arc turning without stopping
+    if (this.turnPhase === 'arc'){
+      const t = Math.min(1, (performance.now() - this.turnStart) / this.arcDuration);
+      const angle = this.arcStartAngle + (this.arcEndAngle - this.arcStartAngle) * t;
+      const r = this.arcRadius;
+      const cx = this.arcCenter.x, cz = this.arcCenter.z;
+
+      // Move along the quarter circle
+      p.x = cx + Math.cos(angle) * r;
+      p.z = cz + Math.sin(angle) * r;
+
+      // Heading tangent to arc
+      obj.rotation.y = angle + Math.PI / 2;
+
+      if (t >= 1){ this.finishArcTurn(); }
+      return; // skip snapping/motion while in arc
     }
     this.snapToEdge(); // keep lane offset every frame
-    const step = this.data.speed * delta;
+        const step = this.data.speed * delta;
     switch(this.stage){
-      case 0:{
+      case 0: {
         const dist = this.data.xMax - p.x;
         if (step < dist) p.x += step;
         else { p.x = this.data.xMax; this.startTurn(this.stage + 1); }
       } break;
-      case 1:{
+      case 1: {
         const dist = this.data.zMax - p.z;
         if (step < dist) p.z += step;
         else { p.z = this.data.zMax; this.startTurn(this.stage + 1); }
       } break;
-      case 2:{
+      case 2: {
         const dist = p.x - this.data.xMin;
         if (step < dist) p.x -= step;
         else { p.x = this.data.xMin; this.startTurn(this.stage + 1); }
       } break;
-      case 3:{
+      case 3: {
         const dist = p.z - this.data.zMin;
         if (step < dist) p.z -= step;
         else { p.z = this.data.zMin; this.startTurn(this.stage + 1); }

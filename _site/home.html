@@ -702,9 +702,12 @@
 
 
 
-const VEHICLE_COUNT = randomInRange(33,54);
+const VEHICLE_COUNT = randomInRange(12,16);
 
-let VEHICLE_SPEED = randomInRange(1.2,1.8); // units per second
+let VEHICLE_SPEED = randomInRange(0.1,0.5); // units per second
+
+const VEHICLES = [];
+let VEHICLE_UID = 1;
 
 console.log('Vehicle speed set to', VEHICLE_SPEED);
 
@@ -770,29 +773,35 @@ function createVehicle(opts = {}) {
       zMax: Math.max(z1,z2)
     };
 
-    const y = GRID.y + 0.06;
-    const vehicle = document.createElement('a-entity');
-    vehicle.classList.add('vehicle');
-    vehicle.setAttribute('position', `${loop.xMin} ${y} ${loop.zMin}`);
-  const speed = randomInRange(0.2, 1.8); // per-vehicle speed
+  const y = GRID.y + 0.06;
+  const vehicle = document.createElement('a-entity');
+  vehicle.classList.add('vehicle');
+  vehicle.setAttribute('position', `${loop.xMin} ${y} ${loop.zMin}`);
+  vehicle.setAttribute('rotation', `0 90 0`);
 
+  const speed = randomInRange(0.1, 1.8); // per-vehicle speed
   vehicle.setAttribute(
     'vehicle-loop',
     `xMin:${loop.xMin}; xMax:${loop.xMax}; zMin:${loop.zMin}; zMax:${loop.zMax}; speed:${speed}`
   );
 
-    // 50% of road width (cross-road dimension)
-    const crossWidth = GRID.road * 0.5;          // <= road, centered
-    const length = 0.50;                         // along travel axis (initial stage +x)
-    const height = 0.10;
+  
 
-    const body = document.createElement('a-box');
-    body.setAttribute('width', length);          // X dimension for stage 0 (+x)
-    body.setAttribute('height', height);
-    body.setAttribute('depth', crossWidth);      // Z cross width = 50% road
-    body.setAttribute('material', `color:${randomVehicleColor()}; roughness:0.85; metalness:0.15; emissive:#111; emissiveIntensity:0.25`);
-    body.setAttribute('shadow', 'cast:true; receive:true');
-    vehicle.appendChild(body);
+  // Neutral initial body; applyDims will size correctly per stage
+  const body = document.createElement('a-box');
+
+  body.setAttribute('random-deform', 'amp:0.001');
+
+  body.setAttribute('class', 'vehicle-body');
+  body.setAttribute('width', 0.1);   // temporary; overridden by applyDims
+  body.setAttribute('height', 0.10);
+  body.setAttribute('depth', 0.1);   // temporary; overridden by applyDims
+  body.setAttribute('material', `color:${randomVehicleColor()}; roughness:0.85; metalness:0.15; emissive:#111; emissiveIntensity:0.25`);
+  body.setAttribute('shadow', 'cast:true; receive:true');
+
+ 
+  vehicle.appendChild(body);
+
 
     return vehicle;
 }
@@ -947,28 +956,39 @@ function spawnVehicles() {
         }
     });
 
-    AFRAME.registerComponent('random-deform', {
-        schema:{ amp:{default:0.08} },
-        init(){
-            const apply = () => {
-            const mesh = this.el.getObject3D('mesh');
-            if (!mesh) return;
-            const pos = mesh.geometry.attributes.position;
-            for (let i=0;i<pos.count;i++){
-                pos.setXYZ(
-                i,
-                pos.getX(i) + (Math.random()-0.5)*this.data.amp,
-                pos.getY(i) + (Math.random()-0.5)*this.data.amp,
-                pos.getZ(i) + (Math.random()-0.5)*this.data.amp
-                );
-            }
-            pos.needsUpdate = true;
-            mesh.geometry.computeVertexNormals();
-            };
-            this.el.addEventListener('object3dset', apply);
-            apply();
-        }
-    });
+AFRAME.registerComponent('random-deform', {
+  schema:{ amp:{default:0.08} },
+  init(){
+    const apply = () => {
+      // Try this element’s mesh
+      let mesh = this.el.getObject3D('mesh');
+
+      // Fallback: first child with a mesh
+      if (!mesh) {
+        const child = Array.from(this.el.children).find(ch => ch.getObject3D('mesh'));
+        mesh = child && child.getObject3D('mesh');
+      }
+      if (!mesh) return;
+
+      const pos = mesh.geometry.attributes.position;
+      if (!pos) return;
+
+      for (let i = 0; i < pos.count; i++){
+        pos.setXYZ(
+          i,
+          pos.getX(i) + (Math.random()-0.5)*this.data.amp,
+          pos.getY(i) + (Math.random()-0.5)*this.data.amp,
+          pos.getZ(i) + (Math.random()-0.5)*this.data.amp
+        );
+      }
+      pos.needsUpdate = true;
+      mesh.geometry.computeVertexNormals();
+    };
+    this.el.addEventListener('object3dset', apply);
+    // Defer once to let a-box create its mesh
+    setTimeout(apply, 0);
+  }
+});
     
     AFRAME.registerComponent('flock-orbit', {
         schema: {
@@ -1110,45 +1130,87 @@ AFRAME.registerComponent('vehicle-loop', {
     side:{default:'right'} // 'right' or 'left' (driving side)
   },
   init(){
-    this.stage = 0; // 0:+x,1:+z,2:-x,3:-z
+    this.stage = 1; // 0:+x,1:+z,2:-x,3:-z
     this.body  = this.el.querySelector('a-box');
     this.length = 0.08;                 // travel axis length
     this.width  = GRID.road * 0.40;     // cross axis (must be < road)
     this.height = 0.10;
-    // Lane offset (space from center to chosen side)
+    
     this.laneOffsetMag = (GRID.road - this.width) / 2 - 0.005; // small margin
-    // Randomize side if requested
     if (this.data.side === 'random') {
       this.data.side = Math.random()<0.5 ? 'right' : 'left';
     }
+
     this.turning = false;
     this.turnStart = 0;
     this.startYaw = 0;
     this.targetYaw = 0;
+
     this.applyDims();
     this.snapToCorner();
     this.setHeadingInstant();
+
+    this.postTurnYawDeg = null;  
+    this.postTurnAdvanceRemaining = 0;
+    this.blockNextTurnUntilPostYaw = false; // NEW: gate next turn
+    
+    this.uid = VEHICLE_UID++;
+    VEHICLES.push(this);
+  },
+  remove(){
+    const i = VEHICLES.indexOf(this);
+    if (i >= 0) VEHICLES.splice(i, 1);
+  },
+  getAABB(){
+    const boxEl = this.body || this.el;
+    if (!boxEl) return null;
+    const o = boxEl.object3D;
+    const p = new THREE.Vector3();
+    o.getWorldPosition(p);
+    const w = Number(boxEl.getAttribute('width'))  || 0.1;
+    const h = Number(boxEl.getAttribute('height')) || 0.1;
+    const d = Number(boxEl.getAttribute('depth'))  || 0.1;
+    return {
+      min: { x: p.x - w/2, y: p.y - h/2, z: p.z - d/2 },
+      max: { x: p.x + w/2, y: p.y + h/2, z: p.z + d/2 }
+    };
+  },
+  aabbOverlap(a,b){
+    return a && b &&
+      a.min.x <= b.max.x && a.max.x >= b.min.x &&
+      a.min.y <= b.max.y && a.max.y >= b.min.y &&
+      a.min.z <= b.max.z && a.max.z >= b.min.z;
   },
   applyDims(){
     if (!this.body) return;
-    const axis = (this.stage === 0 || this.stage === 2) ? 'x' : 'z';
-    if (axis === 'x'){
-      this.body.setAttribute('width', this.length);
-      this.body.setAttribute('depth', this.width);
-    } else {
-      this.body.setAttribute('width', this.width);
-      this.body.setAttribute('depth', this.length);
-    }
-    this.body.setAttribute('height', this.height);
+
+    // Logical sizes (do not set on geometry)
+    const length = 0.25;      // along travel axis
+    const width  = 0.10;      // across lane
+    const height = this.height;
+
+    // Keep geometry size fixed at 0.1 x 0.10 x 0.1; use scale to achieve target dims
+    const baseX = 0.1, baseY = 0.10, baseZ = 0.1;
+    const alongX = (this.stage === 0 || this.stage === 2);
+
+    const sx = alongX ? (length / baseX) : (width / baseX);
+    const sz = alongX ? (width  / baseZ) : (length / baseZ);
+    const sy = height / baseY;
+
+    // Apply scale to mesh
+    const o = this.body.object3D;
+    o.scale.set(sx, sy, sz);
+
+    // Do NOT call setAttribute('width'/'depth') here—keeps the deformed mesh intact
   },
   headingDegForStage(stage){
-    return [0,90,180,270][stage];
+    return [0,0,0,270][stage];
   },
   setHeadingInstant(){
     this.el.object3D.rotation.y = THREE.MathUtils.degToRad(this.headingDegForStage(this.stage));
   },
   laneOffsetForStage(stage){
-    const right = this.data.side === 'right';
+    const right = this.data.side === 'left';
     const o = this.laneOffsetMag;
     // Coordinate: +x east, +z south.
     // Right side relative to motion:
@@ -1178,7 +1240,7 @@ AFRAME.registerComponent('vehicle-loop', {
     if (this.stage === 3){ p.x = this.data.xMin + (lane.axis==='x'?lane.val:0); }
   },
   headingDegForStage(stage){
-    return [0,90,180,270][stage];
+    return [0,0,0,270][stage];
   },
   setHeadingInstant(){
     const deg = this.headingDegForStage(this.stage);
@@ -1239,26 +1301,86 @@ AFRAME.registerComponent('vehicle-loop', {
     const angle = this.arcEndAngle;
     const r = this.arcRadius;
     const {x:cx, z:cz} = this.arcCenter;
-    const obj = this.el.object3D;
 
-    // End-of-arc position and correct tangent heading
-    obj.position.x = cx + Math.cos(angle) * r;
-    obj.position.z = cz + Math.sin(angle) * r;
-    obj.rotation.y = angle + this.turnSign * (Math.PI / 4);
+    // End-of-arc position using setAttribute (so A-Frame updates properly)
+    const endX = cx + Math.cos(angle) * r;
+    const endZ = cz + Math.sin(angle) * r;
+    const y = this.el.object3D.position.y; // keep current Y
+    this.el.setAttribute('position', `${endX} ${y} ${endZ}`);
 
     // Commit to new stage and resume travel
     this.stage = this.pendingStage;
     this.applyDims();
 
-    // Snap heading to exact +90°/-90° from start (cardinal), no roll/pitch
-    this.el.setAttribute('rotation', `0 ${this.targetYawDeg.toFixed(3)} 0`);
+    // Heading tangent to the path at arc exit (base yaw)
+    const baseYawRad = this.arcEndAngle + this.turnSign * (Math.PI / 2);
+    const baseYawDeg = THREE.MathUtils.radToDeg(baseYawRad);
+    this.el.setAttribute('rotation', `0 ${baseYawDeg.toFixed(3)} 0`);
+
+    // Queue extra 90° AFTER moving onto new road
+    const extraYawDeg = baseYawDeg + (this.turnSign * 90);
+    this.postTurnYawDeg = extraYawDeg;
+    this.postTurnAdvanceRemaining = 0.05;
+    this.blockNextTurnUntilPostYaw = true; // block starting another turn until applied
 
     this.turnPhase = 'none';
   },
   setHeadingInstant(){
     const deg = this.headingDegForStage(this.stage);
-    this.el.setAttribute('rotation', `0 90 0`);
+    this.el.setAttribute('rotation', `0 ${deg} 0`);
   },
+
+  // Compute max allowed step along current axis to avoid overlap
+  clampStepToAvoidCollision(step){
+    const me = this.getAABB();
+    if (!me) return step;
+
+    let maxStep = step;
+    for (const other of VEHICLES){
+      if (other === this) continue;
+      if (other.turnPhase === 'arc') continue; // skip while turning
+      const ob = other.getAABB();
+      if (!ob) continue;
+
+      // Only consider neighbors on same lane axis (X or Z)
+      const alongX = (this.stage === 0 || this.stage === 2);
+      if (alongX){
+        // Must overlap in Z to collide
+        const zOverlap = !(me.max.z < ob.min.z || me.min.z > ob.max.z);
+        if (!zOverlap) continue;
+
+        if (this.stage === 0){ // moving +X
+          if (me.max.x <= ob.min.x){
+            const gap = ob.min.x - me.max.x;
+            maxStep = Math.min(maxStep, Math.max(0, gap - 0.5));
+          }
+        } else { // moving -X
+          if (me.min.x >= ob.max.x){
+            const gap = me.min.x - ob.max.x;
+            maxStep = Math.min(maxStep, Math.max(0, gap - 0.5));
+          }
+        }
+      } else {
+        // Along Z; must overlap in X
+        const xOverlap = !(me.max.x < ob.min.x || me.min.x > ob.max.x);
+        if (!xOverlap) continue;
+
+        if (this.stage === 1){ // moving +Z
+          if (me.max.z <= ob.min.z){
+            const gap = ob.min.z - me.max.z;
+            maxStep = Math.min(maxStep, Math.max(0, gap - 0.5));
+          }
+        } else { // moving -Z
+          if (me.min.z >= ob.max.z){
+            const gap = me.min.z - ob.max.z;
+            maxStep = Math.min(maxStep, Math.max(0, gap - 0.5));
+          }
+        }
+      }
+    }
+    return Math.max(0, maxStep);
+  },
+
   tick(time, dt){
     const delta = dt / 1000;
     if (delta <= 0) return;
@@ -1266,35 +1388,129 @@ AFRAME.registerComponent('vehicle-loop', {
     const obj = this.el.object3D;
     const p = obj.position;
 
-    // Rotate while turning: heading follows tangent along arc
+    // Arc turning (unchanged)
     if (this.turnPhase === 'arc'){
       const t = Math.min(1, (performance.now() - this.turnStart) / this.arcDuration);
       const angle = this.arcStartAngle + (this.arcEndAngle - this.arcStartAngle) * t;
       const r = this.arcRadius;
       const {x:cx, z:cz} = this.arcCenter;
-
       p.x = cx + Math.cos(angle) * r;
       p.z = cz + Math.sin(angle) * r;
-
-      // Update yaw during arc (tangent to path)
-      const yawRad = angle + this.turnSign * (Math.PI / 2);
-      const yawDeg = THREE.MathUtils.radToDeg(yawRad);
+      const yawDeg = THREE.MathUtils.radToDeg(angle + this.turnSign * (Math.PI / 2));
       this.el.setAttribute('rotation', `0 ${yawDeg} 0`);
-
       if (t >= 1) this.finishArcTurn();
-      return; // no snapToEdge during arc
+      return;
     }
 
     // Keep lane when not turning
     this.snapToEdge();
 
-    const step = this.data.speed * delta;
+    let step = this.data.speed * delta;
+
+    step = this.clampStepToAvoidCollision(step);
+
+    // Move along current stage
+  if (step > 0){
     switch(this.stage){
-      case 0:{ const dist = this.data.xMax - p.x; if (step < dist) p.x += step; else { p.x = this.data.xMax; this.startTurn(this.stage + 1); } } break;
-      case 1:{ const dist = this.data.zMax - p.z; if (step < dist) p.z += step; else { p.z = this.data.zMax; this.startTurn(this.stage + 1); } } break;
-      case 2:{ const dist = p.x - this.data.xMin; if (step < dist) p.x -= step; else { p.x = this.data.xMin; this.startTurn(this.stage + 1); } } break;
-      case 3:{ const dist = p.z - this.data.zMin; if (step < dist) p.z -= step; else { p.z = this.data.zMin; this.startTurn(this.stage + 1); } } break;
+      case 0:{ // +X
+        const dist = this.data.xMax - p.x;
+        const s = Math.min(step, dist);
+        p.x += s;
+        if (s >= dist && !this.blockNextTurnUntilPostYaw) this.startTurn((this.stage + 1) % 4);
+      } break;
+      case 1:{ // +Z
+        const dist = this.data.zMax - p.z;
+        const s = Math.min(step, dist);
+        p.z += s;
+        if (s >= dist && !this.blockNextTurnUntilPostYaw) this.startTurn((this.stage + 1) % 4);
+      } break;
+      case 2:{ // -X
+        const dist = p.x - this.data.xMin;
+        const s = Math.min(step, dist);
+        p.x -= s;
+        if (s >= dist && !this.blockNextTurnUntilPostYaw) this.startTurn((this.stage + 1) % 4);
+      } break;
+      case 3:{ // -Z
+        const dist = p.z - this.data.zMin;
+        const s = Math.min(step, dist);
+        p.z -= s;
+        if (s >= dist && !this.blockNextTurnUntilPostYaw) this.startTurn((this.stage + 1) % 4);
+      } break;
     }
+  }
+
+  // Apply queued extra yaw after moving onto new road (existing logic)
+  if (this.postTurnYawDeg !== null && this.postTurnAdvanceRemaining > 0){
+    // Already advanced with clamped step; check and apply
+    this.postTurnAdvanceRemaining -= 0; // distance consumed above
+    if (this.postTurnAdvanceRemaining <= 0){
+      const snap = Math.round(this.postTurnYawDeg / 90) * 90;
+      this.el.setAttribute('rotation', `0 ${snap} 0`);
+      this.postTurnYawDeg = null;
+      this.blockNextTurnUntilPostYaw = false;
+    }
+  }
+
+    // If we have a pending extra yaw, consume distance first
+    if (this.postTurnYawDeg !== null && this.postTurnAdvanceRemaining > 0){
+      const consume = Math.min(step, this.postTurnAdvanceRemaining);
+      // Advance along current stage by 'consume' only
+      switch(this.stage){
+        case 0: p.x = Math.min(p.x + consume, this.data.xMax); break;
+        case 1: p.z = Math.min(p.z + consume, this.data.zMax); break;
+        case 2: p.x = Math.max(p.x - consume, this.data.xMin); break;
+        case 3: p.z = Math.max(p.z - consume, this.data.zMin); break;
+      }
+      this.postTurnAdvanceRemaining -= consume;
+      step -= consume;
+
+      // If we’ve advanced enough, apply the extra 90° yaw now
+      if (this.postTurnAdvanceRemaining <= 0){
+        // Snap to exact cardinal (round to nearest 90°)
+        const snap = Math.round(this.postTurnYawDeg / 90) * 0;
+        this.el.setAttribute('rotation', `0 ${snap} 0`);
+        this.postTurnYawDeg = null;
+        this.blockNextTurnUntilPostYaw = false; // allow turns again
+      }
+    }
+
+    // Continue normal forward motion with any remaining step
+    if (step > 0){
+    switch(this.stage){
+      case 0:{
+        const dist = this.data.xMax - p.x;
+        if (step < dist){ p.x += step; }
+        else {
+          p.x = this.data.xMax;
+          if (!this.blockNextTurnUntilPostYaw) this.startTurn((this.stage + 1) % 4);
+        }
+      } break;
+      case 1:{
+        const dist = this.data.zMax - p.z;
+        if (step < dist){ p.z += step; }
+        else {
+          p.z = this.data.zMax;
+          if (!this.blockNextTurnUntilPostYaw) this.startTurn((this.stage + 1) % 4);
+        }
+      } break;
+      case 2:{
+        const dist = p.x - this.data.xMin;
+        if (step < dist){ p.x -= step; }
+        else {
+          p.x = this.data.xMin;
+          if (!this.blockNextTurnUntilPostYaw) this.startTurn((this.stage + 1) % 4);
+        }
+      } break;
+      case 3:{
+        const dist = p.z - this.data.zMin;
+        if (step < dist){ p.z -= step; }
+        else {
+          p.z = this.data.zMin;
+          if (!this.blockNextTurnUntilPostYaw) this.startTurn((this.stage + 1) % 4);
+        }
+      } break;
+    }
+  }
   }
 });
 

@@ -224,12 +224,13 @@
         <img id="paperTex" src="/assets/textures/paper.png" crossorigin="anonymous">
         <img id="LpaperTex" src="/assets/textures/LINED_PAPER.jpg" crossorigin="anonymous">
         <img id="GpaperTex" src="/assets/textures/graph_paper.jpg" crossorigin="anonymous">
+        <img id="dashTexX" src="/assets/textures/road_texture_x.png" crossorigin="anonymous">
     </a-assets>
 
-    <a-sky color="#009FF6"></a-sky>
+    <a-sky id="sky" material="shader: standard; src: #skyGradient; roughness:1; metalness:0; side:double"></a-sky>
+
 
     <!-- Softer ambient so shadows stay visible -->
-    <a-entity light="type: ambient; color: #FFFFFF; intensity: 0.25"></a-entity>
 
     <a-plane 
         position="0 0 -4"
@@ -295,7 +296,75 @@
         // 0, 90, 180, 270 degrees in radians
         const steps = [0, Math.PI/2, Math.PI, 3*Math.PI/2];
         return steps[Math.floor(Math.random()*steps.length)];
-    }    
+    }
+
+function ensureDashTexture(){
+  if (document.getElementById('dashTex')) return;
+  const assets = document.querySelector('a-assets') || (() => {
+    const a = document.createElement('a-assets'); document.querySelector('a-scene').appendChild(a); return a;
+  })();
+  const canvas = document.createElement('canvas');
+  canvas.id = 'dashTex';
+  canvas.width = 64; canvas.height = 64;
+  const ctx = canvas.getContext('2d');
+
+  // Transparent background
+  ctx.clearRect(0,0,64,64);
+
+  // Draw a horizontal dashed stripe centered (for vertical roads, we rotate by plane geometry)
+  // We'll make the dash pattern along the long axis (height of the plane)
+  ctx.fillStyle = '#ffe800';
+  const stripeH = 6;           // stripe thickness in px
+  const y = (64 - stripeH) / 2;
+  // Create dash-gap pattern: 12px dash, 10px gap across the canvas height
+  for (let i = 0; i < 64; i += 22) {
+    ctx.fillRect(0, y, 64, stripeH); // full width stripe
+    // Erase gaps along the width to emulate segments
+    ctx.clearRect(i, y, 10, stripeH); // gap
+  }
+
+  // Slight soft edges by adding alpha gradient (optional)
+  // Left as-is for simplicity
+
+  assets.appendChild(canvas);
+}
+
+// Create a canvas gradient for the sky
+function ensureSkyGradientTexture(){
+  if (document.getElementById('skyGradient')) return;
+  const assets = document.querySelector('a-assets') || (() => {
+    const a = document.createElement('a-assets'); document.querySelector('a-scene').appendChild(a); return a;
+  })();
+  const canvas = document.createElement('canvas');
+  canvas.id = 'skyGradient';
+  canvas.width = 1024;
+  canvas.height = 1024;
+  assets.appendChild(canvas);
+
+  // Initial draw
+  const ctx = canvas.getContext('2d');
+  const draw = (angleRad = 0) => {
+    const w = canvas.width, h = canvas.height;
+    ctx.clearRect(0,0,w,h);
+    // Gradient direction based on angle
+    const cx = w, cy = h;
+    const dx = Math.cos(angleRad), dy = Math.sin(angleRad);
+    const r = Math.max(w,h);
+    const x0 = cx - dx * r, y0 = cy - dy * r;
+    const x1 = cx + dx * r, y1 = cy + dy * r;
+    const grd = ctx.createLinearGradient(x0,y0,x1,y1);
+    // Colors: horizon warmer, zenith cooler
+    grd.addColorStop(0.0, '#0b1b3a');   // deep zenith
+    grd.addColorStop(0.4, '#1565c0');   // mid sky
+    grd.addColorStop(0.7, '#009BFF');   // bright near sun
+    grd.addColorStop(1.0, '#009BFF');   // near horizon
+    ctx.fillStyle = grd;
+    ctx.fillRect(0,0,w,h);
+  };
+  draw(0);
+  // Expose for component
+  canvas._drawSky = draw;
+}
 
     const groundEl = document.getElementById('ground-1');
     groundEl.setAttribute('color', randomGrayColor());
@@ -439,109 +508,108 @@
         }
     }
 
+// Add once near your other helpers (top-level <script> scope)
+function ensureWindowTexture(){
+  if (document.getElementById('windowTex')) return;
+  const assets = document.querySelector('a-assets') || (() => {
+    const a = document.createElement('a-assets'); document.querySelector('a-scene').appendChild(a); return a;
+  })();
+  const canvas = document.createElement('canvas');
+  canvas.id = 'windowTex';
+  canvas.width = 64; canvas.height = 64;
+  const ctx = canvas.getContext('2d');
+  ctx.clearRect(0,0,64,64);
+  // draw one glowing window per tile
+  const pad = 16;
+  ctx.fillStyle = 'rgba(110,200,255,0.85)'; // window glass
+  ctx.fillRect(pad, pad, 64 - pad*2, 64 - pad*2);
+  // subtle mullion border
+  ctx.strokeStyle = 'rgba(255,255,255,0.25)';
+  ctx.lineWidth = 2;
+  ctx.strokeRect(pad+1, pad+1, 64 - (pad+2)*2, 64 - (pad+2)*2);
+  assets.appendChild(canvas);
+}
 
-    function spawnBirdFlock(opts = {}) {
-        const cam = document.getElementById('isoCamera');
-        if (!cam) return;
+function addWindowGrid(buildingEl, w, h, d){
+  ensureWindowTexture();
+  const epsilon = 0.003;
+  const y = 0; // centered on building (child local space)
 
-        const camObj = cam.object3D;
-        const camPos = new THREE.Vector3();
-        camObj.getWorldPosition(camPos);
+  // decide repeats from building size (pane size ~0.12x0.16)
+  const colsFront = Math.max(18, Math.floor(w / 0.12));
+  const rowsFront = Math.max(36, Math.floor(h / 0.12));
+  const colsSide  = Math.max(18, Math.floor(d / 0.12));
+  const rowsSide  = rowsFront;
 
-        const fwd = new THREE.Vector3(0, 0, -1).applyQuaternion(camObj.quaternion).normalize();
-        const lateral = new THREE.Vector3().crossVectors(fwd, new THREE.Vector3(0, 1, 0)).normalize();
+  const commonMat = (cols, rows) =>
+    `shader:standard; src:#windowTex; color:#FFFF00; emissive:#FFFF00; emissiveIntensity:0.05; ` +
+    `roughness:1; metalness:0; transparent:false; alphaTest:0.85; side:double; polygonOffset:true; ` +
+    `polygonOffsetFactor:-1; polygonOffsetUnits:-1; repeat:${cols} ${rows}`;
 
-        const lateralOffset = (Math.random() - 0.5) * 8;
-        const distance = 10;
-        const center = camPos.clone()
-            .add(fwd.clone().multiplyScalar(distance))
-            .add(lateral.clone().multiplyScalar(lateralOffset));
-        const radius = randomInRange(3.5, 6.5);
-        const angSpeed = randomInRange(0.05, 0.15); // rev/sec
+  const mk = (width, height, pos, rotY, cols, rows) => {
+    const p = document.createElement('a-plane');
+    p.classList.add('window-grid');
+    p.setAttribute('width', width);
+    p.setAttribute('height', height);
+    p.setAttribute('position', `${pos.x} ${pos.y} ${pos.z}`);
+    p.setAttribute('rotation', `0 ${rotY} 0`);
+    p.setAttribute('material', commonMat(cols, rows));
+    p.setAttribute('shadow', 'cast:false; receive:true');
+    buildingEl.appendChild(p);
+  };
 
-        const {
-            count   = Math.floor(Math.random() * 3) + 7, // 7–9
-            spacing = 0.55,
-            depthSpacing = 0.45
-        } = opts;
+  // Front face (+Z)
+  mk(w, h, {x:0, y, z:(d/2)+epsilon}, 0, colsFront, rowsFront);
+  // Back face (-Z)
+  mk(w, h, {x:0, y, z:-(d/2)-epsilon}, 180, colsFront, rowsFront);
+  // Right face (+X)
+  mk(d, h, {x:(w/2)+epsilon, y, z:0}, 90, colsSide, rowsSide);
+  // Left face (-X)
+  mk(d, h, {x:-(w/2)-epsilon, y, z:0}, -90, colsSide, rowsSide);
+}
 
-        const flock = document.createElement('a-entity');
-        flock.classList.add('bird-flock');
-        flock.setAttribute('position', `${center.x + radius} ${center.y + 2} ${center.z}`); // start on orbit
-        flock.setAttribute('flock-orbit', `center: ${center.x} ${center.y + 2} ${center.z}; radius: ${radius}; angularSpeed: ${angSpeed}; bobAmp: 0.08; bobFreq: 0.6; lifetime: 20`);
-
-        // Leader
-        const leader = createBird({ x:0, y:0, z:0, color: randomGrayColor() });
-        leader.removeAttribute('bird-fly');
-        flock.appendChild(leader);
-
-        // Arms of the V
-        let armIndex = 0;
-        for (let i = 1; i < count; i++) {
-            const left = i % 2 === 1;
-            if (!left) armIndex++;
-            const step = armIndex + 1;
-            const xOffset = (left ? -1 : 1) * step * spacing;
-            const zOffset = -step * depthSpacing;
-            const yOffset = (Math.random() - 0.5) * 0.25;
-
-            const bird = createBird({ x:xOffset, y:yOffset, z:zOffset, color: randomGrayColor() });
-            bird.removeAttribute('bird-fly');
-            flock.appendChild(bird);
-        }
-        scene.appendChild(flock);
-    }
-
-
-
-    // Create one box programmatically
     function createBuilding(opts = {}) {
-        const {
-            x = 0, y = 0, z = 0,
-            w = 0.5, h = randomInRange(2, 6), d = 0.5,
-            color = randomGrayColor(),
-            deform = true  // allow disabling deformation
-        } = opts;
+  const {
+    x = 0, y = 0, z = 0,
+    w = 0.5, h = randomInRange(2, 6), d = 0.5,
+    color = randomGrayColor(),
+    deform = true
+  } = opts;
 
-        const repeatX = Math.max(1, Math.round(w * 3));
-        const repeatY = Math.max(1, Math.round(h * 2));
-        const offsetX = randomOffset();
-        const offsetY = randomOffset();
-        const rot = randomRotation();
+  const repeatX = Math.max(1, Math.round(w * 3));
+  const repeatY = Math.max(1, Math.round(h * 2));
+  const offsetX = randomOffset();
+  const offsetY = randomOffset();
+  const rot = randomRotation();
 
-        const building = document.createElement('a-entity');
-        building.classList.add('building'); // mark for road builder
+  const building = document.createElement('a-entity');
+  building.classList.add('building');
 
+  building.setAttribute(
+    'geometry',
+    `primitive: box; width: ${w}; height: ${h}; depth: ${d}; segmentsWidth: 8; segmentsHeight: 16; segmentsDepth: 8`
+  );
+  building.setAttribute('position', `${x} ${y} ${z}`);
+  building.setAttribute(
+    'material',
+    `shader: standard; src: #GpaperTex; color: ${color}; roughness:1; metalness:0; repeat:${repeatX} ${repeatY}; offset:${offsetX} ${offsetY}; rotation:${rot}`
+  );
+  building.addEventListener('materialtextureloaded', (e) => {
+    const tex = e.detail.texture;
+    if (tex) { tex.anisotropy = 8; tex.needsUpdate = true; }
+  });
+  building.setAttribute('shadow', 'cast: true; receive: true');
 
-        // Use geometry with segments so vertex deformation is visible
-        building.setAttribute(
-            'geometry',
-            `primitive: box; width: ${w}; height: ${h}; depth: ${d}; segmentsWidth: 8; segmentsHeight: 16; segmentsDepth: 8`
-        );
+  if (deform) {
+    const amp = (0.001 + h * 0.001 + Math.random() * 0.02).toFixed(3);
+    building.setAttribute('random-deform', `amp:${amp}`);
+  }
 
-        building.setAttribute('position', `${x} ${y} ${z}`);
+  // Add emissive window grid overlays on all faces
+  addWindowGrid(building, w, h, d);
 
-        building.setAttribute(
-            'material',
-            `shader: standard; src: #GpaperTex; color: ${color}; roughness:1; metalness:0; repeat:${repeatX} ${repeatY}; offset:${offsetX} ${offsetY}; rotation:${rot}`
-        );
-        
-
-        building.addEventListener('materialtextureloaded', (e) => {
-            const tex = e.detail.texture;
-            if (tex) { tex.anisotropy = 8; tex.needsUpdate = true; }
-        });
-
-        building.setAttribute('shadow', 'cast: true; receive: true');
-
-        // Apply deformation (amp scales with height plus randomness)
-        if (deform) {
-            const amp = (0.001 + h * 0.001 + Math.random() * 0.02).toFixed(3);
-            building.setAttribute('random-deform', `amp:${amp}`);
-        }
-
-        return building;
-    }
+  return building;
+}
 
     // Wait for scene to be ready
     const scene = document.querySelector('a-scene');
@@ -584,6 +652,7 @@
     }  
 
     function buildRoadNetwork() {
+      ensureDashTexture();
   // DEBUG: ensure we have buildings
   const buildings = Array.from(scene.querySelectorAll('.building'));
   console.log('Buildings:', buildings.length);
@@ -592,14 +661,20 @@
   const roadGroup = document.createElement('a-entity');
   roadGroup.id = 'road-network';
 
-  // Base orthogonal grid (always visible)
-  const roadMat = 'shader: standard; color:#222; roughness:1; metalness:0; side:double; polygonOffset:true; polygonOffsetFactor:-1; polygonOffsetUnits:-1';
-  const lineMat = 'shader: standard; color:#ffe800; emissive:#ffe800; emissiveIntensity:0.4; roughness:1; metalness:0; side:double; polygonOffset:true; polygonOffsetFactor:-1; polygonOffsetUnits:-1';
-
   const lenX = g.maxX - g.minX;
   const lenZ = g.maxZ - g.minZ;
   const midZ = g.minZ + lenZ / 2;
   const midX = g.minX + lenX / 2;
+
+  // Base orthogonal grid (always visible)
+  const roadMat = 'shader: standard; color:#222; roughness:1; metalness:0; side:double; polygonOffset:true; polygonOffsetFactor:-1; polygonOffsetUnits:-1';
+  
+  const lineMat = `shader: standard; src:#dashTex; color:#ffe800; emissive:#ffe800; emissiveIntensity:0; roughness:1; metalness:0; side:double; polygonOffset:true; polygonOffsetFactor:-1; polygonOffsetUnits:-1; rotate:1.508; repeat: 0.5 ${Math.ceil(lenZ / 0.3)}`;
+
+  const lineMatX = `shader: standard; src:#dashTex; color:#ffe800; emissive:#ffe800; emissiveIntensity:0; roughness:1; metalness:0; side:double; transparent:false; polygonOffset:true; polygonOffsetFactor:-1; polygonOffsetUnits:-1; repeat: 0.1 ${Math.ceil(lenX / 0.3)}`;
+
+
+
 
   // Vertical strips
   for (let x = g.minX; x <= g.maxX + 1e-6; x += g.block) {
@@ -615,9 +690,9 @@
     const line = document.createElement('a-plane');
     line.setAttribute('position', `${x} ${g.y + 0.002} ${midZ}`);
     line.setAttribute('rotation', '-90 0 0');
-    line.setAttribute('width', 0.04);
+    line.setAttribute('width', 0.01);
     line.setAttribute('height', lenZ);
-    line.setAttribute('material', lineMat);
+    line.setAttribute('material', lineMat); // repeat along road length
     line.setAttribute('shadow', 'cast:false; receive:true');
     roadGroup.appendChild(line);
   }
@@ -637,7 +712,7 @@
     line.setAttribute('position', `${midX} ${g.y + 0.002} ${z}`);
     line.setAttribute('rotation', '-90 0 0');
     line.setAttribute('width', lenX);
-    line.setAttribute('height', 0.04);
+    line.setAttribute('height', 0.01);
     line.setAttribute('material', lineMat);
     line.setAttribute('shadow', 'cast:false; receive:true');
     roadGroup.appendChild(line);
@@ -647,9 +722,11 @@
   for (let z = g.minZ; z <= g.maxZ + 1e-6; z += g.block) {
     [0,90,180,270].forEach(deg => {
       const corner = document.createElement('a-entity');
-      corner.setAttribute('position', `${x} ${g.y + -5} ${z}`);
+      corner.setAttribute('position', `${x} ${g.y + 0.001} ${z}`);
       corner.setAttribute('rotation', '90 0 0');
-      corner.setAttribute('quarter-disk', `radius:${g.road/16}; startDeg:${deg}`);
+      corner.setAttribute('quarter-disk', `radius:${g.road/2}; startDeg:${deg}`);
+      corner.setAttribute('material', roadMat);
+      corner.setAttribute('shadow', 'cast:false; receive:true');
       roadGroup.appendChild(corner);
     });
   }
@@ -701,8 +778,7 @@
 }
 
 
-
-const VEHICLE_COUNT = randomInRange(12,16);
+const VEHICLE_COUNT = randomInRange(18,26);
 
 let VEHICLE_SPEED = randomInRange(0.1,0.5); // units per second
 
@@ -749,29 +825,30 @@ function randomVehicleColor() {
 }
 
 
+
 function createVehicle(opts = {}) {
-    const {
-        w = randomInRange(4, 6), h = randomInRange(2, 6), d = randomInRange(11, 14),
-        color = randomHexColor(),
-        deform = true
-    } = opts;
+  const {
+      w = randomInRange(4, 6), h = randomInRange(2, 6), d = randomInRange(11, 14),
+      color = randomGrayColor(),
+      deform = true
+  } = opts;
 
-    const xs = gridXs();
-    const zs = gridZs();
-    if (xs.length < 2 || zs.length < 2) return null;
+  const xs = gridXs();
+  const zs = gridZs();
+  if (xs.length < 2 || zs.length < 2) return null;
 
-    // Pick two distinct X/Z lines
-    const x1 = xs[Math.floor(Math.random()*xs.length)];
-    let x2 = x1; while (x2 === x1) x2 = xs[Math.floor(Math.random()*xs.length)];
-    const z1 = zs[Math.floor(Math.random()*zs.length)];
-    let z2 = z1; while (z2 === z1) z2 = zs[Math.floor(Math.random()*zs.length)];
+  // Pick two distinct X/Z lines
+  const x1 = xs[Math.floor(Math.random()*xs.length)];
+  let x2 = x1; while (x2 === x1) x2 = xs[Math.floor(Math.random()*xs.length)];
+  const z1 = zs[Math.floor(Math.random()*zs.length)];
+  let z2 = z1; while (z2 === z1) z2 = zs[Math.floor(Math.random()*zs.length)];
 
-    const loop = {
-      xMin: Math.min(x1,x2),
-      xMax: Math.max(x1,x2),
-      zMin: Math.min(z1,z2),
-      zMax: Math.max(z1,z2)
-    };
+  const loop = {
+    xMin: Math.min(x1,x2),
+    xMax: Math.max(x1,x2),
+    zMin: Math.min(z1,z2),
+    zMax: Math.max(z1,z2)
+  };
 
   const y = GRID.y + 0.06;
   const vehicle = document.createElement('a-entity');
@@ -779,31 +856,61 @@ function createVehicle(opts = {}) {
   vehicle.setAttribute('position', `${loop.xMin} ${y} ${loop.zMin}`);
   vehicle.setAttribute('rotation', `0 90 0`);
 
-  const speed = randomInRange(0.1, 1.8); // per-vehicle speed
+  const speed = randomInRange(0.1, 0.8); // per-vehicle speed
   vehicle.setAttribute(
     'vehicle-loop',
     `xMin:${loop.xMin}; xMax:${loop.xMax}; zMin:${loop.zMin}; zMax:${loop.zMax}; speed:${speed}`
   );
 
-  
+  const vehColor = randomGrayColor();
+
+  const vehicle_width = 0.1;
+  const vehicle_height = randomInRange(0.07, 0.10);
+  const vehicle_depth = randomInRange(0.09, 0.05);
 
   // Neutral initial body; applyDims will size correctly per stage
   const body = document.createElement('a-box');
 
   body.setAttribute('random-deform', 'amp:0.001');
-
   body.setAttribute('class', 'vehicle-body');
-  body.setAttribute('width', 0.1);   // temporary; overridden by applyDims
-  body.setAttribute('height', 0.10);
-  body.setAttribute('depth', 0.1);   // temporary; overridden by applyDims
-  body.setAttribute('material', `color:${randomVehicleColor()}; roughness:0.85; metalness:0.15; emissive:#111; emissiveIntensity:0.25`);
+  body.setAttribute('width', `${vehicle_width}`);   // temporary; overridden by applyDims
+  body.setAttribute('height', `${vehicle_height}`);
+  body.setAttribute('depth', `${vehicle_depth}`);   // temporary; overridden by applyDims
+  body.setAttribute('material', `shader:standard; color:${vehColor}; roughness:0.85; metalness:0; emissive:#111; emissiveIntensity:0.25`);
   body.setAttribute('shadow', 'cast:true; receive:true');
+  body.setAttribute('vehicle-hover', `ampY:0.01; tiltDeg:2; speed:${randomInRange(0.8,1.3).toFixed(2)}`);
 
- 
   vehicle.appendChild(body);
 
+  // Emissive rectangle cube on the left side
+  const leftSideLamp = document.createElement('a-box');
+  leftSideLamp.setAttribute('class', 'vehicle-left-lamp');
+  leftSideLamp.setAttribute('width', 0.014);   // thin
+  leftSideLamp.setAttribute('height', 0.028);  // taller than headlight
+  leftSideLamp.setAttribute('depth', 0.008);   // thin depth
+  // Position slightly to the left of the body (negative X), centered vertically, near mid Z
+  leftSideLamp.setAttribute('position', `-${(vehicle_width/2 + 0.010).toFixed(3)} 0 0`);
+  leftSideLamp.setAttribute('material', 'shader:standard; color:#ffffaa; emissive:#ffd800; emissiveIntensity:10; roughness:0.6; metalness:0; transparent:true; opacity:0.95');
+  leftSideLamp.setAttribute('shadow', 'cast:false; receive:false');
+  body.appendChild(leftSideLamp);
 
-    return vehicle;
+  
+
+  // Trapezoidal prism roof (rectangular frustum), child of body so it follows body scaling
+  const roof = document.createElement('a-entity');
+  roof.setAttribute('random-deform', 'amp:0.001');
+  roof.setAttribute('class', 'vehicle-roof');
+  roof.setAttribute(
+    'trapezoid-prism',
+    `widthBottom:${(vehicle_width * 0.95).toFixed(3)}; widthTop:${(vehicle_width * 0.65).toFixed(3)}; ` +
+    `depthBottom:${(vehicle_depth * 0.95).toFixed(3)}; depthTop:${(vehicle_depth * 0.65).toFixed(3)}; ` +
+    `height:${(vehicle_height * 0.55).toFixed(3)}`
+  );
+  roof.setAttribute('material', `shader:standard; color:${vehColor}; roughness:1; metalness:0; side:double; transparent:false; opacity:1; wireframe:false`);
+  roof.setAttribute('shadow', 'cast:true; receive:true');
+  body.appendChild(roof);
+
+  return vehicle;
 }
 
 function spawnVehicles() {
@@ -817,12 +924,15 @@ function spawnVehicles() {
         const sun = document.createElement('a-entity');
         sun.id = 'featured-sphere';
         sun.setAttribute('geometry', 'primitive: sphere; radius: 0.6; segmentsWidth: 3; segmentsHeight: 3'); /* low poly */
-
         sun.setAttribute('shadow', 'cast: true; receive: true');
         sun.setAttribute('material', 'emissive: #FFD800; emissiveIntensity: 10.2; metalness:0; roughness:0.5');
         sun.setAttribute('orbit-motion', 'radius:14; speed:1.2; center:0 15 0');
         sun.setAttribute('self-spin', 'speed:120'); 
         scene.appendChild(sun);
+
+        const sky = document.getElementById('sky');
+        sky.setAttribute('sky-gradient-follow', 'sun: #featured-sphere; moon: #featured-moon');
+
     
         // Point light that FOLLOWS the box (instead of box following light)
         const followLight = document.createElement('a-entity');
@@ -832,31 +942,131 @@ function spawnVehicles() {
         followLight.setAttribute('follow-target', 'target: #featured-sphere; offset: 0 0 0');
         scene.appendChild(followLight);
 
+
+
+{
+  // Moon sphere
+  const moon = document.createElement('a-entity');
+  moon.id = 'featured-moon';
+  moon.setAttribute('geometry', 'primitive: sphere; radius: 0.5; segmentsWidth: 4; segmentsHeight: 4');
+  moon.setAttribute('shadow', 'cast: true; receive: true');
+  moon.setAttribute('material', 'emissive: #CFE8FF; emissiveIntensity: 2.5; metalness:0; roughness:0.6');
+
+  // Orbit opposite the sun: same radius/speed, but with a half-rotation phase offset
+  // We add a small helper to phase-shift the angle by PI at init.
+  moon.setAttribute('orbit-motion', 'radius:14; speed:1.2');
+
+  // Slight self spin
+  moon.setAttribute('self-spin', 'speed:80');
+
+  scene.appendChild(moon);
+
+  // Shift moon’s orbit phase by 180° once it’s in the scene
+  moon.addEventListener('componentinitialized', (e) => {
+    if (e.detail.name === 'orbit-motion') {
+      const comp = moon.components['orbit-motion'];
+      if (comp) comp.angle = Math.PI; // Opposite side of the orbit
+    }
+  });
+
+  // Light that follows the moon (cooler tone)
+  const moonLight = document.createElement('a-entity');
+  moonLight.id = 'featured-moon-light';
+  moonLight.setAttribute('light', 'type: directional; intensity: 0.5; distance: 6; decay: 2; color: #CFE8FF; castShadow: true; shadowMapWidth:1024; shadowMapHeight:1024; shadowCameraLeft:-5; shadowCameraRight:5; shadowCameraTop:5; shadowCameraBottom:-5; shadowCameraNear:0.5; shadowCameraFar:20;');
+  moonLight.setAttribute('shadow', 'castShadow: true');
+  moonLight.setAttribute('follow-target', 'target: #featured-moon; offset: 0 0 0');
+  scene.appendChild(moonLight);
+}
+
+
         spawnAllBuildings(); // create the boxes
         buildRoadNetwork(); // create roads
         spawnClouds(); // add clouds
         spawnBirds(); // add birds
         spawnVehicles(); // add vehicles
+        
     }); 
 
+// Component: align sky gradient with sun/moon azimuth
+AFRAME.registerComponent('sky-gradient-follow', {
+  schema: { sun: {type:'selector'}, moon: {type:'selector'} },
+  init(){
+    ensureSkyGradientTexture();
+    this.skyCanvas = document.getElementById('skyGradient');
+    this.ctx = this.skyCanvas.getContext('2d');
+    this.tmp = new THREE.Vector3();
+    // Slight tilt for interest
+    this.tiltDeg = 5;
+    // Apply texture to sky
+    const sky = this.el;
+    sky.setAttribute('material', 'shader:standard; src:#skyGradient; roughness:1; metalness:0; side:double');
+  },
+  tick(){
+    const sunEl = this.data.sun;
+    const moonEl = this.data.moon;
+    if (!sunEl || !moonEl) return;
+
+    const ps = sunEl.object3D.position;
+    const pm = moonEl.object3D.position;
+
+    // Project to XZ to get azimuth, average both
+    const azSun = Math.atan2(ps.x, ps.z);   // radians
+    const azMoon = Math.atan2(pm.x, pm.z);
+    // Weighted average (sun stronger)
+    const wSun = 0.7, wMoon = 0.3;
+    let az = Math.atan2(
+      wSun*Math.sin(azSun) + wMoon*Math.sin(azMoon),
+      wSun*Math.cos(azSun) + wMoon*Math.cos(azMoon)
+    );
+
+    // Redraw gradient aligned with azimuth
+    this.skyCanvas._drawSky(az);
+
+    // Rotate sky to face gradient direction (optional visual cue)
+    const yawDeg = THREE.MathUtils.radToDeg(az);
+    this.el.setAttribute('rotation', `0 ${yawDeg} ${this.tiltDeg}`);
+  }
+});
+
     // Orbit component
-    AFRAME.registerComponent('orbit-motion', {
-        schema: {
-            radius: {default: 15},
-            speed: {default: 1},  
-            center: {type: 'vec3', default: {x:0,y:0,z:0}}
-        },
-        init() {
-            this.angle = 0; // radians
-        },
-        tick(time, dt) {
-            const deltaSec = dt / 100000; // correct
-            this.angle += this.data.speed * 2 * Math.PI * deltaSec;
-            const x = this.data.center.x + this.data.radius * Math.cos(this.angle);
-            const z = this.data.center.z + this.data.radius * Math.sin(this.angle);
-            this.el.setAttribute('position', `${x} ${this.data.center.y} ${z}`);
-        }
-    });
+AFRAME.registerComponent('orbit-motion', {
+  schema: {
+    radius: {default: 14},
+    speed:  {default: 1.0},
+    center: {type: 'vec3', default: {x:0,y:0,z:0}},
+    tiltYDeg: {default: 90} // NEW: yaw tilt in degrees
+  },
+  init() {
+    this.angle = 0;
+    const ground = document.getElementById('ground-1');
+    if (ground) {
+      const gp = ground.object3D.position;
+      const currentY = this.el.object3D.position.y || (gp.y + 6);
+      this.data.center = { x: gp.x, y: currentY, z: gp.z };
+    } else {
+      const p = this.el.object3D.position;
+      this.data.center = { x: 0, y: p.y, z: 0 };
+    }
+  },
+  tick(time, dt) {
+    const s = dt / 100000;
+    if (s <= 0) return;
+
+    this.angle += this.data.speed * 2 * Math.PI * s;
+
+    // Orbit in XZ around center; Y fixed
+    const x = this.data.center.x + this.data.radius * Math.cos(this.angle);
+    const z = this.data.center.z
+    const y = this.data.center.y + this.data.radius * Math.sin(this.angle);
+
+    this.el.setAttribute('position', `${x} ${y} ${z}`);
+
+    // Face tangent with an extra yaw tilt
+    const yawRad = this.angle + Math.PI / 2;
+    const yawDeg = THREE.MathUtils.radToDeg(yawRad) + this.data.tiltYDeg;
+    this.el.setAttribute('rotation', `0 ${yawDeg} 0`);
+  }
+});
 
     // Make an entity follow another entity’s world position
     AFRAME.registerComponent('follow-target', {
@@ -1119,7 +1329,50 @@ AFRAME.registerComponent('quarter-disk', {
   remove() { this.el.removeObject3D('mesh'); }
 });
 
+// Define a custom trapezoidal prism (rectangular frustum) geometry component.
+AFRAME.registerComponent('trapezoid-prism', {
+  schema: {
+    widthBottom: {default: 0.10},
+    widthTop:    {default: 0.06},
+    depthBottom: {default: 0.10},
+    depthTop:    {default: 0.06},
+    height:      {default: 0.08}
+  },
+  init() {
+    const d = this.data;
+    const hb = d.height / 2; // FIX: exact half-height
 
+    const vb = [
+      [-d.widthBottom/2, -hb, -d.depthBottom/2],
+      [ d.widthBottom/2, -hb, -d.depthBottom/2],
+      [ d.widthBottom/2, -hb,  d.depthBottom/2],
+      [-d.widthBottom/2, -hb,  d.depthBottom/2],
+    ];
+    const vt = [
+      [-d.widthTop/2, hb, -d.depthTop/2],
+      [ d.widthTop/2, hb, -d.depthTop/2],
+      [ d.widthTop/2, hb,  d.depthTop/2],
+      [-d.widthTop/2, hb,  d.depthTop/2],
+    ];
+    const faces = [0,1,2, 0,2,3, 4,6,5, 4,7,6, 0,1,5, 0,5,4, 1,2,6, 1,6,5, 2,3,7, 2,7,6, 3,0,4, 3,4,7];
+
+    const positions = new Float32Array(8 * 3);
+    const verts = vb.concat(vt);
+    for (let i = 0; i < verts.length; i++) {
+      positions[i*3] = verts[i][0];
+      positions[i*3+1] = verts[i][1];
+      positions[i*3+2] = verts[i][2];
+    }
+    const geom = new THREE.BufferGeometry();
+    geom.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    geom.setIndex(faces);
+    geom.computeVertexNormals();
+
+    const mat = new THREE.MeshStandardMaterial({ color: '#222', roughness: 1, metalness: 0, side: THREE.DoubleSide });
+    this.el.setObject3D('mesh', new THREE.Mesh(geom, mat));
+  },
+  remove() { this.el.removeObject3D('mesh'); }
+});
 
 AFRAME.registerComponent('vehicle-loop', {
   schema:{
@@ -1132,6 +1385,8 @@ AFRAME.registerComponent('vehicle-loop', {
   init(){
     this.stage = 1; // 0:+x,1:+z,2:-x,3:-z
     this.body  = this.el.querySelector('a-box');
+    this.roof  = this.el.querySelector('.vehicle-roof'); 
+
     this.length = 0.08;                 // travel axis length
     this.width  = GRID.road * 0.40;     // cross axis (must be < road)
     this.height = 0.10;
@@ -1182,24 +1437,45 @@ AFRAME.registerComponent('vehicle-loop', {
       a.min.z <= b.max.z && a.max.z >= b.min.z;
   },
   applyDims(){
-    if (!this.body) return;
+  if (!this.body) return;
 
-    // Logical sizes (do not set on geometry)
-    const length = 0.25;      // along travel axis
-    const width  = 0.10;      // across lane
-    const height = this.height;
+  // Body logical sizes
+  const length = 0.25;
+  const width  = 0.10;
+  const height = this.height;
 
-    // Keep geometry size fixed at 0.1 x 0.10 x 0.1; use scale to achieve target dims
-    const baseX = 0.1, baseY = 0.10, baseZ = 0.1;
-    const alongX = (this.stage === 0 || this.stage === 2);
+  // Base geometry (body box is 0.1 x 0.10 x 0.1)
+  const baseX = 0.1, baseY = 0.10, baseZ = 0.1;
+  const alongX = (this.stage === 0 || this.stage === 2);
 
-    const sx = alongX ? (length / baseX) : (width / baseX);
-    const sz = alongX ? (width  / baseZ) : (length / baseZ);
-    const sy = height / baseY;
+  // Apply body scale
+  const sx = alongX ? (length / baseX) : (width / baseX);
+  const sz = alongX ? (width  / baseZ) : (length / baseZ);
+  const sy = height / baseY;
 
-    // Apply scale to mesh
-    const o = this.body.object3D;
-    o.scale.set(sx, sy, sz);
+  const bodyO = this.body.object3D;
+bodyO.scale.set(sx, sy, sz);
+bodyO.position.set(0, 0, 0);
+
+// Roof: center and rest flush on top, compensating for parent's Y scale
+if (this.roof){
+  const roofFootprint = 0.50;
+  const roofHeightRel = 0.55;
+
+  const roofO = this.roof.object3D;
+  roofO.scale.set(roofFootprint, roofHeightRel, roofFootprint);
+
+  const epsilon = 0.001;           // avoid z-fighting
+  const bodyHalfHWorld = this.height / 2;
+  const roofHWorld     = this.height * roofHeightRel;
+  const yWorldOffset   = bodyHalfHWorld + (roofHWorld / 2) + epsilon;
+
+  // Convert world offset to local (parent-scaled) units
+  const yLocal = yWorldOffset / sy;
+
+  roofO.position.set(0, yLocal, 0);
+  roofO.rotation.set(0, 0, 0);
+}
 
     // Do NOT call setAttribute('width'/'depth') here—keeps the deformed mesh intact
   },
@@ -1246,7 +1522,6 @@ AFRAME.registerComponent('vehicle-loop', {
     const deg = this.headingDegForStage(this.stage);
     this.el.setAttribute('rotation', `0 ${deg} 0`);
   },
-
   startTurn(nextStage){
     const prev = this.stage;
     const next = nextStage % 4;
@@ -1511,6 +1786,42 @@ AFRAME.registerComponent('vehicle-loop', {
       } break;
     }
   }
+  }
+});
+
+// Hover effect: bob on Y, subtle pitch/roll, emissive glow.
+AFRAME.registerComponent('vehicle-hover', {
+  schema: {
+    ampY:    {default: 0.015},   // bob amplitude (meters)
+    tiltDeg: {default: 3},       // max tilt (degrees)
+    speed:   {default: 1.0},     // base hover speed multiplier
+    offset:  {default: 0}        // per-vehicle phase offset
+  },
+  init(){
+    const p = this.el.object3D.position.clone();
+    this.baseY = p.y;
+    // Soft glow
+    const body = this.el.querySelector('.vehicle-body');
+    if (body) {
+      const mat = body.getAttribute('material') || '';
+      body.setAttribute('material', `${mat}; emissive:#66aaff; emissiveIntensity:0.35`);
+      body.setAttribute('shadow', 'cast:false; receive:false'); // reduce shadow for hover look
+    }
+    // Small random phase so vehicles don't bob in sync
+    if (!this.data.offset) this.data.offset = Math.random() * Math.PI * 2;
+  },
+  tick(time){
+    const t = (time / 1000) * this.data.speed + this.data.offset;
+    const oy = Math.sin(t) * this.data.ampY;
+    const pitch = Math.sin(t * 0.9) * THREE.MathUtils.degToRad(this.data.tiltDeg);
+    const roll  = Math.cos(t * 0.8) * THREE.MathUtils.degToRad(this.data.tiltDeg);
+
+    const o = this.el.object3D;
+    o.position.y = this.baseY + oy + 0.01;
+
+    // Preserve current yaw; apply hover pitch/roll
+    const yaw = o.rotation.y;
+    o.rotation.set(pitch, yaw, roll);
   }
 });
 

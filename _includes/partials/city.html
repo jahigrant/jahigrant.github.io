@@ -672,17 +672,19 @@ function createVehicle(opts = {}) {
 
   vehicle.appendChild(body);
 
-  // Emissive rectangle cube on the left side
-  const leftSideLamp = document.createElement('a-box');
-  leftSideLamp.setAttribute('class', 'vehicle-left-lamp');
-  leftSideLamp.setAttribute('width', 0.014);   // thin
-  leftSideLamp.setAttribute('height', 0.028);  // taller than headlight
-  leftSideLamp.setAttribute('depth', 0.008);   // thin depth
-  // Position slightly to the left of the body (negative X), centered vertically, near mid Z
-  leftSideLamp.setAttribute('position', `-${(vehicle_width/2 + 0.010).toFixed(3)} 0 0`);
-  leftSideLamp.setAttribute('material', 'shader:standard; color:#ffffaa; emissive:#ffd800; emissiveIntensity:10; roughness:0.6; metalness:0; transparent:true; opacity:0.95');
-  leftSideLamp.setAttribute('shadow', 'cast:false; receive:false');
-  body.appendChild(leftSideLamp);
+// REMOVE the leftSideLamp block and replace with a forward-facing headlamp:
+// Emissive headlamp that always precedes direction of travel (local +Z)
+  const headLamp = document.createElement('a-box');
+  headLamp.setAttribute('class', 'vehicle-headlamp');
+  headLamp.setAttribute('width', 0.020);
+  headLamp.setAttribute('height', 0.012);
+  headLamp.setAttribute('depth', 0.006);
+  // Place slightly ahead of the body front; local +Z is "forward" of the vehicle
+  const frontOffset = (0.25 / 2) + 0.012; // match vehicle-loop length (0.25)
+  headLamp.setAttribute('position', `0 0 ${frontOffset.toFixed(3)}`);
+  headLamp.setAttribute('material', 'shader:standard; color:#fff8b0; emissive:#ffd800; emissiveIntensity:1.2; roughness:0.5; metalness:0; transparent:true; opacity:0.95');
+  headLamp.setAttribute('shadow', 'cast:true; receive:false');
+  vehicle.appendChild(headLamp);
 
   
 
@@ -1274,6 +1276,8 @@ if (this.roof){
   },
   setHeadingInstant(){
     this.el.object3D.rotation.y = THREE.MathUtils.degToRad(this.headingDegForStage(this.stage));
+    const deg = this.headingDegForStage(this.stage);
+    this.el.setAttribute('rotation', `0 ${deg} 0`);
   },
   laneOffsetForStage(stage){
     const right = this.data.side === 'left';
@@ -1305,13 +1309,7 @@ if (this.roof){
     if (this.stage === 2){ p.z = this.data.zMax + (lane.axis==='z'?lane.val:0); }
     if (this.stage === 3){ p.x = this.data.xMin + (lane.axis==='x'?lane.val:0); }
   },
-  headingDegForStage(stage){
-    return [0,0,0,270][stage];
-  },
-  setHeadingInstant(){
-    const deg = this.headingDegForStage(this.stage);
-    this.el.setAttribute('rotation', `0 ${deg} 0`);
-  },
+
   startTurn(nextStage){
     const prev = this.stage;
     const next = nextStage % 4;
@@ -1388,6 +1386,10 @@ if (this.roof){
     this.postTurnAdvanceRemaining = 0.05;
     this.blockNextTurnUntilPostYaw = true; // block starting another turn until applied
 
+    this.stage = this.pendingStage;
+    this.applyDims();
+    this.setHeadingInstant(); // align yaw to new travel axis
+
     this.turnPhase = 'none';
   },
   setHeadingInstant(){
@@ -1453,7 +1455,6 @@ if (this.roof){
     const obj = this.el.object3D;
     const p = obj.position;
 
-    // Arc turning (unchanged)
     if (this.turnPhase === 'arc'){
       const t = Math.min(1, (performance.now() - this.turnStart) / this.arcDuration);
       const angle = this.arcStartAngle + (this.arcEndAngle - this.arcStartAngle) * t;
@@ -1469,6 +1470,7 @@ if (this.roof){
 
     // Keep lane when not turning
     this.snapToEdge();
+    this.setHeadingInstant()
 
     let step = this.data.speed * delta;
 

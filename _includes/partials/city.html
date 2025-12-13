@@ -15,6 +15,8 @@
         <img id="LpaperTex" src="/assets/textures/LINED_PAPER.jpg" crossorigin="anonymous">
         <img id="GpaperTex" src="/assets/textures/graph_paper.jpg" crossorigin="anonymous">
         <img id="dashTexX" src="/assets/textures/road_texture_x.png" crossorigin="anonymous">
+
+        <a-asset-item id="car01" src="/assets/models/car_01/car_01.gltf"></a-asset-item>
     </a-assets>
 
     <a-sky id="sky" material="shader: standard; src: #skyGradient; roughness:1; metalness:0; side:double"></a-sky>
@@ -29,6 +31,13 @@
         color="#020202"
         shadow="receive: true">
     </a-plane>
+
+    <a-light 
+        id="ambientLight" 
+        type="ambient" 
+        color="#FFFFFF" 
+        intensity="0.80"> 
+    </a-light>
 
     <a-box id="ground-1" position="0 0 -3.9" rotation="0 0 0" width="10.3" height="0.5" depth="8" shadow="receive: true"
            material="shader: standard; src: #paperTex; color: #FFFFFF; roughness: 1; metalness: 0; repeat: 4 4">
@@ -654,53 +663,22 @@ function createVehicle(opts = {}) {
 
   const vehColor = randomGrayColor();
 
-  const vehicle_width = 0.1;
-  const vehicle_height = randomInRange(0.07, 0.10);
-  const vehicle_depth = randomInRange(0.09, 0.05);
+  const vehicle_width = 0.01;
+  const vehicle_height = 0.01;
+  const vehicle_depth = 0.01;
 
-  // Neutral initial body; applyDims will size correctly per stage
-  const body = document.createElement('a-box');
 
-  body.setAttribute('random-deform', 'amp:0.001');
-  body.setAttribute('class', 'vehicle-body');
-  body.setAttribute('width', `${vehicle_width}`);   // temporary; overridden by applyDims
-  body.setAttribute('height', `${vehicle_height}`);
-  body.setAttribute('depth', `${vehicle_depth}`);   // temporary; overridden by applyDims
-  body.setAttribute('material', `shader:standard; color:${vehColor}; roughness:0.85; metalness:0; emissive:#111; emissiveIntensity:0.25`);
-  body.setAttribute('shadow', 'cast:true; receive:true');
-  body.setAttribute('vehicle-hover', `ampY:0.01; tiltDeg:2; speed:${randomInRange(0.8,1.3).toFixed(2)}`);
+  // Load the glTF car model
+  const car = document.createElement('a-entity');
+  car.classList.add('vehicle-body');
+  car.setAttribute('gltf-model', '#car01');
+  // Reasonable initial scale; vehicle-loop will rescale along axis
+  car.setAttribute('scale', '0.001 0.001 0.001');
+  car.setAttribute('shadow', 'cast:true; receive:true');
+  // Hover effect on the model root
+  car.setAttribute('vehicle-hover', `ampY:0.01; tiltDeg:2; speed:${randomInRange(0.8,1.3).toFixed(2)}`);
 
-  vehicle.appendChild(body);
-
-// REMOVE the leftSideLamp block and replace with a forward-facing headlamp:
-// Emissive headlamp that always precedes direction of travel (local +Z)
-  const headLamp = document.createElement('a-box');
-  headLamp.setAttribute('class', 'vehicle-headlamp');
-  headLamp.setAttribute('width', 0.020);
-  headLamp.setAttribute('height', 0.012);
-  headLamp.setAttribute('depth', 0.006);
-  // Place slightly ahead of the body front; local +Z is "forward" of the vehicle
-  const frontOffset = (0.25 / 2) + 0.012; // match vehicle-loop length (0.25)
-  headLamp.setAttribute('position', `0 0 ${frontOffset.toFixed(3)}`);
-  headLamp.setAttribute('material', 'shader:standard; color:#fff8b0; emissive:#ffd800; emissiveIntensity:1.2; roughness:0.5; metalness:0; transparent:true; opacity:0.95');
-  headLamp.setAttribute('shadow', 'cast:true; receive:false');
-  vehicle.appendChild(headLamp);
-
-  
-
-  // Trapezoidal prism roof (rectangular frustum), child of body so it follows body scaling
-  const roof = document.createElement('a-entity');
-  roof.setAttribute('random-deform', 'amp:0.001');
-  roof.setAttribute('class', 'vehicle-roof');
-  roof.setAttribute(
-    'trapezoid-prism',
-    `widthBottom:${(vehicle_width * 0.95).toFixed(3)}; widthTop:${(vehicle_width * 0.65).toFixed(3)}; ` +
-    `depthBottom:${(vehicle_depth * 0.95).toFixed(3)}; depthTop:${(vehicle_depth * 0.65).toFixed(3)}; ` +
-    `height:${(vehicle_height * 0.55).toFixed(3)}`
-  );
-  roof.setAttribute('material', `shader:standard; color:${vehColor}; roughness:1; metalness:0; side:double; transparent:false; opacity:1; wireframe:false`);
-  roof.setAttribute('shadow', 'cast:true; receive:true');
-  body.appendChild(roof);
+  vehicle.appendChild(car);
 
   return vehicle;
 }
@@ -729,7 +707,7 @@ function spawnVehicles() {
         // Point light that FOLLOWS the box (instead of box following light)
         const followLight = document.createElement('a-entity');
         followLight.id = 'featured-light';
-        followLight.setAttribute('light', 'type: directional; intensity: 1.5; distance: 5; decay: 2; color: #FFF7EB; castShadow: true; shadowMapWidth:1024; shadowMapHeight:1024; shadowCameraLeft:-5; shadowCameraRight:5; shadowCameraTop:5; shadowCameraBottom:-5; shadowCameraNear:0.5; shadowCameraFar:20;');
+        followLight.setAttribute('light', 'type: directional; intensity: 10.5; distance: 5; decay: 2; color: #FFF7EB; castShadow: true; shadowMapWidth:1024; shadowMapHeight:1024; shadowCameraLeft:-5; shadowCameraRight:5; shadowCameraTop:5; shadowCameraBottom:-5; shadowCameraNear:0.5; shadowCameraFar:20;');
         followLight.setAttribute('shadow', 'castShadow: true');
         followLight.setAttribute('follow-target', 'target: #featured-sphere; offset: 0 0 0');
         scene.appendChild(followLight);
@@ -764,7 +742,7 @@ function spawnVehicles() {
   // Light that follows the moon (cooler tone)
   const moonLight = document.createElement('a-entity');
   moonLight.id = 'featured-moon-light';
-  moonLight.setAttribute('light', 'type: directional; intensity: 0.5; distance: 6; decay: 2; color: #CFE8FF; castShadow: true; shadowMapWidth:1024; shadowMapHeight:1024; shadowCameraLeft:-5; shadowCameraRight:5; shadowCameraTop:5; shadowCameraBottom:-5; shadowCameraNear:0.5; shadowCameraFar:20;');
+  moonLight.setAttribute('light', 'type: directional; intensity: 10.5; distance: 6; decay: 2; color: #CFE8FF; castShadow: true; shadowMapWidth:1024; shadowMapHeight:1024; shadowCameraLeft:-5; shadowCameraRight:5; shadowCameraTop:5; shadowCameraBottom:-5; shadowCameraNear:0.5; shadowCameraFar:20;');
   moonLight.setAttribute('shadow', 'castShadow: true');
   moonLight.setAttribute('follow-target', 'target: #featured-moon; offset: 0 0 0');
   scene.appendChild(moonLight);
@@ -1176,11 +1154,11 @@ AFRAME.registerComponent('vehicle-loop', {
   },
   init(){
     this.stage = 1; // 0:+x,1:+z,2:-x,3:-z
-    this.body  = this.el.querySelector('a-box');
-    this.roof  = this.el.querySelector('.vehicle-roof'); 
+    this.body  = this.el.querySelector('.vehicle-body');
+    this.roof  = null; 
 
-    this.length = 0.08;                 // travel axis length
-    this.width  = GRID.road * 0.40;     // cross axis (must be < road)
+    this.length = 0.1;                 // travel axis length
+    this.width  = GRID.road * 0.15;     // cross axis (must be < road)
     this.height = 0.10;
     
     this.laneOffsetMag = (GRID.road - this.width) / 2 - 0.005; // small margin
@@ -1209,17 +1187,13 @@ AFRAME.registerComponent('vehicle-loop', {
     if (i >= 0) VEHICLES.splice(i, 1);
   },
   getAABB(){
-    const boxEl = this.body || this.el;
-    if (!boxEl) return null;
-    const o = boxEl.object3D;
-    const p = new THREE.Vector3();
-    o.getWorldPosition(p);
-    const w = Number(boxEl.getAttribute('width'))  || 0.1;
-    const h = Number(boxEl.getAttribute('height')) || 0.1;
-    const d = Number(boxEl.getAttribute('depth'))  || 0.1;
+    const meshEl = this.body || this.el;
+    if (!meshEl) return null;
+    const obj = meshEl.object3D;
+    const bb = new THREE.Box3().setFromObject(obj);
     return {
-      min: { x: p.x - w/2, y: p.y - h/2, z: p.z - d/2 },
-      max: { x: p.x + w/2, y: p.y + h/2, z: p.z + d/2 }
+      min: { x: bb.min.x, y: bb.min.y, z: bb.min.z },
+      max: { x: bb.max.x, y: bb.max.y, z: bb.max.z }
     };
   },
   aabbOverlap(a,b){
@@ -1232,12 +1206,12 @@ AFRAME.registerComponent('vehicle-loop', {
   if (!this.body) return;
 
   // Body logical sizes
-  const length = 0.25;
-  const width  = 0.10;
+  const length = 0.1;
+  const width  = GRID.road * 0.1;
   const height = this.height;
 
   // Base geometry (body box is 0.1 x 0.10 x 0.1)
-  const baseX = 0.1, baseY = 0.10, baseZ = 0.1;
+  const baseX = 0.1, baseY = 0.1, baseZ = 0.1;
   const alongX = (this.stage === 0 || this.stage === 2);
 
   // Apply body scale
@@ -1246,33 +1220,14 @@ AFRAME.registerComponent('vehicle-loop', {
   const sy = height / baseY;
 
   const bodyO = this.body.object3D;
-bodyO.scale.set(sx, sy, sz);
-bodyO.position.set(0, 0, 0);
+  bodyO.scale.set(sx, sy, sz);
+  bodyO.position.set(0, 0, 0);
 
-// Roof: center and rest flush on top, compensating for parent's Y scale
-if (this.roof){
-  const roofFootprint = 0.50;
-  const roofHeightRel = 0.55;
-
-  const roofO = this.roof.object3D;
-  roofO.scale.set(roofFootprint, roofHeightRel, roofFootprint);
-
-  const epsilon = 0.001;           // avoid z-fighting
-  const bodyHalfHWorld = this.height / 2;
-  const roofHWorld     = this.height * roofHeightRel;
-  const yWorldOffset   = bodyHalfHWorld + (roofHWorld / 2) + epsilon;
-
-  // Convert world offset to local (parent-scaled) units
-  const yLocal = yWorldOffset / sy;
-
-  roofO.position.set(0, yLocal, 0);
-  roofO.rotation.set(0, 0, 0);
-}
 
     // Do NOT call setAttribute('width'/'depth') here—keeps the deformed mesh intact
   },
   headingDegForStage(stage){
-    return [0,0,0,270][stage];
+    return [90,90,90,90][stage % 4] 
   },
   setHeadingInstant(){
     this.el.object3D.rotation.y = THREE.MathUtils.degToRad(this.headingDegForStage(this.stage));
@@ -1381,14 +1336,10 @@ if (this.roof){
     this.el.setAttribute('rotation', `0 ${baseYawDeg.toFixed(3)} 0`);
 
     // Queue extra 90° AFTER moving onto new road
-    const extraYawDeg = baseYawDeg + (this.turnSign * 90);
+    const extraYawDeg = baseYawDeg + (this.turnSign * 0);
     this.postTurnYawDeg = extraYawDeg;
-    this.postTurnAdvanceRemaining = 0.05;
+    this.postTurnAdvanceRemaining = 0.01;
     this.blockNextTurnUntilPostYaw = true; // block starting another turn until applied
-
-    this.stage = this.pendingStage;
-    this.applyDims();
-    this.setHeadingInstant(); // align yaw to new travel axis
 
     this.turnPhase = 'none';
   },
@@ -1470,7 +1421,6 @@ if (this.roof){
 
     // Keep lane when not turning
     this.snapToEdge();
-    this.setHeadingInstant()
 
     let step = this.data.speed * delta;
 
@@ -1614,6 +1564,20 @@ AFRAME.registerComponent('vehicle-hover', {
     // Preserve current yaw; apply hover pitch/roll
     const yaw = o.rotation.y;
     o.rotation.set(pitch, yaw, roll);
+  }
+});
+
+// Helper: place an entity at target's world position + global offset
+AFRAME.registerComponent('follow-target-global', {
+  schema:{ target:{type:'selector'}, offset:{type:'vec3', default:{x:0,y:0,z:0}} },
+  tick(){
+    const t = this.data.target;
+    if (!t) return;
+    const tp = new THREE.Vector3();
+    t.object3D.getWorldPosition(tp);
+    this.el.object3D.position.set(tp.x + this.data.offset.x,
+                                  tp.y + this.data.offset.y,
+                                  tp.z + this.data.offset.z);
   }
 });
 

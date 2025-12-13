@@ -21,3 +21,7 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# Ignore Cinema 4D files
+*.c4d
+**/*.c4d

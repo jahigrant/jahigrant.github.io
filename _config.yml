@@ -2,13 +2,13 @@
 name: Jahi Grant
 first_name: Jahi
 last_name: Grant
-title: Portfolio
-strapline_text: A selection of 
+title: Designs
+strapline_text: Creating stylish, functional, high quality pieces. Each product designed is a unique product.
 strapline:
-  - skills
-  - abilities
+  - Projets
+  - Designs
   - musings
-description: JavaScript, Python, HTML, CSS and other coding in the day of the life of a frontend developer
+description: Creating stylish, functional, high quality pieces. Each product designed is a unique product.
 site_path: https://jahigrant.github.io/
 include: ['_about_pages']
 relative_permalinks: false

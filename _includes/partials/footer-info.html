@@ -18,13 +18,13 @@
         {% for strapitem in site.strapline %}
 
             {% unless forloop.first %}
-                <span class="fw-lighter fs-6">{{ strapitem }}</span>
+                <span class="fw-lighter fs-6"></span>
             {% else %}
-                <span class="fw-lighter fs-6 ms-2">{{ strapitem }}</span>
+                <span class="fw-lighter fs-6 ms-2"></span>
             {% endunless %}
             
             {% unless forloop.last %}
-                <span aria-hidden="true" class="fw-lighter">+</span>
+                <span aria-hidden="true" class="fw-lighter"></span>
             {% endunless %}
 
         {% endfor %}

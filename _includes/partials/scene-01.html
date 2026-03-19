@@ -1,0 +1,164 @@
+
+<a-scene 
+    vr-mode-ui="enterVRButton: false; enterARButton: false;"
+    style="width: 100%; height: 100%;"
+    shadow="type: pcfsoft;"
+    renderer="antialias: true;" effects="bloom"
+    embedded
+    device-orientation-permission-ui="enabled: false"
+    style="width: 100%; height: 100%;"
+>
+
+  <a-assets>
+      <!-- Replace this path with your texture file -->
+      <img id="paperTex" src="/assets/textures/paper.png" crossorigin="anonymous">
+      <img id="LpaperTex" src="/assets/textures/LINED_PAPER.jpg" crossorigin="anonymous">
+      <img id="GpaperTex" src="/assets/textures/graph_paper.jpg" crossorigin="anonymous">
+      <img id="dashTexX" src="/assets/textures/road_texture_x.png" crossorigin="anonymous">
+      <a-asset-item id="world01" src="/assets/models/world-01/world-01.gltf"></a-asset-item>
+  </a-assets>
+
+  <a-sky id="sky" color="#FFFFFF"></a-sky>
+
+  <a-light 
+      id="ambientLight" 
+      type="ambient" 
+      color="#FFFFFF" 
+      intensity="0.80"> 
+  </a-light>
+
+  <a-box id="ground-1" position="0 0 -3.9" rotation="0 0 0" width="8" height="0.5" depth="8" transparent="true" shadow="receive: false"visible="false">
+  </a-box>
+
+
+
+    <a-entity
+    id="world"
+    gltf-model="#world01"
+    position="0 0 -4"
+    scale="1 1 1"
+    shadow="cast: false; receive: true">
+  </a-entity>
+    
+  <a-entity id="rig" position="0 -1.5 -13" rotation="10 0 0">
+      <a-entity 
+          id="isoCamera" 
+          camera
+          orthographic-camera="size: 10; near: 0.1; far: 10000"
+          position="0 0 10"
+          rotation="0 0 0"
+            look-controls="enabled: true"
+            wasd-controls="acceleration: 25"
+            limited-look-controls="
+                minPitch: -10; 
+                maxPitch: 10;
+                minYaw: -10;
+                maxYaw: 10"
+          shadow="cast: true; receive: false">
+      </a-entity>
+  </a-entity>
+
+</a-scene>
+
+<script>
+
+  function randomHexColor() {
+      return '#' + Math.floor(Math.random() * 0xFFFFFF).toString(16).padStart(6,'0');
+  }
+
+  // Random gray (#RRGGBB where R=G=B). Range 0–255; tweak min/max to avoid full black/white.
+  function randomGrayColor(min = 32, max = 224) {
+      const clamp = (n, lo, hi) => Math.max(lo, Math.min(hi, n));
+      const lo = clamp(min, 0, 255);
+      const hi = clamp(max, 0, 255);
+      const v = Math.floor(Math.random() * (hi - lo + 1)) + lo;
+      const hex = v.toString(16).padStart(2, '0');
+      return `#${hex}${hex}${hex}`;
+  }
+
+  function randomInRange(min, max) {
+      return Math.random() * (max - min) + min;
+  }
+
+  function randomOffset() {
+      return Math.random().toFixed(2); // 0.00–0.99
+  }
+  
+  function randomRotation() {
+      // 0, 90, 180, 270 degrees in radians
+      const steps = [0, Math.PI/2, Math.PI, 3*Math.PI/2];
+      return steps[Math.floor(Math.random()*steps.length)];
+  }
+
+  // Simple seeded random (for stable deformation if desired)
+  function seededRand(seed) {
+    let x = Math.sin(seed) * 10000;
+    return x - Math.floor(x);
+  }
+
+
+
+  AFRAME.registerComponent('limited-look-controls', {
+      schema: {
+          minPitch: {default: -10}, // degrees
+          maxPitch: {default: 10},
+          minYaw: {default: -10},
+          maxYaw: {default: 10}
+          },
+          tick: function () {
+          var rotation = this.el.getAttribute('rotation');
+          // Clamp pitch (x) and yaw (y)
+          rotation.x = Math.max(this.data.minPitch, Math.min(this.data.maxPitch, rotation.x));
+          rotation.y = Math.max(this.data.minYaw, Math.min(this.data.maxYaw, rotation.y));
+          this.el.setAttribute('rotation', rotation);
+      }
+  });
+
+  AFRAME.registerComponent('orthographic-camera', {
+      schema: { size: {default: 4096}, near: {default: 0.1}, far: {default: 1000} },
+      init() {
+          this.camera = new THREE.OrthographicCamera();
+          this.el.setObject3D('camera', this.camera);
+          this._onResize = this.updateProjection.bind(this);
+          window.addEventListener('resize', this._onResize);
+          this.updateProjection();
+      },
+      updateProjection() {
+          const size = this.data.size;
+          const sceneEl = this.el.sceneEl;
+          const canvas = sceneEl && sceneEl.canvas;
+          const w = (canvas && canvas.clientWidth) || window.innerWidth || 1;
+          const h = (canvas && canvas.clientHeight) || window.innerHeight || 1;
+          const aspect = w / h;
+
+          this.camera.left = -size * aspect * 2;
+          this.camera.right =  size * aspect * 2;
+          this.camera.top =   size * 2;
+          this.camera.bottom = -size * 2;
+          this.camera.near = this.data.near;
+          this.camera.far = this.data.far;
+          this.camera.updateProjectionMatrix();
+      },
+      remove() {
+          window.removeEventListener('resize', this._onResize);
+          this.el.removeObject3D('camera');
+      }
+  });
+
+
+  // Helper: place an entity at target's world position + global offset
+  AFRAME.registerComponent('follow-target-global', {
+    schema:{ target:{type:'selector'}, offset:{type:'vec3', default:{x:0,y:0,z:0}} },
+    tick(){
+      const t = this.data.target;
+      if (!t) return;
+      const tp = new THREE.Vector3();
+      t.object3D.getWorldPosition(tp);
+      this.el.object3D.position.set(tp.x + this.data.offset.x,
+                                    tp.y + this.data.offset.y,
+                                    tp.z + this.data.offset.z);
+    }
+  });
+
+</script>
+                  

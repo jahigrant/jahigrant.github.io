@@ -39,8 +39,7 @@
         intensity="0.80"> 
     </a-light>
 
-    <a-box id="ground-1" position="0 0 -3.9" rotation="0 0 0" width="10.3" height="0.5" depth="8" shadow="receive: true"
-           material="shader: standard; src: #paperTex; color: #FFFFFF; roughness: 1; metalness: 0; repeat: 4 4">
+    <a-box id="ground-1" position="0 0 -3.9" rotation="0 0 0" width="8" height="0.5" depth="8" transparent="true" shadow="receive: false">
     </a-box>
     
     <a-entity id="rig" position="0 -1.5 -13" rotation="10 0 0">
@@ -153,10 +152,10 @@ function ensureSkyGradientTexture(){
     const x1 = cx + dx * r, y1 = cy + dy * r;
     const grd = ctx.createLinearGradient(x0,y0,x1,y1);
     // Colors: horizon warmer, zenith cooler
-    grd.addColorStop(0.0, '#0b1b3a');   // deep zenith
+    grd.addColorStop(0.4, '#0b1b3a');   // deep zenith
     grd.addColorStop(0.4, '#1565c0');   // mid sky
-    grd.addColorStop(0.7, '#009BFF');   // bright near sun
-    grd.addColorStop(1.0, '#009BFF');   // near horizon
+    grd.addColorStop(0.4, '#FFFFFF');   // bright near sun
+    grd.addColorStop(0.4, '#009BFF');   // near horizon
     ctx.fillStyle = grd;
     ctx.fillRect(0,0,w,h);
   };
@@ -195,7 +194,7 @@ function ensureSkyGradientTexture(){
 
     function createDeformedCloud(opts = {}) {
       const {
-        x = 0, y = 8, z = 0,
+        x = 5, y = 8, z = 0,
         minPieces = 3,
         maxPieces = 7,
         baseSize = 0.25,
@@ -749,11 +748,11 @@ function spawnVehicles() {
 }
 
 
-        spawnAllBuildings(); // create the boxes
-        buildRoadNetwork(); // create roads
+        // spawnAllBuildings(); // create the boxes
+        //buildRoadNetwork();  create roads
         spawnClouds(); // add clouds
-        spawnBirds(); // add birds
-        spawnVehicles(); // add vehicles
+        // spawnBirds(); // add birds
+        //spawnVehicles();  add vehicles
         
     }); 
 
@@ -798,45 +797,7 @@ AFRAME.registerComponent('sky-gradient-follow', {
   }
 });
 
-    // Orbit component
-AFRAME.registerComponent('orbit-motion', {
-  schema: {
-    radius: {default: 14},
-    speed:  {default: 1.0},
-    center: {type: 'vec3', default: {x:0,y:0,z:0}},
-    tiltYDeg: {default: 90} // NEW: yaw tilt in degrees
-  },
-  init() {
-    this.angle = 0;
-    const ground = document.getElementById('ground-1');
-    if (ground) {
-      const gp = ground.object3D.position;
-      const currentY = this.el.object3D.position.y || (gp.y + 6);
-      this.data.center = { x: gp.x, y: currentY, z: gp.z };
-    } else {
-      const p = this.el.object3D.position;
-      this.data.center = { x: 0, y: p.y, z: 0 };
-    }
-  },
-  tick(time, dt) {
-    const s = dt / 100000;
-    if (s <= 0) return;
-
-    this.angle += this.data.speed * 2 * Math.PI * s;
-
-    // Orbit in XZ around center; Y fixed
-    const x = this.data.center.x + this.data.radius * Math.cos(this.angle);
-    const z = this.data.center.z
-    const y = this.data.center.y + this.data.radius * Math.sin(this.angle);
-
-    this.el.setAttribute('position', `${x} ${y} ${z}`);
-
-    // Face tangent with an extra yaw tilt
-    const yawRad = this.angle + Math.PI / 2;
-    const yawDeg = THREE.MathUtils.radToDeg(yawRad) + this.data.tiltYDeg;
-    this.el.setAttribute('rotation', `0 ${yawDeg} 0`);
-  }
-});
+ 
 
     // Make an entity follow another entity’s world position
     AFRAME.registerComponent('follow-target', {
@@ -853,8 +814,8 @@ AFRAME.registerComponent('orbit-motion', {
         schema: {
             speed: {default: 0.5},
             jitter:{default: 0},
-            minX:  {default: -5},
-            maxX:  {default: 5}
+            minX:  {default: -20},
+            maxX:  {default: 20}
         },
         init() {
             this._pos = new THREE.Vector3();

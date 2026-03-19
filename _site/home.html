@@ -219,48 +219,44 @@
     style="width: 100%; height: 100%;"
 >
 
-    <a-assets>
-        <!-- Replace this path with your texture file -->
-        <img id="paperTex" src="/assets/textures/paper.png" crossorigin="anonymous">
-        <img id="LpaperTex" src="/assets/textures/LINED_PAPER.jpg" crossorigin="anonymous">
-        <img id="GpaperTex" src="/assets/textures/graph_paper.jpg" crossorigin="anonymous">
-        <img id="dashTexX" src="/assets/textures/road_texture_x.png" crossorigin="anonymous">
+  <a-assets>
+      <!-- Replace this path with your texture file -->
+      <img id="paperTex" src="/assets/textures/paper.png" crossorigin="anonymous">
+      <img id="LpaperTex" src="/assets/textures/LINED_PAPER.jpg" crossorigin="anonymous">
+      <img id="GpaperTex" src="/assets/textures/graph_paper.jpg" crossorigin="anonymous">
+      <img id="dashTexX" src="/assets/textures/road_texture_x.png" crossorigin="anonymous">
+      <a-asset-item id="world01" src="/assets/models/world-01/world-01.gltf"></a-asset-item>
+  </a-assets>
 
-        <a-asset-item id="car01" src="/assets/models/car_01/car_01.gltf"></a-asset-item>
-    </a-assets>
+  <a-sky id="sky" color="#FFFFFF"></a-sky>
 
-    <a-sky id="sky" material="shader: standard; src: #skyGradient; roughness:1; metalness:0; side:double"></a-sky>
+  <a-light 
+      id="ambientLight" 
+      type="ambient" 
+      color="#FFFFFF" 
+      intensity="0.80"> 
+  </a-light>
+
+  <a-box id="ground-1" position="0 0 -3.9" rotation="0 0 0" width="8" height="0.5" depth="8" transparent="true" shadow="receive: false"visible="false">
+  </a-box>
 
 
-    <!-- Softer ambient so shadows stay visible -->
 
-    <a-plane 
-        position="0 0 -4"
-        rotation="-90 0 0"
-        width="7.5" height="7.5"
-        color="#020202"
-        shadow="receive: true">
-    </a-plane>
-
-    <a-light 
-        id="ambientLight" 
-        type="ambient" 
-        color="#FFFFFF" 
-        intensity="0.80"> 
-    </a-light>
-
-    <a-box id="ground-1" position="0 0 -3.9" rotation="0 0 0" width="10.3" height="0.5" depth="8" shadow="receive: true"
-           material="shader: standard; src: #paperTex; color: #FFFFFF; roughness: 1; metalness: 0; repeat: 4 4">
-    </a-box>
+    <a-entity
+    id="world"
+    gltf-model="#world01"
+    position="0 0 -4"
+    scale="1 1 1"
+    shadow="cast: false; receive: true">
+  </a-entity>
     
-    <a-entity id="rig" position="0 -1.5 -13" rotation="10 0 0">
-        <a-entity 
-            id="isoCamera" 
-            camera            
-            position="0 5 15"
-            rotation="0 -100 0"
-            fov="40"
-            far="10000"
+  <a-entity id="rig" position="0 -1.5 -13" rotation="10 0 0">
+      <a-entity 
+          id="isoCamera" 
+          camera
+          orthographic-camera="size: 10; near: 0.1; far: 10000"
+          position="0 0 10"
+          rotation="0 0 0"
             look-controls="enabled: true"
             wasd-controls="acceleration: 25"
             limited-look-controls="
@@ -268,1528 +264,111 @@
                 maxPitch: 10;
                 minYaw: -10;
                 maxYaw: 10"
-            shadow="
-                cast: true; 
-                receive: false;"
-        >
-        </a-entity>
-    </a-entity>
+          shadow="cast: true; receive: false">
+      </a-entity>
+  </a-entity>
 
 </a-scene>
 
 <script>
 
-    function randomHexColor() {
-        return '#' + Math.floor(Math.random() * 0xFFFFFF).toString(16).padStart(6,'0');
-    }
-
-    // Random gray (#RRGGBB where R=G=B). Range 0–255; tweak min/max to avoid full black/white.
-    function randomGrayColor(min = 32, max = 224) {
-        const clamp = (n, lo, hi) => Math.max(lo, Math.min(hi, n));
-        const lo = clamp(min, 0, 255);
-        const hi = clamp(max, 0, 255);
-        const v = Math.floor(Math.random() * (hi - lo + 1)) + lo;
-        const hex = v.toString(16).padStart(2, '0');
-        return `#${hex}${hex}${hex}`;
-    }
-
-    function randomInRange(min, max) {
-        return Math.random() * (max - min) + min;
-    }
-
-    function randomOffset() {
-        return Math.random().toFixed(2); // 0.00–0.99
-    }
-    
-    function randomRotation() {
-        // 0, 90, 180, 270 degrees in radians
-        const steps = [0, Math.PI/2, Math.PI, 3*Math.PI/2];
-        return steps[Math.floor(Math.random()*steps.length)];
-    }
-
-function ensureDashTexture(){
-  if (document.getElementById('dashTex')) return;
-  const assets = document.querySelector('a-assets') || (() => {
-    const a = document.createElement('a-assets'); document.querySelector('a-scene').appendChild(a); return a;
-  })();
-  const canvas = document.createElement('canvas');
-  canvas.id = 'dashTex';
-  canvas.width = 64; canvas.height = 64;
-  const ctx = canvas.getContext('2d');
-
-  // Transparent background
-  ctx.clearRect(0,0,64,64);
-
-  // Draw a horizontal dashed stripe centered (for vertical roads, we rotate by plane geometry)
-  // We'll make the dash pattern along the long axis (height of the plane)
-  ctx.fillStyle = '#ffe800';
-  const stripeH = 6;           // stripe thickness in px
-  const y = (64 - stripeH) / 2;
-  // Create dash-gap pattern: 12px dash, 10px gap across the canvas height
-  for (let i = 0; i < 64; i += 22) {
-    ctx.fillRect(0, y, 64, stripeH); // full width stripe
-    // Erase gaps along the width to emulate segments
-    ctx.clearRect(i, y, 10, stripeH); // gap
+  function randomHexColor() {
+      return '#' + Math.floor(Math.random() * 0xFFFFFF).toString(16).padStart(6,'0');
   }
 
-  // Slight soft edges by adding alpha gradient (optional)
-  // Left as-is for simplicity
-
-  assets.appendChild(canvas);
-}
-
-// Create a canvas gradient for the sky
-function ensureSkyGradientTexture(){
-  if (document.getElementById('skyGradient')) return;
-  const assets = document.querySelector('a-assets') || (() => {
-    const a = document.createElement('a-assets'); document.querySelector('a-scene').appendChild(a); return a;
-  })();
-  const canvas = document.createElement('canvas');
-  canvas.id = 'skyGradient';
-  canvas.width = 1024;
-  canvas.height = 1024;
-  assets.appendChild(canvas);
-
-  // Initial draw
-  const ctx = canvas.getContext('2d');
-  const draw = (angleRad = 0) => {
-    const w = canvas.width, h = canvas.height;
-    ctx.clearRect(0,0,w,h);
-    // Gradient direction based on angle
-    const cx = w, cy = h;
-    const dx = Math.cos(angleRad), dy = Math.sin(angleRad);
-    const r = Math.max(w,h);
-    const x0 = cx - dx * r, y0 = cy - dy * r;
-    const x1 = cx + dx * r, y1 = cy + dy * r;
-    const grd = ctx.createLinearGradient(x0,y0,x1,y1);
-    // Colors: horizon warmer, zenith cooler
-    grd.addColorStop(0.0, '#0b1b3a');   // deep zenith
-    grd.addColorStop(0.4, '#1565c0');   // mid sky
-    grd.addColorStop(0.7, '#009BFF');   // bright near sun
-    grd.addColorStop(1.0, '#009BFF');   // near horizon
-    ctx.fillStyle = grd;
-    ctx.fillRect(0,0,w,h);
-  };
-  draw(0);
-  // Expose for component
-  canvas._drawSky = draw;
-}
-
-    const groundEl = document.getElementById('ground-1');
-    groundEl.setAttribute('color', randomGrayColor());
-
-    const CLOUD_COUNT = 25;
-
-    // GRID for roads + snapping
-    const GRID = {
-        minX: -5, maxX: 5,
-        minZ: -7, maxZ: 0,
-        block: 1.0,      // grid cell size
-        road: 0.28,      // road strip width
-        y: 0.26          // slightly above ground-1 top (~0.25)
-    };
-
-    function snapToBlock(x, z) {
-        const i = Math.floor((x - GRID.minX) / GRID.block);
-        const k = Math.floor((z - GRID.minZ) / GRID.block);
-        const cx = GRID.minX + (i + 0.5) * GRID.block;
-        const cz = GRID.minZ + (k + 0.5) * GRID.block;
-        return { x: cx, z: cz };
-    }
-
-    // Simple seeded random (for stable deformation if desired)
-    function seededRand(seed) {
-      let x = Math.sin(seed) * 10000;
-      return x - Math.floor(x);
-    }
-
-    function createDeformedCloud(opts = {}) {
-      const {
-        x = 0, y = 8, z = 0,
-        minPieces = 3,
-        maxPieces = 7,
-        baseSize = 0.25,
-        spread = 0.6
-      } = opts;
-
-      const pieces = Math.floor(Math.random() * (maxPieces - minPieces + 1)) + minPieces;
-      const cloudRoot = document.createElement('a-entity');
-      cloudRoot.classList.add('cloud');
-      cloudRoot.setAttribute('position', `${x} ${y} ${z}`);
-      cloudRoot.setAttribute('cloud-drift', `speed:${randomInRange(0.15,0.9)}; jitter:0.15; minX:-5; maxX:5`);
-
-      for (let i = 0; i < pieces; i++) {
-        const seed = Math.random() * 9999;
-        const px = (seededRand(seed + 1) - 0.5) * spread;
-        const py = (seededRand(seed + 2) - 0.5) * (spread * 0.4);
-        const pz = (seededRand(seed + 3) - 0.5) * spread;
-
-        const sx = baseSize * (0.6 + seededRand(seed + 4));
-        const sy = baseSize * (0.4 + seededRand(seed + 5));
-        const sz = baseSize * (0.6 + seededRand(seed + 6));
-
-        const box = document.createElement('a-box');
-        box.setAttribute('position', `${px} ${py} ${pz}`);
-        box.setAttribute('width', sx);
-        box.setAttribute('height', sy);
-        box.setAttribute('depth', sz);
-
-        // Emissive subtle glow + paper texture (random offset)
-        const offsetX = randomOffset();
-        const offsetY = randomOffset();
-        box.setAttribute('material',
-          `shader: standard; src:#LpaperTex; color:#FFFFFF; emissive:#FFFFFF; emissiveIntensity:0.3; opacity:0.85; transparent:true; roughness:1; metalness:0; offset:${offsetX} ${offsetY}; repeat:2 2`);
-        box.setAttribute('shadow', 'cast:false; receive:false');
-        box.setAttribute('random-deform', 'amp:0.03');
-        cloudRoot.appendChild(box);
-      }
-      return cloudRoot;
-    }
-
-    function spawnClouds() {
-      for (let i = 0; i < CLOUD_COUNT; i++) {
-        scene.appendChild(createDeformedCloud({
-          x: randomInRange(-5, 5),
-          y: randomInRange(5, 6),
-          z: randomInRange(-5, 5)
-        }));
-      }
-    }
-   
-    function createBird(opts = {}) {
-        const {
-            x = randomInRange(-5, 5),
-            y = randomInRange(4, 8),
-            z = randomInRange(-7, 0),
-            color = randomGrayColor(),
-            speed = randomInRange(0.8, 1.8) // units/sec
-        } = opts;
-
-        // Root entity (so the bird-fly behavior moves the whole V)
-        const bird = document.createElement('a-entity');
-        bird.classList.add('bird');
-        bird.setAttribute('position', `${x} ${y} ${z}`);
-        bird.setAttribute('bird-fly', `speed:${speed}; amp:${randomInRange(0.4,0.9)}; freq:${randomInRange(0.2,0.6)}; minX:-5; maxX:5; minZ:-7; maxZ:0; yMin:7; yMax:11`);
-
-        // Wing dimensions (thin boxes)
-        const wingThicknessX = 0.01; // X (thin)
-        const wingHeightY    = 0.02; // Y (thin)
-        const wingLengthZ    = 0.12; // Z (length)
-
-        // Left wing (yaw +25°)
-        const left = document.createElement('a-box');
-        left.setAttribute('width', wingThicknessX);
-        left.setAttribute('height', wingHeightY);
-        left.setAttribute('depth', wingLengthZ);
-        left.setAttribute('position', `-0.03 0 0`);
-        left.setAttribute('rotation', `0 25 0`);
-        left.setAttribute('material', `color:${color}; roughness:1; metalness:0`);
-        left.setAttribute('shadow', 'cast:true; receive:false');
-
-        // Right wing (yaw -25°)
-        const right = document.createElement('a-box');
-        right.setAttribute('width', wingThicknessX);
-        right.setAttribute('height', wingHeightY);
-        right.setAttribute('depth', wingLengthZ);
-        right.setAttribute('position', `0.03 0 0`);
-        right.setAttribute('rotation', `0 -25 0`);
-        right.setAttribute('material', `color:${color}; roughness:1; metalness:0`);
-        right.setAttribute('shadow', 'cast:true; receive:false');
-
-        // Optional tiny body/joint
-        const body = document.createElement('a-box');
-        body.setAttribute('width', 0.012);
-        body.setAttribute('height', 0.012);
-        body.setAttribute('depth', 0.02);
-        body.setAttribute('material', `color:${color}; roughness:1; metalness:0; opacity:0.9; transparent:true`);
-        body.setAttribute('shadow', 'cast:true; receive:false');
-
-        bird.appendChild(left);
-        bird.appendChild(right);
-        bird.appendChild(body);
-        return bird;
-    }
-
-    function spawnBirds() {
-        const count = Math.floor(Math.random() * 4) + 8; // 3..5 birds
-        for (let i = 0; i < count; i++) {
-        scene.appendChild(createBird());
-        }
-    }
-
-// Add once near your other helpers (top-level <script> scope)
-function ensureWindowTexture(){
-  if (document.getElementById('windowTex')) return;
-  const assets = document.querySelector('a-assets') || (() => {
-    const a = document.createElement('a-assets'); document.querySelector('a-scene').appendChild(a); return a;
-  })();
-  const canvas = document.createElement('canvas');
-  canvas.id = 'windowTex';
-  canvas.width = 64; canvas.height = 64;
-  const ctx = canvas.getContext('2d');
-  ctx.clearRect(0,0,64,64);
-  // draw one glowing window per tile
-  const pad = 16;
-  ctx.fillStyle = 'rgba(110,200,255,0.85)'; // window glass
-  ctx.fillRect(pad, pad, 64 - pad*2, 64 - pad*2);
-  // subtle mullion border
-  ctx.strokeStyle = 'rgba(255,255,255,0.25)';
-  ctx.lineWidth = 2;
-  ctx.strokeRect(pad+1, pad+1, 64 - (pad+2)*2, 64 - (pad+2)*2);
-  assets.appendChild(canvas);
-}
-
-function addWindowGrid(buildingEl, w, h, d){
-  ensureWindowTexture();
-  const epsilon = 0.003;
-  const y = 0; // centered on building (child local space)
-
-  // decide repeats from building size (pane size ~0.12x0.16)
-  const colsFront = Math.max(18, Math.floor(w / 0.12));
-  const rowsFront = Math.max(36, Math.floor(h / 0.12));
-  const colsSide  = Math.max(18, Math.floor(d / 0.12));
-  const rowsSide  = rowsFront;
-
-  const commonMat = (cols, rows) =>
-    `shader:standard; src:#windowTex; color:#FFFF00; emissive:#FFFF00; emissiveIntensity:0.05; ` +
-    `roughness:1; metalness:0; transparent:false; alphaTest:0.85; side:double; polygonOffset:true; ` +
-    `polygonOffsetFactor:-1; polygonOffsetUnits:-1; repeat:${cols} ${rows}`;
-
-  const mk = (width, height, pos, rotY, cols, rows) => {
-    const p = document.createElement('a-plane');
-    p.classList.add('window-grid');
-    p.setAttribute('width', width);
-    p.setAttribute('height', height);
-    p.setAttribute('position', `${pos.x} ${pos.y} ${pos.z}`);
-    p.setAttribute('rotation', `0 ${rotY} 0`);
-    p.setAttribute('material', commonMat(cols, rows));
-    p.setAttribute('shadow', 'cast:false; receive:true');
-    buildingEl.appendChild(p);
-  };
-
-  // Front face (+Z)
-  mk(w, h, {x:0, y, z:(d/2)+epsilon}, 0, colsFront, rowsFront);
-  // Back face (-Z)
-  mk(w, h, {x:0, y, z:-(d/2)-epsilon}, 180, colsFront, rowsFront);
-  // Right face (+X)
-  mk(d, h, {x:(w/2)+epsilon, y, z:0}, 90, colsSide, rowsSide);
-  // Left face (-X)
-  mk(d, h, {x:-(w/2)-epsilon, y, z:0}, -90, colsSide, rowsSide);
-}
-
-    function createBuilding(opts = {}) {
-  const {
-    x = 0, y = 0, z = 0,
-    w = 0.5, h = randomInRange(2, 6), d = 0.5,
-    color = randomGrayColor(),
-    deform = true
-  } = opts;
-
-  const repeatX = Math.max(1, Math.round(w * 3));
-  const repeatY = Math.max(1, Math.round(h * 2));
-  const offsetX = randomOffset();
-  const offsetY = randomOffset();
-  const rot = randomRotation();
-
-  const building = document.createElement('a-entity');
-  building.classList.add('building');
-
-  building.setAttribute(
-    'geometry',
-    `primitive: box; width: ${w}; height: ${h}; depth: ${d}; segmentsWidth: 8; segmentsHeight: 16; segmentsDepth: 8`
-  );
-  building.setAttribute('position', `${x} ${y} ${z}`);
-  building.setAttribute(
-    'material',
-    `shader: standard; src: #GpaperTex; color: ${color}; roughness:1; metalness:0; repeat:${repeatX} ${repeatY}; offset:${offsetX} ${offsetY}; rotation:${rot}`
-  );
-  building.addEventListener('materialtextureloaded', (e) => {
-    const tex = e.detail.texture;
-    if (tex) { tex.anisotropy = 8; tex.needsUpdate = true; }
-  });
-  building.setAttribute('shadow', 'cast: true; receive: true');
-
-  if (deform) {
-    const amp = (0.001 + h * 0.001 + Math.random() * 0.02).toFixed(3);
-    building.setAttribute('random-deform', `amp:${amp}`);
+  // Random gray (#RRGGBB where R=G=B). Range 0–255; tweak min/max to avoid full black/white.
+  function randomGrayColor(min = 32, max = 224) {
+      const clamp = (n, lo, hi) => Math.max(lo, Math.min(hi, n));
+      const lo = clamp(min, 0, 255);
+      const hi = clamp(max, 0, 255);
+      const v = Math.floor(Math.random() * (hi - lo + 1)) + lo;
+      const hex = v.toString(16).padStart(2, '0');
+      return `#${hex}${hex}${hex}`;
   }
 
-  // Add emissive window grid overlays on all faces
-  addWindowGrid(building, w, h, d);
+  function randomInRange(min, max) {
+      return Math.random() * (max - min) + min;
+  }
 
-  return building;
-}
-
-    // Wait for scene to be ready
-    const scene = document.querySelector('a-scene');
-    scene.addEventListener('loaded', () => {
-        // Spawn initial box
-        // scene.appendChild(createBuilding({ x: 2, y: 8, z: -3 }));
-    });
-
-    // Optional: spawn a new random box every 3s (limit to 20)
-    let spawned = 0;
-    const MAX = 200;
-
-    function spawnAllBuildings() {
-        const cols = Math.floor((GRID.maxX - GRID.minX) / GRID.block);
-        const rows = Math.floor((GRID.maxZ - GRID.minZ) / GRID.block);
-        const capacity = Math.max(1, cols * rows); // max distinct cells
-        const target = Math.min(MAX, capacity);
-
-        const occupied = new Set();
-
-        while (spawned < target) {
-            const rx = randomInRange(GRID.minX, GRID.maxX);
-            const rz = randomInRange(GRID.minZ, GRID.maxZ);
-            const s = snapToBlock(rx, rz);
-            const key = `${s.x.toFixed(2)}|${s.z.toFixed(2)}`;
-
-            if (occupied.has(key)) continue; // skip duplicates
-            occupied.add(key);
-
-            scene.appendChild(
-                createBuilding({
-                    x: s.x,
-                    y: randomInRange(0.0, 0.2),
-                    z: s.z,
-                    deform: Math.random() > 0.1
-                })
-            );
-            spawned++;
-        }
-    }  
-
-    function buildRoadNetwork() {
-      ensureDashTexture();
-  // DEBUG: ensure we have buildings
-  const buildings = Array.from(scene.querySelectorAll('.building'));
-  console.log('Buildings:', buildings.length);
+  function randomOffset() {
+      return Math.random().toFixed(2); // 0.00–0.99
+  }
   
-  const g = GRID;
-  const roadGroup = document.createElement('a-entity');
-  roadGroup.id = 'road-network';
-
-  const lenX = g.maxX - g.minX;
-  const lenZ = g.maxZ - g.minZ;
-  const midZ = g.minZ + lenZ / 2;
-  const midX = g.minX + lenX / 2;
-
-  // Base orthogonal grid (always visible)
-  const roadMat = 'shader: standard; color:#222; roughness:1; metalness:0; side:double; polygonOffset:true; polygonOffsetFactor:-1; polygonOffsetUnits:-1';
-  
-  const lineMat = `shader: standard; src:#dashTex; color:#ffe800; emissive:#ffe800; emissiveIntensity:0; roughness:1; metalness:0; side:double; polygonOffset:true; polygonOffsetFactor:-1; polygonOffsetUnits:-1; rotate:1.508; repeat: 0.5 ${Math.ceil(lenZ / 0.3)}`;
-
-  const lineMatX = `shader: standard; src:#dashTex; color:#ffe800; emissive:#ffe800; emissiveIntensity:0; roughness:1; metalness:0; side:double; transparent:false; polygonOffset:true; polygonOffsetFactor:-1; polygonOffsetUnits:-1; repeat: 0.1 ${Math.ceil(lenX / 0.3)}`;
-
-
-
-
-  // Vertical strips
-  for (let x = g.minX; x <= g.maxX + 1e-6; x += g.block) {
-    const road = document.createElement('a-plane');
-    road.setAttribute('position', `${x} ${g.y} ${midZ}`);
-    road.setAttribute('rotation', '-90 0 0');
-    road.setAttribute('width', g.road);
-    road.setAttribute('height', lenZ);
-    road.setAttribute('material', roadMat);
-    road.setAttribute('shadow', 'cast:false; receive:true');
-    roadGroup.appendChild(road);
-
-    const line = document.createElement('a-plane');
-    line.setAttribute('position', `${x} ${g.y + 0.002} ${midZ}`);
-    line.setAttribute('rotation', '-90 0 0');
-    line.setAttribute('width', 0.01);
-    line.setAttribute('height', lenZ);
-    line.setAttribute('material', lineMat); // repeat along road length
-    line.setAttribute('shadow', 'cast:false; receive:true');
-    roadGroup.appendChild(line);
+  function randomRotation() {
+      // 0, 90, 180, 270 degrees in radians
+      const steps = [0, Math.PI/2, Math.PI, 3*Math.PI/2];
+      return steps[Math.floor(Math.random()*steps.length)];
   }
 
-  // Horizontal strips
-  for (let z = g.minZ; z <= g.maxZ + 1e-6; z += g.block) {
-    const road = document.createElement('a-plane');
-    road.setAttribute('position', `${midX} ${g.y} ${z}`);
-    road.setAttribute('rotation', '-90 0 0');
-    road.setAttribute('width', lenX);
-    road.setAttribute('height', g.road);
-    road.setAttribute('material', roadMat);
-    road.setAttribute('shadow', 'cast:false; receive:true');
-    roadGroup.appendChild(road);
-
-    const line = document.createElement('a-plane');
-    line.setAttribute('position', `${midX} ${g.y + 0.002} ${z}`);
-    line.setAttribute('rotation', '-90 0 0');
-    line.setAttribute('width', lenX);
-    line.setAttribute('height', 0.01);
-    line.setAttribute('material', lineMat);
-    line.setAttribute('shadow', 'cast:false; receive:true');
-    roadGroup.appendChild(line);
+  // Simple seeded random (for stable deformation if desired)
+  function seededRand(seed) {
+    let x = Math.sin(seed) * 10000;
+    return x - Math.floor(x);
   }
 
-  for (let x = g.minX; x <= g.maxX + 1e-6; x += g.block) {
-  for (let z = g.minZ; z <= g.maxZ + 1e-6; z += g.block) {
-    [0,90,180,270].forEach(deg => {
-      const corner = document.createElement('a-entity');
-      corner.setAttribute('position', `${x} ${g.y + 0.001} ${z}`);
-      corner.setAttribute('rotation', '90 0 0');
-      corner.setAttribute('quarter-disk', `radius:${g.road/2}; startDeg:${deg}`);
-      corner.setAttribute('material', roadMat);
-      corner.setAttribute('shadow', 'cast:false; receive:true');
-      roadGroup.appendChild(corner);
-    });
-  }
-}
-
-  // Optional: connectors only where two buildings share row/column
-  if (buildings.length) {
-    const centers = buildings.map(b => {
-      const p = b.object3D.position;
-      return { x: p.x, z: p.z };
-    });
-    const eps = 1e-6;
-    centers.forEach((a, i) => {
-      centers.forEach((b, j) => {
-        if (j <= i) return;
-        const dx = Math.abs(a.x - b.x);
-        const dz = Math.abs(a.z - b.z);
-        // Same row
-        if (dz < eps && dx > g.block + eps) {
-          const midX2 = (a.x + b.x) / 2;
-          const road = document.createElement('a-plane');
-            road.setAttribute('rotation', '-90 0 0');
-            road.setAttribute('position', `${midX2} ${g.y + 0.001} ${a.z}`);
-            road.setAttribute('width', dx);
-            road.setAttribute('height', g.road * 0.1);
-            road.setAttribute('material', 'shader:standard; color:#333; roughness:1; metalness:0');
-            road.setAttribute('shadow', 'cast:false; receive:true');
-
-            roadGroup.appendChild(road);
-        }
-        // Same column
-        if (dx < eps && dz > g.block + eps) {
-          const midZ2 = (a.z + b.z) / 2;
-          const road = document.createElement('a-plane');
-            road.setAttribute('rotation', '-90 0 0');
-            road.setAttribute('position', `${a.x} ${g.y + 0.001} ${midZ2}`);
-            road.setAttribute('width', g.road * 0.1);
-            road.setAttribute('height', dz);
-            road.setAttribute('material', 'shader:standard; color:#333; roughness:1; metalness:0');
-            road.setAttribute('shadow', 'cast:false; receive:true');
-            roadGroup.appendChild(road);
-        }
-      });
-    });
-  }
-
-  scene.appendChild(roadGroup);
-  console.log('Roads added:', roadGroup.children.length);
-}
 
 
-const VEHICLE_COUNT = randomInRange(18,26);
-
-let VEHICLE_SPEED = randomInRange(0.1,0.5); // units per second
-
-const VEHICLES = [];
-let VEHICLE_UID = 1;
-
-console.log('Vehicle speed set to', VEHICLE_SPEED);
-
-function setVehicleSpeed(scale){
-  const factor = Math.max(0.2, Number(scale) || 1);
-  document.querySelectorAll('[vehicle-loop]').forEach(el => {
-    const comp = el.components['vehicle-loop'];
-    if (!comp) return;
-    const current = comp.data.speed;
-    el.setAttribute('vehicle-loop', `speed:${(current * factor).toFixed(3)}`);
-  });
-}
-function randomizeAllVehicleSpeeds(min=1.0, max=2.2){
-  document.querySelectorAll('[vehicle-loop]').forEach(el => {
-    el.setAttribute('vehicle-loop', `speed:${randomInRange(min, max).toFixed(3)}`);
-  });
-}
-// Optional: quick keys [-] slower, [=] faster
-window.addEventListener('keydown', (e)=>{
-  if (e.key === '-') setVehicleSpeed(0.9);      // slow all ~10%
-  if (e.key === '=' || e.key === '+') setVehicleSpeed(1.1); // speed all ~10%
-  if (e.key.toLowerCase() === 'r') randomizeAllVehicleSpeeds(1.0, 2.2); // re-randomize
-});
-
-function gridXs() {
-  const xs = [];
-  for (let x = GRID.minX; x <= GRID.maxX + 1e-6; x += GRID.block) xs.push(Number(x.toFixed(5)));
-  return xs;
-}
-function gridZs() {
-  const zs = [];
-  for (let z = GRID.minZ; z <= GRID.maxZ + 1e-6; z += GRID.block) zs.push(Number(z.toFixed(5)));
-  return zs;
-}
-
-function randomVehicleColor() {
-  const palette = ['#ff3d00','#ff9800','#ffc107','#03a9f4','#8bc34a','#e91e63','#9c27b0','#607d8b'];
-  return palette[Math.floor(Math.random()*palette.length)];
-}
-
-
-
-function createVehicle(opts = {}) {
-  const {
-      w = randomInRange(4, 6), h = randomInRange(2, 6), d = randomInRange(11, 14),
-      color = randomGrayColor(),
-      deform = true
-  } = opts;
-
-  const xs = gridXs();
-  const zs = gridZs();
-  if (xs.length < 2 || zs.length < 2) return null;
-
-  // Pick two distinct X/Z lines
-  const x1 = xs[Math.floor(Math.random()*xs.length)];
-  let x2 = x1; while (x2 === x1) x2 = xs[Math.floor(Math.random()*xs.length)];
-  const z1 = zs[Math.floor(Math.random()*zs.length)];
-  let z2 = z1; while (z2 === z1) z2 = zs[Math.floor(Math.random()*zs.length)];
-
-  const loop = {
-    xMin: Math.min(x1,x2),
-    xMax: Math.max(x1,x2),
-    zMin: Math.min(z1,z2),
-    zMax: Math.max(z1,z2)
-  };
-
-  const y = GRID.y + 0.06;
-  const vehicle = document.createElement('a-entity');
-  vehicle.classList.add('vehicle');
-  vehicle.setAttribute('position', `${loop.xMin} ${y} ${loop.zMin}`);
-  vehicle.setAttribute('rotation', `0 90 0`);
-
-  const speed = randomInRange(0.1, 0.8); // per-vehicle speed
-  vehicle.setAttribute(
-    'vehicle-loop',
-    `xMin:${loop.xMin}; xMax:${loop.xMax}; zMin:${loop.zMin}; zMax:${loop.zMax}; speed:${speed}`
-  );
-
-  const vehColor = randomGrayColor();
-
-  const vehicle_width = 0.01;
-  const vehicle_height = 0.01;
-  const vehicle_depth = 0.01;
-
-
-  // Load the glTF car model
-  const car = document.createElement('a-entity');
-  car.classList.add('vehicle-body');
-  car.setAttribute('gltf-model', '#car01');
-  // Reasonable initial scale; vehicle-loop will rescale along axis
-  car.setAttribute('scale', '0.001 0.001 0.001');
-  car.setAttribute('shadow', 'cast:true; receive:true');
-  // Hover effect on the model root
-  car.setAttribute('vehicle-hover', `ampY:0.01; tiltDeg:2; speed:${randomInRange(0.8,1.3).toFixed(2)}`);
-
-  vehicle.appendChild(car);
-
-  return vehicle;
-}
-
-function spawnVehicles() {
-  for (let i=0;i<VEHICLE_COUNT;i++) {
-    const v = createVehicle();
-    if (v) scene.appendChild(v);
-  }
-}
-
-    scene.addEventListener('loaded', () => {
-        const sun = document.createElement('a-entity');
-        sun.id = 'featured-sphere';
-        sun.setAttribute('geometry', 'primitive: sphere; radius: 0.6; segmentsWidth: 3; segmentsHeight: 3'); /* low poly */
-        sun.setAttribute('shadow', 'cast: true; receive: true');
-        sun.setAttribute('material', 'emissive: #FFD800; emissiveIntensity: 10.2; metalness:0; roughness:0.5');
-        sun.setAttribute('orbit-motion', 'radius:14; speed:1.2; center:0 15 0');
-        sun.setAttribute('self-spin', 'speed:120'); 
-        scene.appendChild(sun);
-
-        const sky = document.getElementById('sky');
-        sky.setAttribute('sky-gradient-follow', 'sun: #featured-sphere; moon: #featured-moon');
-
-    
-        // Point light that FOLLOWS the box (instead of box following light)
-        const followLight = document.createElement('a-entity');
-        followLight.id = 'featured-light';
-        followLight.setAttribute('light', 'type: directional; intensity: 10.5; distance: 5; decay: 2; color: #FFF7EB; castShadow: true; shadowMapWidth:1024; shadowMapHeight:1024; shadowCameraLeft:-5; shadowCameraRight:5; shadowCameraTop:5; shadowCameraBottom:-5; shadowCameraNear:0.5; shadowCameraFar:20;');
-        followLight.setAttribute('shadow', 'castShadow: true');
-        followLight.setAttribute('follow-target', 'target: #featured-sphere; offset: 0 0 0');
-        scene.appendChild(followLight);
-
-
-
-{
-  // Moon sphere
-  const moon = document.createElement('a-entity');
-  moon.id = 'featured-moon';
-  moon.setAttribute('geometry', 'primitive: sphere; radius: 0.5; segmentsWidth: 4; segmentsHeight: 4');
-  moon.setAttribute('shadow', 'cast: true; receive: true');
-  moon.setAttribute('material', 'emissive: #CFE8FF; emissiveIntensity: 2.5; metalness:0; roughness:0.6');
-
-  // Orbit opposite the sun: same radius/speed, but with a half-rotation phase offset
-  // We add a small helper to phase-shift the angle by PI at init.
-  moon.setAttribute('orbit-motion', 'radius:14; speed:1.2');
-
-  // Slight self spin
-  moon.setAttribute('self-spin', 'speed:80');
-
-  scene.appendChild(moon);
-
-  // Shift moon’s orbit phase by 180° once it’s in the scene
-  moon.addEventListener('componentinitialized', (e) => {
-    if (e.detail.name === 'orbit-motion') {
-      const comp = moon.components['orbit-motion'];
-      if (comp) comp.angle = Math.PI; // Opposite side of the orbit
-    }
+  AFRAME.registerComponent('limited-look-controls', {
+      schema: {
+          minPitch: {default: -10}, // degrees
+          maxPitch: {default: 10},
+          minYaw: {default: -10},
+          maxYaw: {default: 10}
+          },
+          tick: function () {
+          var rotation = this.el.getAttribute('rotation');
+          // Clamp pitch (x) and yaw (y)
+          rotation.x = Math.max(this.data.minPitch, Math.min(this.data.maxPitch, rotation.x));
+          rotation.y = Math.max(this.data.minYaw, Math.min(this.data.maxYaw, rotation.y));
+          this.el.setAttribute('rotation', rotation);
+      }
   });
 
-  // Light that follows the moon (cooler tone)
-  const moonLight = document.createElement('a-entity');
-  moonLight.id = 'featured-moon-light';
-  moonLight.setAttribute('light', 'type: directional; intensity: 10.5; distance: 6; decay: 2; color: #CFE8FF; castShadow: true; shadowMapWidth:1024; shadowMapHeight:1024; shadowCameraLeft:-5; shadowCameraRight:5; shadowCameraTop:5; shadowCameraBottom:-5; shadowCameraNear:0.5; shadowCameraFar:20;');
-  moonLight.setAttribute('shadow', 'castShadow: true');
-  moonLight.setAttribute('follow-target', 'target: #featured-moon; offset: 0 0 0');
-  scene.appendChild(moonLight);
-}
+  AFRAME.registerComponent('orthographic-camera', {
+      schema: { size: {default: 4096}, near: {default: 0.1}, far: {default: 1000} },
+      init() {
+          this.camera = new THREE.OrthographicCamera();
+          this.el.setObject3D('camera', this.camera);
+          this._onResize = this.updateProjection.bind(this);
+          window.addEventListener('resize', this._onResize);
+          this.updateProjection();
+      },
+      updateProjection() {
+          const size = this.data.size;
+          const sceneEl = this.el.sceneEl;
+          const canvas = sceneEl && sceneEl.canvas;
+          const w = (canvas && canvas.clientWidth) || window.innerWidth || 1;
+          const h = (canvas && canvas.clientHeight) || window.innerHeight || 1;
+          const aspect = w / h;
 
-
-        spawnAllBuildings(); // create the boxes
-        buildRoadNetwork(); // create roads
-        spawnClouds(); // add clouds
-        spawnBirds(); // add birds
-        spawnVehicles(); // add vehicles
-        
-    }); 
-
-// Component: align sky gradient with sun/moon azimuth
-AFRAME.registerComponent('sky-gradient-follow', {
-  schema: { sun: {type:'selector'}, moon: {type:'selector'} },
-  init(){
-    ensureSkyGradientTexture();
-    this.skyCanvas = document.getElementById('skyGradient');
-    this.ctx = this.skyCanvas.getContext('2d');
-    this.tmp = new THREE.Vector3();
-    // Slight tilt for interest
-    this.tiltDeg = 5;
-    // Apply texture to sky
-    const sky = this.el;
-    sky.setAttribute('material', 'shader:standard; src:#skyGradient; roughness:1; metalness:0; side:double');
-  },
-  tick(){
-    const sunEl = this.data.sun;
-    const moonEl = this.data.moon;
-    if (!sunEl || !moonEl) return;
-
-    const ps = sunEl.object3D.position;
-    const pm = moonEl.object3D.position;
-
-    // Project to XZ to get azimuth, average both
-    const azSun = Math.atan2(ps.x, ps.z);   // radians
-    const azMoon = Math.atan2(pm.x, pm.z);
-    // Weighted average (sun stronger)
-    const wSun = 0.7, wMoon = 0.3;
-    let az = Math.atan2(
-      wSun*Math.sin(azSun) + wMoon*Math.sin(azMoon),
-      wSun*Math.cos(azSun) + wMoon*Math.cos(azMoon)
-    );
-
-    // Redraw gradient aligned with azimuth
-    this.skyCanvas._drawSky(az);
-
-    // Rotate sky to face gradient direction (optional visual cue)
-    const yawDeg = THREE.MathUtils.radToDeg(az);
-    this.el.setAttribute('rotation', `0 ${yawDeg} ${this.tiltDeg}`);
-  }
-});
-
-    // Orbit component
-AFRAME.registerComponent('orbit-motion', {
-  schema: {
-    radius: {default: 14},
-    speed:  {default: 1.0},
-    center: {type: 'vec3', default: {x:0,y:0,z:0}},
-    tiltYDeg: {default: 90} // NEW: yaw tilt in degrees
-  },
-  init() {
-    this.angle = 0;
-    const ground = document.getElementById('ground-1');
-    if (ground) {
-      const gp = ground.object3D.position;
-      const currentY = this.el.object3D.position.y || (gp.y + 6);
-      this.data.center = { x: gp.x, y: currentY, z: gp.z };
-    } else {
-      const p = this.el.object3D.position;
-      this.data.center = { x: 0, y: p.y, z: 0 };
-    }
-  },
-  tick(time, dt) {
-    const s = dt / 100000;
-    if (s <= 0) return;
-
-    this.angle += this.data.speed * 2 * Math.PI * s;
-
-    // Orbit in XZ around center; Y fixed
-    const x = this.data.center.x + this.data.radius * Math.cos(this.angle);
-    const z = this.data.center.z
-    const y = this.data.center.y + this.data.radius * Math.sin(this.angle);
-
-    this.el.setAttribute('position', `${x} ${y} ${z}`);
-
-    // Face tangent with an extra yaw tilt
-    const yawRad = this.angle + Math.PI / 2;
-    const yawDeg = THREE.MathUtils.radToDeg(yawRad) + this.data.tiltYDeg;
-    this.el.setAttribute('rotation', `0 ${yawDeg} 0`);
-  }
-});
-
-    // Make an entity follow another entity’s world position
-    AFRAME.registerComponent('follow-target', {
-        schema:{ target:{type:'selector'}, offset:{type:'vec3',default:{x:0,y:0,z:0}} },
-        tick(){
-            if(!this.data.target) return;
-            const p = this.data.target.object3D.position;
-            const o = this.data.offset;
-            this.el.object3D.position.set(p.x+o.x, p.y+o.y, p.z+o.z);
-        }
-    });
-
-    AFRAME.registerComponent('cloud-drift', {
-        schema: {
-            speed: {default: 0.5},
-            jitter:{default: 0},
-            minX:  {default: -5},
-            maxX:  {default: 5}
-        },
-        init() {
-            this._pos = new THREE.Vector3();
-        },
-        tick(time, dt) {
-            const delta = dt / 5000;
-            const variedSpeed = this.data.speed * (1 + (Math.random() - 0.5) * this.data.jitter);
-            this.el.object3D.getWorldPosition(this._pos);
-            this._pos.x += variedSpeed * delta;
-            if (this._pos.x > this.data.maxX) this._pos.x = this.data.minX;
-            this.el.object3D.position.set(this._pos.x, this._pos.y, this._pos.z);
-        }
-    });
-
-    AFRAME.registerComponent('bird-fly', {
-        schema: {
-            speed:  {default: 1},
-            minX:   {default: -5},
-            maxX:   {default: 5},
-            minZ:   {default: -7},
-            maxZ:   {default: 0},
-            yMin:   {default: 5},
-            yMax:   {default: 9},
-            amp:    {default: 0.6},    // vertical amplitude
-            freq:   {default: 0.35}    // cycles per second
-        },
-        init() {
-            this._target = new THREE.Vector3();
-            this._phase  = Math.random() * Math.PI * 2;
-            this._baseY  = this.el.object3D.position.y; // start height
-            this.pickTarget();
-        },
-        pickTarget() {
-            const d = this.data;
-            this._target.set(
-                randomInRange(d.minX, d.maxX),
-                this._baseY, // keep horizontal target level; vertical handled by sine
-                randomInRange(d.minZ, d.maxZ)
-            );
-        },
-        tick(time, dt) {
-            const delta = dt / 4000;
-            if (delta <= 0) return;
-
-            // Horizontal movement (ignore Y in distance calc)
-            const pos = this.el.object3D.position;
-            const to = this._target.clone().sub(pos);
-            to.y = 0;
-            const dist = Math.sqrt(to.x * to.x + to.z * to.z);
-
-            if (dist < 0.05) {
-                this.pickTarget();
-                return;
-            }
-
-            to.normalize();
-            const step = Math.min(dist, this.data.speed * delta);
-            pos.x += to.x * step;
-            pos.z += to.z * step;
-
-            // Vertical oscillation
-            this._phase += 2 * Math.PI * this.data.freq * delta;
-            const yOsc = Math.sin(this._phase) * this.data.amp;
-            pos.y = this._baseY + yOsc;
-
-            // Face movement direction (yaw)
-            const yaw = Math.atan2(to.x, to.z) * 180 / Math.PI;
-            this.el.setAttribute('rotation', `0 ${yaw} 0`);
-        }
-    });
-
-    AFRAME.registerComponent('self-spin', {
-        schema:{ speed:{default:120} },
-        init(){ this.angle=0; },
-        tick(time, dt){
-            const deltaSec = dt / 10000;
-            this.angle = (this.angle + this.data.speed * deltaSec) % 360;
-            this.el.setAttribute('rotation', `0 ${this.angle} 0`);
-        }
-    });
-
-AFRAME.registerComponent('random-deform', {
-  schema:{ amp:{default:0.08} },
-  init(){
-    const apply = () => {
-      // Try this element’s mesh
-      let mesh = this.el.getObject3D('mesh');
-
-      // Fallback: first child with a mesh
-      if (!mesh) {
-        const child = Array.from(this.el.children).find(ch => ch.getObject3D('mesh'));
-        mesh = child && child.getObject3D('mesh');
+          this.camera.left = -size * aspect * 2;
+          this.camera.right =  size * aspect * 2;
+          this.camera.top =   size * 2;
+          this.camera.bottom = -size * 2;
+          this.camera.near = this.data.near;
+          this.camera.far = this.data.far;
+          this.camera.updateProjectionMatrix();
+      },
+      remove() {
+          window.removeEventListener('resize', this._onResize);
+          this.el.removeObject3D('camera');
       }
-      if (!mesh) return;
+  });
 
-      const pos = mesh.geometry.attributes.position;
-      if (!pos) return;
 
-      for (let i = 0; i < pos.count; i++){
-        pos.setXYZ(
-          i,
-          pos.getX(i) + (Math.random()-0.5)*this.data.amp,
-          pos.getY(i) + (Math.random()-0.5)*this.data.amp,
-          pos.getZ(i) + (Math.random()-0.5)*this.data.amp
-        );
-      }
-      pos.needsUpdate = true;
-      mesh.geometry.computeVertexNormals();
-    };
-    this.el.addEventListener('object3dset', apply);
-    // Defer once to let a-box create its mesh
-    setTimeout(apply, 0);
-  }
-});
-    
-    AFRAME.registerComponent('flock-orbit', {
-        schema: {
-            center:      {type: 'vec3', default: {x:0,y:8,z:0}},
-            radius:      {default: 5},
-            angularSpeed:{default: 0.1}, // rev/sec
-            phase:       {default: 0},   // radians
-            bobAmp:      {default: 0.1},
-            bobFreq:     {default: 0.6},
-            lifetime:    {default: 20},  // seconds
-            fadeOut:     {default: 2}
-        },
-        init() {
-            this.theta = this.data.phase;
-            this.start = performance.now();
-        },
-        tick(time, dt) {
-            const s = dt / 1000;
-            if (s <= 0) return;
-
-            this.theta += this.data.angularSpeed * 2 * Math.PI * s;
-
-            const cx = this.data.center.x;
-            const cy = this.data.center.y;
-            const cz = this.data.center.z;
-
-            const x = cx + this.data.radius * Math.cos(this.theta);
-            const z = cz + this.data.radius * Math.sin(this.theta);
-            const y = cy + Math.sin(time * 0.002 * (this.data.bobFreq / 0.6)) * this.data.bobAmp;
-
-            const obj = this.el.object3D;
-            obj.position.set(x, y, z);
-
-            // Face direction of travel (tangent)
-            const yaw = Math.atan2(-Math.sin(this.theta), -Math.cos(this.theta)); // heading along tangent
-            obj.rotation.set(0, yaw, 0);
-
-            // Lifetime + fade
-            const elapsed = (performance.now() - this.start) / 1000;
-            if (elapsed > this.data.lifetime) {
-            const alpha = 1 - Math.min(1, (elapsed - this.data.lifetime) / this.data.fadeOut);
-            this.el.querySelectorAll('a-box').forEach(b => {
-                const m = b.getAttribute('material') || 'opacity:1';
-                const next = m.match(/opacity:/) ? m.replace(/opacity:\s*[\d.]+/, `opacity:${(0.2 + 0.8 * alpha).toFixed(2)}`) : `${m}; opacity:${(0.2 + 0.8 * alpha).toFixed(2)}`;
-                b.setAttribute('material', next);
-            });
-            if (alpha <= 0) this.el.parentNode && this.el.parentNode.removeChild(this.el);
-            }
-        }
-    });
-
-    AFRAME.registerComponent('limited-look-controls', {
-        schema: {
-            minPitch: {default: -10}, // degrees
-            maxPitch: {default: 10},
-            minYaw: {default: -10},
-            maxYaw: {default: 10}
-            },
-            tick: function () {
-            var rotation = this.el.getAttribute('rotation');
-            // Clamp pitch (x) and yaw (y)
-            rotation.x = Math.max(this.data.minPitch, Math.min(this.data.maxPitch, rotation.x));
-            rotation.y = Math.max(this.data.minYaw, Math.min(this.data.maxYaw, rotation.y));
-            this.el.setAttribute('rotation', rotation);
-        }
-    });
-
-    AFRAME.registerComponent('orthographic-camera', {
-        schema: { size: {default: 4096}, near: {default: 0.1}, far: {default: 1000} },
-        init() {
-            this.camera = new THREE.OrthographicCamera();
-            this.el.setObject3D('camera', this.camera);
-            this._onResize = this.updateProjection.bind(this);
-            window.addEventListener('resize', this._onResize);
-            this.updateProjection();
-        },
-        updateProjection() {
-            const size = this.data.size;
-            const sceneEl = this.el.sceneEl;
-            const canvas = sceneEl && sceneEl.canvas;
-            const w = (canvas && canvas.clientWidth) || window.innerWidth || 1;
-            const h = (canvas && canvas.clientHeight) || window.innerHeight || 1;
-            const aspect = w / h;
-
-            this.camera.left = -size * aspect * 2;
-            this.camera.right =  size * aspect * 2;
-            this.camera.top =   size * 2;
-            this.camera.bottom = -size * 2;
-            this.camera.near = this.data.near;
-            this.camera.far = this.data.far;
-            this.camera.updateProjectionMatrix();
-        },
-        remove() {
-            window.removeEventListener('resize', this._onResize);
-            this.el.removeObject3D('camera');
-        }
-    });
-
-AFRAME.registerComponent('quarter-disk', {
-  schema: { radius:{default:0.14}, startDeg:{default:0} },
-  init() {
-    const r = this.data.radius;
-    const start = THREE.MathUtils.degToRad(this.data.startDeg);
-    const length = Math.PI / 2;
-    const segments = 24;
-    const geom = new THREE.BufferGeometry();
-    const positions = [];
-    // Build in X/Y plane (Z=0) so it stands vertical by default.
-    for (let i = 0; i <= segments; i++) {
-      const t = start + (i / segments) * length;
-      const x = Math.cos(t) * r;
-      const y = Math.sin(t) * r;
-      positions.push(0, 0, 0);
-      positions.push(x, y, 0);
-      if (i < segments) {
-        const t2 = start + ((i + 1) / segments) * length;
-        const x2 = Math.cos(t2) * r;
-        const y2 = Math.sin(t2) * r;
-        positions.push(x2, y2, 0);
-      }
+  // Helper: place an entity at target's world position + global offset
+  AFRAME.registerComponent('follow-target-global', {
+    schema:{ target:{type:'selector'}, offset:{type:'vec3', default:{x:0,y:0,z:0}} },
+    tick(){
+      const t = this.data.target;
+      if (!t) return;
+      const tp = new THREE.Vector3();
+      t.object3D.getWorldPosition(tp);
+      this.el.object3D.position.set(tp.x + this.data.offset.x,
+                                    tp.y + this.data.offset.y,
+                                    tp.z + this.data.offset.z);
     }
-    const posAttr = new THREE.Float32BufferAttribute(positions, 3);
-    geom.setAttribute('position', posAttr);
-    geom.computeVertexNormals();
-    const mat = new THREE.MeshStandardMaterial({ color:'#222', roughness:1, metalness:0, side:THREE.DoubleSide });
-    this.el.setObject3D('mesh', new THREE.Mesh(geom, mat));
-  },
-  remove() { this.el.removeObject3D('mesh'); }
-});
-
-// Define a custom trapezoidal prism (rectangular frustum) geometry component.
-AFRAME.registerComponent('trapezoid-prism', {
-  schema: {
-    widthBottom: {default: 0.10},
-    widthTop:    {default: 0.06},
-    depthBottom: {default: 0.10},
-    depthTop:    {default: 0.06},
-    height:      {default: 0.08}
-  },
-  init() {
-    const d = this.data;
-    const hb = d.height / 2; // FIX: exact half-height
-
-    const vb = [
-      [-d.widthBottom/2, -hb, -d.depthBottom/2],
-      [ d.widthBottom/2, -hb, -d.depthBottom/2],
-      [ d.widthBottom/2, -hb,  d.depthBottom/2],
-      [-d.widthBottom/2, -hb,  d.depthBottom/2],
-    ];
-    const vt = [
-      [-d.widthTop/2, hb, -d.depthTop/2],
-      [ d.widthTop/2, hb, -d.depthTop/2],
-      [ d.widthTop/2, hb,  d.depthTop/2],
-      [-d.widthTop/2, hb,  d.depthTop/2],
-    ];
-    const faces = [0,1,2, 0,2,3, 4,6,5, 4,7,6, 0,1,5, 0,5,4, 1,2,6, 1,6,5, 2,3,7, 2,7,6, 3,0,4, 3,4,7];
-
-    const positions = new Float32Array(8 * 3);
-    const verts = vb.concat(vt);
-    for (let i = 0; i < verts.length; i++) {
-      positions[i*3] = verts[i][0];
-      positions[i*3+1] = verts[i][1];
-      positions[i*3+2] = verts[i][2];
-    }
-    const geom = new THREE.BufferGeometry();
-    geom.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-    geom.setIndex(faces);
-    geom.computeVertexNormals();
-
-    const mat = new THREE.MeshStandardMaterial({ color: '#222', roughness: 1, metalness: 0, side: THREE.DoubleSide });
-    this.el.setObject3D('mesh', new THREE.Mesh(geom, mat));
-  },
-  remove() { this.el.removeObject3D('mesh'); }
-});
-
-AFRAME.registerComponent('vehicle-loop', {
-  schema:{
-    xMin:{default:-5}, xMax:{default:5},
-    zMin:{default:-7}, zMax:{default:0},
-    speed:{default:1.5},
-    turnMs:{default:300},
-    side:{default:'right'} // 'right' or 'left' (driving side)
-  },
-  init(){
-    this.stage = 1; // 0:+x,1:+z,2:-x,3:-z
-    this.body  = this.el.querySelector('.vehicle-body');
-    this.roof  = null; 
-
-    this.length = 0.1;                 // travel axis length
-    this.width  = GRID.road * 0.15;     // cross axis (must be < road)
-    this.height = 0.10;
-    
-    this.laneOffsetMag = (GRID.road - this.width) / 2 - 0.005; // small margin
-    if (this.data.side === 'random') {
-      this.data.side = Math.random()<0.5 ? 'right' : 'left';
-    }
-
-    this.turning = false;
-    this.turnStart = 0;
-    this.startYaw = 0;
-    this.targetYaw = 0;
-
-    this.applyDims();
-    this.snapToCorner();
-    this.setHeadingInstant();
-
-    this.postTurnYawDeg = null;  
-    this.postTurnAdvanceRemaining = 0;
-    this.blockNextTurnUntilPostYaw = false; // NEW: gate next turn
-    
-    this.uid = VEHICLE_UID++;
-    VEHICLES.push(this);
-  },
-  remove(){
-    const i = VEHICLES.indexOf(this);
-    if (i >= 0) VEHICLES.splice(i, 1);
-  },
-  getAABB(){
-    const meshEl = this.body || this.el;
-    if (!meshEl) return null;
-    const obj = meshEl.object3D;
-    const bb = new THREE.Box3().setFromObject(obj);
-    return {
-      min: { x: bb.min.x, y: bb.min.y, z: bb.min.z },
-      max: { x: bb.max.x, y: bb.max.y, z: bb.max.z }
-    };
-  },
-  aabbOverlap(a,b){
-    return a && b &&
-      a.min.x <= b.max.x && a.max.x >= b.min.x &&
-      a.min.y <= b.max.y && a.max.y >= b.min.y &&
-      a.min.z <= b.max.z && a.max.z >= b.min.z;
-  },
-  applyDims(){
-  if (!this.body) return;
-
-  // Body logical sizes
-  const length = 0.1;
-  const width  = GRID.road * 0.1;
-  const height = this.height;
-
-  // Base geometry (body box is 0.1 x 0.10 x 0.1)
-  const baseX = 0.1, baseY = 0.1, baseZ = 0.1;
-  const alongX = (this.stage === 0 || this.stage === 2);
-
-  // Apply body scale
-  const sx = alongX ? (length / baseX) : (width / baseX);
-  const sz = alongX ? (width  / baseZ) : (length / baseZ);
-  const sy = height / baseY;
-
-  const bodyO = this.body.object3D;
-  bodyO.scale.set(sx, sy, sz);
-  bodyO.position.set(0, 0, 0);
-
-
-    // Do NOT call setAttribute('width'/'depth') here—keeps the deformed mesh intact
-  },
-  headingDegForStage(stage){
-    return [90,90,90,90][stage % 4] 
-  },
-  setHeadingInstant(){
-    this.el.object3D.rotation.y = THREE.MathUtils.degToRad(this.headingDegForStage(this.stage));
-    const deg = this.headingDegForStage(this.stage);
-    this.el.setAttribute('rotation', `0 ${deg} 0`);
-  },
-  laneOffsetForStage(stage){
-    const right = this.data.side === 'left';
-    const o = this.laneOffsetMag;
-    // Coordinate: +x east, +z south.
-    // Right side relative to motion:
-    // +x: +z, +z: -x, -x: -z, -z: +x
-    switch(stage){
-      case 0: return {axis:'z', val: right ? +o : -o};
-      case 1: return {axis:'x', val: right ? -o : +o};
-      case 2: return {axis:'z', val: right ? -o : +o};
-      case 3: return {axis:'x', val: right ? +o : -o};
-      default: return {axis:'z', val:0};
-    }
-  },
-  snapToCorner(){
-    const p = this.el.object3D.position;
-    const lane = this.laneOffsetForStage(this.stage);
-    if (this.stage === 0){ p.x = this.data.xMin; p.z = this.data.zMin + (lane.axis==='z'?lane.val:0); }
-    if (this.stage === 1){ p.x = this.data.xMax + (lane.axis==='x'?lane.val:0); p.z = this.data.zMin; }
-    if (this.stage === 2){ p.x = this.data.xMax; p.z = this.data.zMax + (lane.axis==='z'?lane.val:0); }
-    if (this.stage === 3){ p.x = this.data.xMin + (lane.axis==='x'?lane.val:0); p.z = this.data.zMax; }
-  },
-  snapToEdge(){
-    const p = this.el.object3D.position;
-    const lane = this.laneOffsetForStage(this.stage);
-    if (this.stage === 0){ p.z = this.data.zMin + (lane.axis==='z'?lane.val:0); }
-    if (this.stage === 1){ p.x = this.data.xMax + (lane.axis==='x'?lane.val:0); }
-    if (this.stage === 2){ p.z = this.data.zMax + (lane.axis==='z'?lane.val:0); }
-    if (this.stage === 3){ p.x = this.data.xMin + (lane.axis==='x'?lane.val:0); }
-  },
-
-  startTurn(nextStage){
-    const prev = this.stage;
-    const next = nextStage % 4;
-
-    // Arc center (intersection corner)
-    let cx, cz;
-    if (prev === 0 && next === 1) { cx = this.data.xMax; cz = this.data.zMin; }   // +x -> +z
-    else if (prev === 1 && next === 2) { cx = this.data.xMax; cz = this.data.zMax; } // +z -> -x
-    else if (prev === 2 && next === 3) { cx = this.data.xMin; cz = this.data.zMax; } // -x -> -z
-    else if (prev === 3 && next === 0) { cx = this.data.xMin; cz = this.data.zMin; } // -z -> +x
-    else { cx = this.data.xMax; cz = this.data.zMin; }
-    this.arcCenter = { x: cx, z: cz };
-
-    // Preserve lane offset before arc
-    const lane = this.laneOffsetForStage(prev);
-    const p = this.el.object3D.position;
-    if (prev === 0 || prev === 2) {
-      const zTarget = (prev === 0) ? this.data.zMin : this.data.zMax;
-      p.z = zTarget + (lane.axis === 'z' ? lane.val : 0);
-    } else {
-      const xTarget = (prev === 1) ? this.data.xMax : this.data.xMin;
-      p.x = xTarget + (lane.axis === 'x' ? lane.val : 0);
-    }
-
-    // Radius from current front to corner center (keeps lane offset path)
-    this.arcRadius = Math.hypot(p.x - cx, p.z - cz);
-
-    // Start angle
-    this.arcStartAngle = Math.atan2(p.z - cz, p.x - cx);
-
-    // Correct left/right detection and heading sign
-    const delta = (next - prev + 4) % 4;           // 1=left(CCW), 3=right(CW)
-    this.turnSign = (delta === 3) ? -1 : +1;
-
-    // Full quarter turn
-    this.arcEndAngle = this.arcStartAngle + this.turnSign * (Math.PI / 2);
-
-    // Constant-speed arc duration
-    const theta = Math.abs(this.arcEndAngle - this.arcStartAngle); // PI/2
-    const speed = Math.max(0.0001, this.data.speed);
-    this.arcDuration = (this.arcRadius * theta) / speed;
-
-    // Store exact target yaw in DEGREES for a clean 90° snap at end
-    const targetYawRad = this.arcEndAngle + this.turnSign * (Math.PI / 2);
-    this.targetYawDeg = THREE.MathUtils.radToDeg(targetYawRad);
-
-    this.turnPhase = 'arc';
-    this.turnStart = performance.now();
-    this.pendingStage = next;
-  },
-  finishArcTurn(){
-    const angle = this.arcEndAngle;
-    const r = this.arcRadius;
-    const {x:cx, z:cz} = this.arcCenter;
-
-    // End-of-arc position using setAttribute (so A-Frame updates properly)
-    const endX = cx + Math.cos(angle) * r;
-    const endZ = cz + Math.sin(angle) * r;
-    const y = this.el.object3D.position.y; // keep current Y
-    this.el.setAttribute('position', `${endX} ${y} ${endZ}`);
-
-    // Commit to new stage and resume travel
-    this.stage = this.pendingStage;
-    this.applyDims();
-
-    // Heading tangent to the path at arc exit (base yaw)
-    const baseYawRad = this.arcEndAngle + this.turnSign * (Math.PI / 2);
-    const baseYawDeg = THREE.MathUtils.radToDeg(baseYawRad);
-    this.el.setAttribute('rotation', `0 ${baseYawDeg.toFixed(3)} 0`);
-
-    // Queue extra 90° AFTER moving onto new road
-    const extraYawDeg = baseYawDeg + (this.turnSign * 0);
-    this.postTurnYawDeg = extraYawDeg;
-    this.postTurnAdvanceRemaining = 0.01;
-    this.blockNextTurnUntilPostYaw = true; // block starting another turn until applied
-
-    this.turnPhase = 'none';
-  },
-  setHeadingInstant(){
-    const deg = this.headingDegForStage(this.stage);
-    this.el.setAttribute('rotation', `0 ${deg} 0`);
-  },
-
-  // Compute max allowed step along current axis to avoid overlap
-  clampStepToAvoidCollision(step){
-    const me = this.getAABB();
-    if (!me) return step;
-
-    let maxStep = step;
-    for (const other of VEHICLES){
-      if (other === this) continue;
-      if (other.turnPhase === 'arc') continue; // skip while turning
-      const ob = other.getAABB();
-      if (!ob) continue;
-
-      // Only consider neighbors on same lane axis (X or Z)
-      const alongX = (this.stage === 0 || this.stage === 2);
-      if (alongX){
-        // Must overlap in Z to collide
-        const zOverlap = !(me.max.z < ob.min.z || me.min.z > ob.max.z);
-        if (!zOverlap) continue;
-
-        if (this.stage === 0){ // moving +X
-          if (me.max.x <= ob.min.x){
-            const gap = ob.min.x - me.max.x;
-            maxStep = Math.min(maxStep, Math.max(0, gap - 0.5));
-          }
-        } else { // moving -X
-          if (me.min.x >= ob.max.x){
-            const gap = me.min.x - ob.max.x;
-            maxStep = Math.min(maxStep, Math.max(0, gap - 0.5));
-          }
-        }
-      } else {
-        // Along Z; must overlap in X
-        const xOverlap = !(me.max.x < ob.min.x || me.min.x > ob.max.x);
-        if (!xOverlap) continue;
-
-        if (this.stage === 1){ // moving +Z
-          if (me.max.z <= ob.min.z){
-            const gap = ob.min.z - me.max.z;
-            maxStep = Math.min(maxStep, Math.max(0, gap - 0.5));
-          }
-        } else { // moving -Z
-          if (me.min.z >= ob.max.z){
-            const gap = me.min.z - ob.max.z;
-            maxStep = Math.min(maxStep, Math.max(0, gap - 0.5));
-          }
-        }
-      }
-    }
-    return Math.max(0, maxStep);
-  },
-
-  tick(time, dt){
-    const delta = dt / 1000;
-    if (delta <= 0) return;
-
-    const obj = this.el.object3D;
-    const p = obj.position;
-
-    if (this.turnPhase === 'arc'){
-      const t = Math.min(1, (performance.now() - this.turnStart) / this.arcDuration);
-      const angle = this.arcStartAngle + (this.arcEndAngle - this.arcStartAngle) * t;
-      const r = this.arcRadius;
-      const {x:cx, z:cz} = this.arcCenter;
-      p.x = cx + Math.cos(angle) * r;
-      p.z = cz + Math.sin(angle) * r;
-      const yawDeg = THREE.MathUtils.radToDeg(angle + this.turnSign * (Math.PI / 2));
-      this.el.setAttribute('rotation', `0 ${yawDeg} 0`);
-      if (t >= 1) this.finishArcTurn();
-      return;
-    }
-
-    // Keep lane when not turning
-    this.snapToEdge();
-
-    let step = this.data.speed * delta;
-
-    step = this.clampStepToAvoidCollision(step);
-
-    // Move along current stage
-  if (step > 0){
-    switch(this.stage){
-      case 0:{ // +X
-        const dist = this.data.xMax - p.x;
-        const s = Math.min(step, dist);
-        p.x += s;
-        if (s >= dist && !this.blockNextTurnUntilPostYaw) this.startTurn((this.stage + 1) % 4);
-      } break;
-      case 1:{ // +Z
-        const dist = this.data.zMax - p.z;
-        const s = Math.min(step, dist);
-        p.z += s;
-        if (s >= dist && !this.blockNextTurnUntilPostYaw) this.startTurn((this.stage + 1) % 4);
-      } break;
-      case 2:{ // -X
-        const dist = p.x - this.data.xMin;
-        const s = Math.min(step, dist);
-        p.x -= s;
-        if (s >= dist && !this.blockNextTurnUntilPostYaw) this.startTurn((this.stage + 1) % 4);
-      } break;
-      case 3:{ // -Z
-        const dist = p.z - this.data.zMin;
-        const s = Math.min(step, dist);
-        p.z -= s;
-        if (s >= dist && !this.blockNextTurnUntilPostYaw) this.startTurn((this.stage + 1) % 4);
-      } break;
-    }
-  }
-
-  // Apply queued extra yaw after moving onto new road (existing logic)
-  if (this.postTurnYawDeg !== null && this.postTurnAdvanceRemaining > 0){
-    // Already advanced with clamped step; check and apply
-    this.postTurnAdvanceRemaining -= 0; // distance consumed above
-    if (this.postTurnAdvanceRemaining <= 0){
-      const snap = Math.round(this.postTurnYawDeg / 90) * 90;
-      this.el.setAttribute('rotation', `0 ${snap} 0`);
-      this.postTurnYawDeg = null;
-      this.blockNextTurnUntilPostYaw = false;
-    }
-  }
-
-    // If we have a pending extra yaw, consume distance first
-    if (this.postTurnYawDeg !== null && this.postTurnAdvanceRemaining > 0){
-      const consume = Math.min(step, this.postTurnAdvanceRemaining);
-      // Advance along current stage by 'consume' only
-      switch(this.stage){
-        case 0: p.x = Math.min(p.x + consume, this.data.xMax); break;
-        case 1: p.z = Math.min(p.z + consume, this.data.zMax); break;
-        case 2: p.x = Math.max(p.x - consume, this.data.xMin); break;
-        case 3: p.z = Math.max(p.z - consume, this.data.zMin); break;
-      }
-      this.postTurnAdvanceRemaining -= consume;
-      step -= consume;
-
-      // If we’ve advanced enough, apply the extra 90° yaw now
-      if (this.postTurnAdvanceRemaining <= 0){
-        // Snap to exact cardinal (round to nearest 90°)
-        const snap = Math.round(this.postTurnYawDeg / 90) * 0;
-        this.el.setAttribute('rotation', `0 ${snap} 0`);
-        this.postTurnYawDeg = null;
-        this.blockNextTurnUntilPostYaw = false; // allow turns again
-      }
-    }
-
-    // Continue normal forward motion with any remaining step
-    if (step > 0){
-    switch(this.stage){
-      case 0:{
-        const dist = this.data.xMax - p.x;
-        if (step < dist){ p.x += step; }
-        else {
-          p.x = this.data.xMax;
-          if (!this.blockNextTurnUntilPostYaw) this.startTurn((this.stage + 1) % 4);
-        }
-      } break;
-      case 1:{
-        const dist = this.data.zMax - p.z;
-        if (step < dist){ p.z += step; }
-        else {
-          p.z = this.data.zMax;
-          if (!this.blockNextTurnUntilPostYaw) this.startTurn((this.stage + 1) % 4);
-        }
-      } break;
-      case 2:{
-        const dist = p.x - this.data.xMin;
-        if (step < dist){ p.x -= step; }
-        else {
-          p.x = this.data.xMin;
-          if (!this.blockNextTurnUntilPostYaw) this.startTurn((this.stage + 1) % 4);
-        }
-      } break;
-      case 3:{
-        const dist = p.z - this.data.zMin;
-        if (step < dist){ p.z -= step; }
-        else {
-          p.z = this.data.zMin;
-          if (!this.blockNextTurnUntilPostYaw) this.startTurn((this.stage + 1) % 4);
-        }
-      } break;
-    }
-  }
-  }
-});
-
-// Hover effect: bob on Y, subtle pitch/roll, emissive glow.
-AFRAME.registerComponent('vehicle-hover', {
-  schema: {
-    ampY:    {default: 0.015},   // bob amplitude (meters)
-    tiltDeg: {default: 3},       // max tilt (degrees)
-    speed:   {default: 1.0},     // base hover speed multiplier
-    offset:  {default: 0}        // per-vehicle phase offset
-  },
-  init(){
-    const p = this.el.object3D.position.clone();
-    this.baseY = p.y;
-    // Soft glow
-    const body = this.el.querySelector('.vehicle-body');
-    if (body) {
-      const mat = body.getAttribute('material') || '';
-      body.setAttribute('material', `${mat}; emissive:#66aaff; emissiveIntensity:0.35`);
-      body.setAttribute('shadow', 'cast:false; receive:false'); // reduce shadow for hover look
-    }
-    // Small random phase so vehicles don't bob in sync
-    if (!this.data.offset) this.data.offset = Math.random() * Math.PI * 2;
-  },
-  tick(time){
-    const t = (time / 1000) * this.data.speed + this.data.offset;
-    const oy = Math.sin(t) * this.data.ampY;
-    const pitch = Math.sin(t * 0.9) * THREE.MathUtils.degToRad(this.data.tiltDeg);
-    const roll  = Math.cos(t * 0.8) * THREE.MathUtils.degToRad(this.data.tiltDeg);
-
-    const o = this.el.object3D;
-    o.position.y = this.baseY + oy + 0.01;
-
-    // Preserve current yaw; apply hover pitch/roll
-    const yaw = o.rotation.y;
-    o.rotation.set(pitch, yaw, roll);
-  }
-});
-
-// Helper: place an entity at target's world position + global offset
-AFRAME.registerComponent('follow-target-global', {
-  schema:{ target:{type:'selector'}, offset:{type:'vec3', default:{x:0,y:0,z:0}} },
-  tick(){
-    const t = this.data.target;
-    if (!t) return;
-    const tp = new THREE.Vector3();
-    t.object3D.getWorldPosition(tp);
-    this.el.object3D.position.set(tp.x + this.data.offset.x,
-                                  tp.y + this.data.offset.y,
-                                  tp.z + this.data.offset.z);
-  }
-});
+  });
 
 </script>
                   
@@ -1798,8 +377,8 @@ AFRAME.registerComponent('follow-target-global', {
     <!-- Foreground content -->
     <div class="position-relative">
       <svg class="bi mt-4 mb-3" style="color: var(--bs-indigo);" width="100" height="100" aria-hidden="true"><use xlink:href="#bootstrap"></use></svg> 
-      <h1 class="text-light">Jahi Grant Portfolio</h1> 
-      <p class="col-lg-8 mx-auto fs-5 text-light">JavaScript, Python, HTML, CSS and other coding in the day of the life of a frontend developer</p> 
+      <h1 class="text-light">Jahi Grant Designs</h1> 
+      <p class="col-lg-8 mx-auto fs-5 text-light">Creating stylish, functional, high quality pieces. Each product designed is a unique product.</p> 
       <div class="d-inline-flex gap-2 mb-5"> 
         <button class="d-inline-flex align-items-center btn btn-primary btn-lg px-4 rounded-1" type="button">Call</button> 
         <button class="btn btn-outline-secondary btn-lg px-4 rounded-1" type="button">Link</button>
@@ -1850,32 +429,32 @@ AFRAME.registerComponent('follow-target-global', {
 
     <p class="pt-0 mb-0">
         <span class="fw-lighter fs-6 ms-0">
-            A selection of    
+            Creating stylish, functional, high quality pieces. Each product designed is a unique product.    
         </span>
         
 
             
-                <span class="fw-lighter fs-6 ms-2">skills</span>
+                <span class="fw-lighter fs-6 ms-2"></span>
             
             
             
-                <span aria-hidden="true" class="fw-lighter">+</span>
-            
-
-        
-
-            
-                <span class="fw-lighter fs-6">abilities</span>
-            
-            
-            
-                <span aria-hidden="true" class="fw-lighter">+</span>
+                <span aria-hidden="true" class="fw-lighter"></span>
             
 
         
 
             
-                <span class="fw-lighter fs-6">musings</span>
+                <span class="fw-lighter fs-6"></span>
+            
+            
+            
+                <span aria-hidden="true" class="fw-lighter"></span>
+            
+
+        
+
+            
+                <span class="fw-lighter fs-6"></span>
             
             
             
@@ -1900,7 +479,7 @@ AFRAME.registerComponent('follow-target-global', {
   <span class="fw-lighter" style="font-size:12px!important;">
     <i class="bi bi-c-circle"></i>
   </span> 
-  2000–25
+  2000–26
   <a class="text-dark text-decoration-none" href="/">
     <span>Jahi Grant</span>.
   </a> 
